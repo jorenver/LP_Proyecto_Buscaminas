@@ -8,7 +8,6 @@ import android.content.Context;
 import android.widget.Button;
 
 public class Celda extends Button implements Observer{
-	boolean vacio;
 	boolean esMina;
 	EstadoCelda estado;
 	int n_minas_cercanas;
@@ -17,7 +16,6 @@ public class Celda extends Button implements Observer{
 	
 	public Celda(Context context,int i,int j) {
 		super(context);
-		vacio=false;
 		esMina=false;
 		estado=EstadoCelda.CUBIERTA;
 		n_minas_cercanas=0;
@@ -25,16 +23,17 @@ public class Celda extends Button implements Observer{
 		pos_y=j;
 	}
 	
+	//Metodos sets and gets
+	public EstadoCelda getEstado(){
+		return estado;
+	}
+	
+	
+	
+	
 	public void descubrir(){
 		
-		
 		estado=EstadoCelda.DESCUBIERTA;
-	
-	
-		
-		
-		
-		
 	
 	}
 	
@@ -42,6 +41,7 @@ public class Celda extends Button implements Observer{
 		return observable;
 	}
 
+	
 	class CeldaObservable extends Observable{
 		void cambioCelda(){
 			setChanged();
