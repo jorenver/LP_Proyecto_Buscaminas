@@ -5,7 +5,7 @@ import android.content.Context;
 import android.widget.Button;
 
 public class Celda extends Button implements Observer{
-	private boolean esMina;
+	private boolean Mina;
 	private EstadoCelda estado;
 	private int n_minas_cercanas;
 	private ArrayList<Observer> adjacentes;
@@ -34,11 +34,32 @@ public class Celda extends Button implements Observer{
 			adjacentes=observador;
 	}
 	
+	
+	public void SetBombasCercanas(){ 
+		int CuentaBombas=0;
+		for(Observer Celda: adyacentes){
+			if(Celda.getMina())
+				CuentaBombas++;
+		}
+		this.setCantMinasCercanas(CuentaBombas);
+	}
+		
+	}
+	
 	public void update(){
 	
 	}
 }
 
+
+public void setCantMinasCercanas(int NumerodeMinas){
+	n_minas_cercanas=NumerodeMinas;
+}
+
+
+public boolean getMina(){
+	return Mina;
+}
 	
 	/*
 	public CeldaObservable getObservable() {
