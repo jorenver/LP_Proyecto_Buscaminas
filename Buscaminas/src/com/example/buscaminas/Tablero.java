@@ -2,7 +2,6 @@ package com.example.buscaminas;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-
 import android.content.Context;
 import android.graphics.Point;
 import android.view.View;
@@ -22,9 +21,11 @@ public class Tablero extends View {
 			Inicio=true;
 			celdas=new HashMap<Point,Celda>();
 			filas=new ArrayList<TableRow>();
-			generarTablero(context);
 			n_filas=f;
 			n_columnas=c;
+			generarTablero(context);
+			llenarCeldasAdyacentes();
+			
 		}
 		
 		public void generarTablero(Context context){
@@ -41,15 +42,14 @@ public class Tablero extends View {
 				for(int j=0;j<n_columnas;j++){
 					Celda celda=new Celda(context ,i,j);
 					celdas.put(new Point(i,j),celda);
-					celda.setText(i+" "+j);
+					celda.setOnClickListener(ClickCelda);
 					f.addView(celda);
 				}
 			layout.addView(f);
 			}
 		}
 		
-		class CLickCelda implements OnClickListener{
-
+		OnClickListener ClickCelda =new  OnClickListener(){
 			@Override
 			public void onClick(View arg0) {
 				
@@ -66,13 +66,36 @@ public class Tablero extends View {
 								Inicio=false;
 							}
 							//si la celda aun no ha sido descubierta se la descubre
-							if(c.getEstado()!=EstadoCelda.DESCUBIERTA)
-								c.descubrir();
+							if(c.getEstado()!=EstadoCelda.DESCUBIERTA)	
+								c.descubrir();	
 						}
 					}
 				}
 			}
+		};
 		
+		
+		public void llenarCeldasAdyacentes(){
+			for(int i=0;i<n_filas;i++){
+				for(int j=0;j<n_columnas;j++){
+					Celda c,c2;
+					ArrayList<Observer> adyacentes=new ArrayList<Observer>();
+					c=celdas.get(new Point(i,j));
+					//recorro todas las celdas adjacentes y las agrego en un array
+					for(int k=-1;k<=1;k++){
+						for(int l=-1;l<=1;l++){
+							if(k==0&&j==0)
+								continue;
+							c2=celdas.get(new Point(i+k,j+l));
+							if(c2!=null)
+								adyacentes.add(c2);
+						}
+					}
+					//seteo todos los observadores a la celda
+					c.setObserver(adyacentes);
+				}
+			}
 		}
-
+				
 }
+

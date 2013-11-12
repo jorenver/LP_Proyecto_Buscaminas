@@ -1,26 +1,20 @@
 package com.example.buscaminas;
 
-import java.util.Observable;
-import java.util.Observer;
-
-
+import java.util.ArrayList;
 import android.content.Context;
 import android.widget.Button;
 
 public class Celda extends Button implements Observer{
-	boolean esMina;
-	EstadoCelda estado;
-	int n_minas_cercanas;
-	int pos_x,pos_y;
-	private CeldaObservable observable;
+	private boolean esMina;
+	private EstadoCelda estado;
+	private int n_minas_cercanas;
+	private ArrayList<Observer> adjacentes;
 	
 	public Celda(Context context,int i,int j) {
 		super(context);
 		esMina=false;
 		estado=EstadoCelda.CUBIERTA;
 		n_minas_cercanas=0;
-		pos_x=i;
-		pos_y=j;
 	}
 	
 	//Metodos sets and gets
@@ -32,11 +26,21 @@ public class Celda extends Button implements Observer{
 	
 	
 	public void descubrir(){
-		
 		estado=EstadoCelda.DESCUBIERTA;
-	
 	}
 	
+	
+	public void setObserver(ArrayList<Observer> observador ){
+			adjacentes=observador;
+	}
+	
+	public void update(){
+	
+	}
+}
+
+	
+	/*
 	public CeldaObservable getObservable() {
 		return observable;
 	}
@@ -57,5 +61,5 @@ public class Celda extends Button implements Observer{
 	}
 
 	
+*/
 
-}
