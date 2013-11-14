@@ -5,14 +5,15 @@ import android.content.Context;
 import android.widget.Button;
 
 public class Celda extends Button implements Observer{
-	private boolean esMina;
+	private boolean Mina;
 	private EstadoCelda estado;
 	private int n_minas_cercanas;
-	private ArrayList<Observer> adjacentes;
+	private ArrayList<Observer> adyacentes;
+	private Observer TableroObservador;
 	
 	public Celda(Context context,int i,int j) {
 		super(context);
-		esMina=false;
+		Mina=false;
 		estado=EstadoCelda.CUBIERTA;
 		n_minas_cercanas=0;
 	}
@@ -26,16 +27,30 @@ public class Celda extends Button implements Observer{
 	
 	
 	public void descubrir(){
-		estado=EstadoCelda.DESCUBIERTA;
+		if(!Mina){		
+			estado=EstadoCelda.DESCUBIERTA;
+			if(this.n_minas_cercanas==0){
+				for(Observer o : adyacentes)
+					o.update();//notifica a todas sus celdas adyacentes
+			}else{
+				this.setText(n_minas_cercanas);
+			}
+		}else
+			//envia el boleano de la Mina para ver si el juego continua o no
+			TableroObservador.update(Mina);
 	}
 	
 	
 	public void setObserver(ArrayList<Observer> observador ){
-			adjacentes=observador;
+			adyacentes=observador;
 	}
 	
 	public void update(){
+		this.descubrir();
+	}
 	
+	public void update(Object o){
+		//no se define
 	}
 }
 

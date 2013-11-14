@@ -8,7 +8,7 @@ import android.view.View;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 
-public class Tablero extends View {
+public class Tablero extends View implements Observer {
 		HashMap<Point,Celda>celdas;
 		ArrayList<TableRow>filas;
 		TableLayout layout;
@@ -95,6 +95,16 @@ public class Tablero extends View {
 					c.setObserver(adyacentes);
 				}
 			}
+		}
+
+		@Override
+		public void update() {
+			//no se define
+		}
+		
+		@Override
+		public void update(Object o){
+			//determina si el jugador , sigue jugando, perdio o gano
 		}
 				
 }
