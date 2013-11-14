@@ -49,13 +49,13 @@ public class Celda extends Button implements Observer{
 	public void SetBombasCercanas(){ 
 		int CuentaBombas=0;
 		for(Observer Celda: adyacentes){
-			if(Celda.getMina())
+			if(((Celda)Celda).getMina())
 				CuentaBombas++;
 		}
 		this.setCantMinasCercanas(CuentaBombas);
 	}
 		
-	}
+
 	
 	public void update(){
 		this.descubrir();
@@ -64,16 +64,18 @@ public class Celda extends Button implements Observer{
 	public void update(Object o){
 		//no se define
 	}
-}
 
 
-public void setCantMinasCercanas(int NumerodeMinas){
-	n_minas_cercanas=NumerodeMinas;
-}
 
+	public void setCantMinasCercanas(int NumerodeMinas){
+		n_minas_cercanas=NumerodeMinas;
+	}
+	
+	
+	public boolean getMina(){
+		return Mina;
+	}
 
-public boolean getMina(){
-	return Mina;
 }
 	
 	/*

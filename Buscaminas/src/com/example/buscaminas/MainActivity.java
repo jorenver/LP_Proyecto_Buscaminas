@@ -10,6 +10,7 @@ public class MainActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		this.setContentView(new Tablero(this,10,10));
 	}
 
 	@Override
