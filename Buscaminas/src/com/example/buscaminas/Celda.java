@@ -1,58 +1,67 @@
 package com.example.buscaminas;
 
 import java.util.ArrayList;
-import android.annotation.SuppressLint;
+import java.util.Observable;
+
 import android.content.Context;
 import android.widget.Button;
 
-@SuppressLint("ViewConstructor")
 public class Celda extends Button implements Observer{
+	private boolean vacio;
 	private boolean Mina;
 	private EstadoCelda estado;
-	private int n_minas_cercanas;
+	private int CantMinasCercanas;
+	private int pos_x,pos_y;
+	private CeldaObservable observable;
 	private ArrayList<Observer> adyacentes;
 	private Observer TableroObservador;
+		
+	public ArrayList<Observer> getAdyacentes() {
+		return adyacentes;
+	}
 	
 	public Celda(Context context,int i,int j) {
 		super(context);
+		vacio=false;
 		Mina=false;
 		estado=EstadoCelda.CUBIERTA;
-		n_minas_cercanas=0;
+		CantMinasCercanas=0;
+		pos_x=i;
+		pos_y=j;
+		adyacentes=new ArrayList<Observer>();
 	}
-	
-	//Metodos sets and gets
-	public EstadoCelda getEstado(){
-		return estado;
-	}
-	
-	
-	
 	
 	public void descubrir(){
-		if(this.estado==EstadoCelda.CUBIERTA){
-			if(!Mina){		
+		if(this.getEstado()==EstadoCelda.CUBIERTA){			
+			if(!Mina){	
 				estado=EstadoCelda.DESCUBIERTA;
-				if(this.n_minas_cercanas==0){
-					for(Observer o : adyacentes)
-						o.update();//notifica a todas sus celdas adyacentes
+				if(this.CantMinasCercanas==0){
+					for(Observer o:adyacentes){
+						o.update();
+					}
+					this.setEnabled(false);
 				}else{
-					this.setText(n_minas_cercanas);
+					this.setText(" "+String.valueOf(CantMinasCercanas)+" ");
 				}
-			}
-			//else
+			}else{
 				//envia el boleano de la Mina para ver si el juego continua o no
 				//TableroObservador.update(Mina);
-			this.setEnabled(false);
+				this.setText("*");
+			}
 		}
 	}
 	
-	
-	public void setObserver(ArrayList<Observer> observador ){
-			adyacentes=observador;
+	public CeldaObservable getObservable() {
+		return observable;
+	}
+
+	class CeldaObservable extends Observable{
+		void cambioCelda(){
+			setChanged();
+		}
 	}
 	
-	
-	public void SetBombasCercanas(){ 
+	public void SetBombasCercanas(){ //este metodo debe llamarse en la clase tablero despues que se generen las minas
 		int CuentaBombas=0;
 		for(Observer Celda: adyacentes){
 			if(((Celda)Celda).getMina())
@@ -60,50 +69,37 @@ public class Celda extends Button implements Observer{
 		}
 		this.setCantMinasCercanas(CuentaBombas);
 	}
-		
 
-	
-	public void update(){
-		this.descubrir();
-	}
-	
-	public void update(Object o){
-		//no se define
+	public void setCantMinasCercanas(int cuentaBombas) {
+		this.CantMinasCercanas=cuentaBombas;
 	}
 
 
-
-	public void setCantMinasCercanas(int NumerodeMinas){
-		n_minas_cercanas=NumerodeMinas;
+	public EstadoCelda getEstado() {
+		return estado;
 	}
-	
-	
+
 	public boolean getMina(){
 		return Mina;
 	}
 
-}
 	
-	/*
-	public CeldaObservable getObservable() {
-		return observable;
+	
+	public void setMina(boolean mina) {
+		Mina = mina;
 	}
-
-	
-	class CeldaObservable extends Observable{
-		void cambioCelda(){
-			setChanged();
-		}
-	}
-	
-	
 
 	@Override
-	public void update(Observable arg0, Object arg1) {
+	public void update() {
+		this.descubrir();
+	}
+
+	@Override
+	public void update(Object o) {
 		// TODO Auto-generated method stub
 		
 	}
-
 	
-*/
+	
 
+}

@@ -2,118 +2,161 @@ package com.example.buscaminas;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import android.annotation.SuppressLint;
+import java.util.Observable;
+import java.util.Random;
+
+
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.Point;
 import android.view.View;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 
-@SuppressLint("ViewConstructor")
-public class Tablero extends View implements Observer {
-		private HashMap<Point,Celda>celdas;
-		private ArrayList<TableRow>filas;
-		private TableLayout layout;
-		private int n_filas,n_columnas;
-		//varible para saber cuando agregar las bombas en el tablero
-		public static boolean Inicio;
-		
-		public Tablero(Context context,int f,int c) {
-			super(context);
-			Inicio=true;
-			celdas=new HashMap<Point,Celda>();
-			filas=new ArrayList<TableRow>();
-			n_filas=f;
-			n_columnas=c;
-			generarTablero(context);
-			llenarCeldasAdyacentes();
-			
+public class Tablero extends View implements Observer{
+	private HashMap<Point,Celda>celdas;
+	private ArrayList<TableRow>tablero;
+	private TableLayout layout;
+	int n_filas,n_columnas;
+	public static boolean Inicio;
+	
+	public Tablero(Context context,int i,int j) {
+		super(context);
+		n_filas=i;
+		n_columnas=j;
+		celdas=new HashMap<Point,Celda>();
+		tablero=new ArrayList<TableRow>();
+		generarTablero(context);
+		registrarCeldasAdyacentes();
+		generarMinas(10);
+		setMinasCercanas();
+	}
+
+	public void generarTablero(Context context){
+		layout = new TableLayout(context);
+		for(int i=0;i<n_filas;i++){
+			TableRow f = new TableRow(context);
+			tablero.add(f);
 		}
-		
-		//seters and geters
-		
-		public TableLayout getLayout(){
-			return layout;
-		}
-		
-		public void generarTablero(Context context){
-			layout = new TableLayout(context);
-			// se crean las filas del tablero
-			for(int i=0;i<n_filas;i++){
-				TableRow f = new TableRow(context);
-				filas.add(f);
+		for(int i=0;i<n_filas;i++)
+		{
+			TableRow f=tablero.get(i);
+			for(int j=0;j<n_columnas;j++){
+				Celda celda= new Celda(context,i,j);
+				celdas.put(new Point(i,j),celda);
+				celda.setOnClickListener(ClickCelda);
+				celda.setText("  ");
+				celdas.put(new Point(i,j),celda);
+				f.addView(celda);
 			}
-			
-			//se agregan las celdas al tablero
-			for(int i=0;i<n_filas;i++){
-				TableRow f=filas.get(i);
-				for(int j=0;j<n_columnas;j++){
-					Celda celda=new Celda(context ,i,j);
-					celda.setOnClickListener(ClickCelda);
-					celdas.put(new Point(i,j),celda);
-					f.addView(celda);
-				}
 			layout.addView(f);
-			}
 		}
-		
-		OnClickListener ClickCelda =new  OnClickListener(){
-			@Override
-			public void onClick(View arg0) {
-				
-				for(int i=0;i<n_filas;i++){
-					for(int j=0;j<n_columnas;j++){
-						Celda c;
-						c=celdas.get(new Point(i,j));
-						//si la vista que genero el evento es una celda del tablero
-						if(arg0==c)
-						{
-							//si el juego recien inicia se generan las bombas
-							if(Inicio){
-								//generar Bombas
-								Inicio=false;
-							}
-							//si la celda aun no ha sido descubierta se la descubre
-							if(c.getEstado()!=EstadoCelda.DESCUBIERTA)	
-								c.descubrir();	
-						}
-					}
-				}
-			}
-		};
-		
-		
-		public void llenarCeldasAdyacentes(){
-			for(int i=0;i<n_filas;i++){
-				for(int j=0;j<n_columnas;j++){
-					Celda c,c2;
-					ArrayList<Observer> adyacentes=new ArrayList<Observer>();
-					c=celdas.get(new Point(i,j));
-					//recorro todas las celdas adjacentes y las agrego en un array
+	}
+
+	public Celda obtenerCelda(int i,int j){
+		Point punto=new Point (i,j);
+		Celda celda=celdas.get(punto);
+		if(celda!=null){
+			return celda;
+		}
+		return null;
+	}
+	
+	public void registrarCeldasAdyacentes(){
+		for(int i=0;i<n_filas;i++){
+			for(int j=0;j<n_columnas;j++){
+				Celda celda_actual=obtenerCelda(i,j);
+				if(celda_actual!=null){
 					for(int k=-1;k<=1;k++){
 						for(int l=-1;l<=1;l++){
-							if(k==0&&j==0)
+							if(k==0&&j==0){
 								continue;
-							c2=celdas.get(new Point(i+k,j+l));
-							if(c2!=null)
-								adyacentes.add(c2);
+							}
+							Celda celda_adj=obtenerCelda(i+k,j+l);
+							if(celda_adj!=null){
+								celda_actual.getAdyacentes().add(celda_adj);
+							}
 						}
 					}
-					//seteo todos los observadores a la celda
-					c.setObserver(adyacentes);
 				}
 			}
 		}
-
-		@Override
-		public void update() {
-			//no se define
+	}
+	
+	
+	public void generarMinas(int minas){ //falta mejorar este algoritmo
+		int aleatorio_x,aleatorio_y;
+		Random random=new Random();
+		Celda celda=null;
+		while(minas!=0){
+			aleatorio_x=random.nextInt(n_filas);
+			aleatorio_y=random.nextInt(n_columnas);
+			celda=obtenerCelda(aleatorio_x,aleatorio_y);
+			if(celda!=null){
+				if(celda.getMina()){
+					continue;
+				}else{
+					celda.setMina(true);
+					minas--;
+				}
+			}
 		}
+	}
+	
+	
+	OnClickListener ClickCelda =new  OnClickListener(){
+		@Override
+		public void onClick(View arg0) {
+			for(int i=0;i<n_filas;i++){
+				for(int j=0;j<n_columnas;j++){
+					Celda c;
+					c=celdas.get(new Point(i,j));
+					//si la vista que genero el evento es una celda del tablero
+					if(arg0==c)
+					{
+						//si el juego recien inicia se generan las bombas
+						if(Inicio){//generar Bombas
+							Inicio=false;						
+						}
+						//si la celda aun no ha sido descubierta se la descubre
+						if(c.getEstado()!=EstadoCelda.DESCUBIERTA)	
+							c.descubrir();	
+					}
+				}
+			}
+		}
+	};
+	
+	
+
+	public TableLayout getLayout() {
+		return layout;
+	}
+
+	public void setLayout(TableLayout layout) {
+		this.layout = layout;
+	}
+
+	public void update(){
 		
-		@Override
-		public void update(Object o){
-			//determina si el jugador , sigue jugando, perdio o gano
+	}
+	
+	public void update(Object o){
+		//determina si el jugador , sigue jugando, perdio o gano
+	}
+	
+	public void setMinasCercanas(){//llama al metodo setBombasCercanas 
+		int i,j;
+		Celda celda;
+		for(i=0;i<n_filas;i++){
+			for(j=0;j<n_columnas;j++){
+				celda=obtenerCelda(i,j);
+				if(celda!=null){
+					celda.SetBombasCercanas();
+				}
+			}
 		}
-				
+	}
+	
+	
 }
-
