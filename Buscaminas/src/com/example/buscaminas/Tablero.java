@@ -2,17 +2,19 @@ package com.example.buscaminas;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Point;
 import android.view.View;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 
+@SuppressLint("ViewConstructor")
 public class Tablero extends View implements Observer {
-		HashMap<Point,Celda>celdas;
-		ArrayList<TableRow>filas;
-		TableLayout layout;
-		int n_filas,n_columnas;
+		private HashMap<Point,Celda>celdas;
+		private ArrayList<TableRow>filas;
+		private TableLayout layout;
+		private int n_filas,n_columnas;
 		//varible para saber cuando agregar las bombas en el tablero
 		public static boolean Inicio;
 		
@@ -28,6 +30,12 @@ public class Tablero extends View implements Observer {
 			
 		}
 		
+		//seters and geters
+		
+		public TableLayout getLayout(){
+			return layout;
+		}
+		
 		public void generarTablero(Context context){
 			layout = new TableLayout(context);
 			// se crean las filas del tablero
@@ -41,8 +49,8 @@ public class Tablero extends View implements Observer {
 				TableRow f=filas.get(i);
 				for(int j=0;j<n_columnas;j++){
 					Celda celda=new Celda(context ,i,j);
-					celdas.put(new Point(i,j),celda);
 					celda.setOnClickListener(ClickCelda);
+					celdas.put(new Point(i,j),celda);
 					f.addView(celda);
 				}
 			layout.addView(f);

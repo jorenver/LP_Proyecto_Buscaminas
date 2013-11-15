@@ -1,9 +1,11 @@
 package com.example.buscaminas;
 
 import java.util.ArrayList;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.widget.Button;
 
+@SuppressLint("ViewConstructor")
 public class Celda extends Button implements Observer{
 	private boolean Mina;
 	private EstadoCelda estado;
@@ -27,17 +29,21 @@ public class Celda extends Button implements Observer{
 	
 	
 	public void descubrir(){
-		if(!Mina){		
-			estado=EstadoCelda.DESCUBIERTA;
-			if(this.n_minas_cercanas==0){
-				for(Observer o : adyacentes)
-					o.update();//notifica a todas sus celdas adyacentes
-			}else{
-				this.setText(n_minas_cercanas);
+		if(this.estado==EstadoCelda.CUBIERTA){
+			if(!Mina){		
+				estado=EstadoCelda.DESCUBIERTA;
+				if(this.n_minas_cercanas==0){
+					for(Observer o : adyacentes)
+						o.update();//notifica a todas sus celdas adyacentes
+				}else{
+					this.setText(n_minas_cercanas);
+				}
 			}
-		}else
-			//envia el boleano de la Mina para ver si el juego continua o no
-			TableroObservador.update(Mina);
+			//else
+				//envia el boleano de la Mina para ver si el juego continua o no
+				//TableroObservador.update(Mina);
+			this.setEnabled(false);
+		}
 	}
 	
 	
