@@ -2,7 +2,6 @@ package com.example.buscaminas;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Observable;
 import java.util.Random;
 
 
@@ -11,6 +10,7 @@ import android.graphics.Color;
 import android.graphics.Point;
 import android.view.View;
 import android.widget.TableLayout;
+import android.widget.TableLayout.LayoutParams;
 import android.widget.TableRow;
 
 public class Tablero extends View implements Observer{
@@ -34,6 +34,10 @@ public class Tablero extends View implements Observer{
 
 	public void generarTablero(Context context){
 		layout = new TableLayout(context);
+		//Cambios mios
+		layout.setLayoutParams(new TableLayout.LayoutParams(
+			       LayoutParams.MATCH_PARENT , LayoutParams.MATCH_PARENT ));
+		//fin cambios mios
 		for(int i=0;i<n_filas;i++){
 			TableRow f = new TableRow(context);
 			tablero.add(f);

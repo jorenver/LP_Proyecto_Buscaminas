@@ -22,6 +22,18 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name="com.example.buscaminas.Inicio"
+            android:label="@string/title_activity_inicio" >
+        </activity>
+        <activity
+            android:name="com.example.buscaminas.AcercaDe"
+            android:label="@string/title_activity_acerca_de" >
+        </activity>
+        <activity
+            android:name="com.example.buscaminas.TopJugadores"
+            android:label="@string/title_activity_top_jugadores" >
+        </activity>
     </application>
 
 </manifest>

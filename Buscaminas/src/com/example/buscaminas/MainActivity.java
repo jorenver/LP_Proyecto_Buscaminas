@@ -11,20 +11,20 @@ import android.widget.Button;
 
 public class MainActivity extends Activity {
 	private Button inicio,acercaDe,top;
-	private ManejadorClick manejadorClickBotones;
+
+	
 	@Override
+	
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		
-		manejadorClickBotones=new ManejadorClick();
 		inicio=(Button)findViewById(R.id.PartidaNueva);
 		acercaDe=(Button)findViewById(R.id.AcercaDe);
 		top=(Button)findViewById(R.id.Top);
 		
-		inicio.setOnClickListener(manejadorClickBotones);
-		acercaDe.setOnClickListener(manejadorClickBotones);
-		top.setOnClickListener(manejadorClickBotones);
+		inicio.setOnClickListener(ClickInicio);
+		acercaDe.setOnClickListener(ClickAcercaDe);
+		top.setOnClickListener(ClickTop);
 	}
 
 	public void lanzarInicio(){
@@ -41,26 +41,33 @@ public class MainActivity extends Activity {
 		Intent i=new Intent(this,TopJugadores.class);
 		startActivity(i);
 	}
-
-	class ManejadorClick implements OnClickListener{
+	
+	OnClickListener ClickInicio = new  OnClickListener(){
 		@Override
-		public void onClick(View v) {
-			if(v instanceof Button){
-				Button b=(Button)v;
-				switch(b.getId()){
-					case R.id.PartidaNueva:
-						lanzarInicio();
-						break;
-					case R.id.AcercaDe:
-						lanzarAcercaDe();
-						break;
-					case R.id.Top:
-						lanzarTopJugadores();
-						break;
-				}
-			}	
+		public void onClick(View arg0) {
+			lanzarInicio();
 		}
-	}
+		
+	};
+
+	OnClickListener ClickAcercaDe = new  OnClickListener(){
+		@Override
+		public void onClick(View arg0) {
+			lanzarAcercaDe();
+		}
+		
+	};
+	
+	OnClickListener ClickTop = new  OnClickListener(){
+		@Override
+		public void onClick(View arg0) {
+			lanzarTopJugadores();
+		}
+		
+	};
+
+	
+	
 	
 	
 	@Override
