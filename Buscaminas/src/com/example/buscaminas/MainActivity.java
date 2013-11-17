@@ -11,20 +11,20 @@ import android.widget.Button;
 
 public class MainActivity extends Activity {
 	private Button inicio,acercaDe,top;
-
-	
+	private ManejadorClick manejadorClickBotones;
 	@Override
-	
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		
+		manejadorClickBotones=new ManejadorClick();
 		inicio=(Button)findViewById(R.id.PartidaNueva);
 		acercaDe=(Button)findViewById(R.id.AcercaDe);
 		top=(Button)findViewById(R.id.Top);
 		
-		inicio.setOnClickListener(ClickInicio);
-		acercaDe.setOnClickListener(ClickAcercaDe);
-		top.setOnClickListener(ClickTop);
+		inicio.setOnClickListener(manejadorClickBotones);
+		acercaDe.setOnClickListener(manejadorClickBotones);
+		top.setOnClickListener(manejadorClickBotones);
 	}
 
 	public void lanzarInicio(){
@@ -41,39 +41,31 @@ public class MainActivity extends Activity {
 		Intent i=new Intent(this,TopJugadores.class);
 		startActivity(i);
 	}
-	
-	OnClickListener ClickInicio = new  OnClickListener(){
-		@Override
-		public void onClick(View arg0) {
-			lanzarInicio();
-		}
-		
-	};
 
-	OnClickListener ClickAcercaDe = new  OnClickListener(){
+	class ManejadorClick implements OnClickListener{
 		@Override
-		public void onClick(View arg0) {
-			lanzarAcercaDe();
+		public void onClick(View v) {
+			if(v instanceof Button){
+				Button b=(Button)v;
+				switch(b.getId()){
+					case R.id.PartidaNueva:
+						lanzarInicio();
+						break;
+					case R.id.AcercaDe:
+						lanzarAcercaDe();
+						break;
+					case R.id.Top:
+						lanzarTopJugadores();
+						break;
+				}
+			}	
 		}
-		
-	};
-	
-	OnClickListener ClickTop = new  OnClickListener(){
-		@Override
-		public void onClick(View arg0) {
-			lanzarTopJugadores();
-		}
-		
-	};
-
-	
-	
+	}
 	
 	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		
 		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
 	}

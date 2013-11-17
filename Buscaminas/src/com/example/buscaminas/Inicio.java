@@ -1,8 +1,11 @@
 package com.example.buscaminas;
 
-import android.os.Bundle;
 import android.app.Activity;
+import android.os.Bundle;
 import android.view.Menu;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
 
 public class Inicio extends Activity {
 	private Button botonFacil,botonIntermedio,botonExperto;
@@ -14,7 +17,7 @@ public class Inicio extends Activity {
 		botonFacil=(Button)findViewById(R.id.Facil);
 		botonIntermedio=(Button)findViewById(R.id.Intermedio);
 		botonExperto=(Button)findViewById(R.id.Experto);
-		registrarBotones();//se registra los botones al manejador de eventos 
+		registrarBotones();
 	}
 
 	@Override
@@ -53,7 +56,7 @@ public class Inicio extends Activity {
 	}
 	
 	
-	public void crearTablero(){//crea el tablero de acuerdo a la dificultad ingresada por el usuario
+	public void crearTablero(){
 		Tablero t=new Tablero(this,filas,columnas,minas);
 		this.setContentView(t.getLayout());
 	}

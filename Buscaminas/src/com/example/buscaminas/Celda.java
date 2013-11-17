@@ -2,18 +2,24 @@ package com.example.buscaminas;
 
 import java.util.ArrayList;
 import java.util.Observable;
+import java.util.Random;
 
+import android.app.ActionBar.LayoutParams;
 import android.content.Context;
+import android.graphics.Color;
 import android.widget.Button;
+import android.widget.TableLayout;
 
 public class Celda extends Button implements Observer{
 	private boolean vacio;
 	private boolean Mina;
+	private int colores[]= {Color.BLUE,Color.GREEN,Color.RED};
 	private EstadoCelda estado;
 	private int CantMinasCercanas;
 	private int pos_x,pos_y;
 	private ArrayList<Observer> adyacentes;
 	private Observer TableroObservador;
+		
 	
 	public Celda(Context context,int i,int j) {
 		super(context);
@@ -37,6 +43,9 @@ public class Celda extends Button implements Observer{
 					this.setEnabled(false);
 				}else{
 					this.setText(String.valueOf(CantMinasCercanas));
+					Random aleatorio=new Random();
+					int indice_color=aleatorio.nextInt(3);
+					this.setTextColor(colores[indice_color]);
 				}
 				TableroObservador.update(this);
 			}else{
@@ -45,8 +54,7 @@ public class Celda extends Button implements Observer{
 			}
 		}
 	}
-	
-	
+
 	public void SetBombasCercanas(){ //este metodo debe llamarse en la clase tablero despues que se generen las minas
 		int CuentaBombas=0;
 		for(Observer Celda: adyacentes){
@@ -68,19 +76,19 @@ public class Celda extends Button implements Observer{
 	public boolean getMina(){
 		return Mina;
 	}
-		
-	public void setMina(boolean mina) {
-		Mina = mina;
-	}
-
+	
 	public void setTableroObservador(Observer tableroObservador) {
 		TableroObservador = tableroObservador;
 	}
-	
+
 	public ArrayList<Observer> getAdyacentes() {
 		return adyacentes;
 	}
-
+	
+	public void setMina(boolean mina) {
+		Mina = mina;
+	}
+	
 	@Override
 	public void update() {
 		this.descubrir();

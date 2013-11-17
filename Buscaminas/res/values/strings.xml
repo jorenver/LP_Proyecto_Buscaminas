@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
     <string name="app_name">Buscaminas</string>
     <string name="action_settings">Settings</string>
     <string name="busca_Minas">Buscaminas</string>
@@ -9,6 +8,6 @@
     <string name="Desarrolladores">Desarrolladores:</string>
     <string name="title_activity_acerca_de">AcercaDe</string>
     <string name="TOP">TOP DE JUGADORES:</string><string name="title_activity_top_jugadores">TopJugadores</string>
+     <string name="DificultadDelJuego">Dificultad</string>
     
-
 </resources>

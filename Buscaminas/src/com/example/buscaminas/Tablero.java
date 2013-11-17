@@ -2,6 +2,7 @@ package com.example.buscaminas;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Observable;
 import java.util.Random;
 
 
@@ -12,18 +13,24 @@ import android.view.View;
 import android.widget.TableLayout;
 import android.widget.TableLayout.LayoutParams;
 import android.widget.TableRow;
+import android.widget.Toast;
 
 public class Tablero extends View implements Observer{
 	private HashMap<Point,Celda>celdas;
 	private ArrayList<TableRow>tablero;
 	private TableLayout layout;
-	int n_filas,n_columnas;
-	public static boolean Inicio=true;
+	int n_filas,n_columnas,cantidad_de_minas;
+	public static boolean Inicio;
+	private Context contexto;
 	
-	public Tablero(Context context,int i,int j) {
+	
+	public Tablero(Context context,int i,int j,int minas) {
 		super(context);
+		Inicio=true;
+		contexto=context;
 		n_filas=i;
 		n_columnas=j;
+		cantidad_de_minas=minas;
 		celdas=new HashMap<Point,Celda>();
 		tablero=new ArrayList<TableRow>();
 		generarTablero(context);
@@ -33,10 +40,6 @@ public class Tablero extends View implements Observer{
 
 	public void generarTablero(Context context){
 		layout = new TableLayout(context);
-		//Cambios mios
-		layout.setLayoutParams(new TableLayout.LayoutParams(
-			       LayoutParams.MATCH_PARENT , LayoutParams.MATCH_PARENT ));
-		//fin cambios mios
 		for(int i=0;i<n_filas;i++){
 			TableRow f = new TableRow(context);
 			tablero.add(f);
@@ -52,7 +55,7 @@ public class Tablero extends View implements Observer{
 				f.addView(celda);
 			}
 			layout.addView(f);
-		}
+		}		
 	}
 
 	public Celda obtenerCelda(int i,int j){
@@ -85,7 +88,6 @@ public class Tablero extends View implements Observer{
 		}
 	}
 	
-	
 	public void generarMinas(Celda celdaInicio,int minas){ //falta mejorar este algoritmo
 		int aleatorio_x,aleatorio_y;
 		Random random=new Random();
@@ -99,7 +101,7 @@ public class Tablero extends View implements Observer{
 					continue;
 				}else{
 					celda.setMina(true);
-					celda.setText("*");//prueba
+					celda.setText("*");
 					minas--;
 				}
 			}
@@ -116,17 +118,14 @@ public class Tablero extends View implements Observer{
 					c=celdas.get(new Point(i,j));
 					//si la vista que genero el evento es una celda del tablero
 					if(arg0==c)
-					{
-						//si el juego recien inicia se generan las bombas
+					{//si el juego recien inicia se generan las bombas
 						if(Inicio){//generar Bombas
-							Inicio=false;	
 							Celda celdaInicio=c;//referencia a la celda que se presiono primero en el juego			
 							generarMinas(celdaInicio,cantidad_de_minas);
 							setMinasCercanas();
-							Inicio=false;					
+							Inicio=false;
 						}
 						//si la celda aun no ha sido descubierta se la descubre
-						if(c.getEstado()!=EstadoCelda.DESCUBIERTA)	
 							c.descubrir();	
 					}
 				}
@@ -160,17 +159,25 @@ public class Tablero extends View implements Observer{
 				}
 			}*/
 		}else{
-			if(celdasDescubiertas()){//gana el juego
-				
-				Toast toast = Toast.makeText(contexto, "Ganaste!!!!!!", Toast.LENGTH_SHORT);
+			if(celdasDescubiertas()){
+				Toast toast = Toast.makeText(contexto, "Ganaste!!!", Toast.LENGTH_SHORT);
 				toast.show();
-			
 			}else{
 				//continua jugando
 			}
 		}
 	}
 	
+	
+	public void observarCeldas(){
+		for(int i=0;i<n_filas;i++){
+			for(int j=0;j<n_columnas;j++){
+				Celda celda=obtenerCelda(i,j);
+				celda.setTableroObservador(this);//hacer que el tablero observe a las celdas
+			}
+		}
+	}
+		
 	public void setMinasCercanas(){//llama al metodo setBombasCercanas 
 		int i,j;
 		Celda celda;
@@ -182,17 +189,8 @@ public class Tablero extends View implements Observer{
 				}
 			}
 		}
-	}	
+	}
 	
-	public void observarCeldas(){
-		for(int i=0;i<n_filas;i++){
-			for(int j=0;j<n_columnas;j++){
-				Celda celda=obtenerCelda(i,j);
-				celda.setTableroObservador(this);//hacer que el tablero observe a las celdas
-			}
-		}
-	}	
-
 	public boolean celdasDescubiertas(){//retorna true si todas las celdas del tablero que no son minas esta descubiertas y false si esto no es cierto
 		for(int i=0;i<n_filas;i++){
 			for(int j=0;j<n_filas;j++){
@@ -204,6 +202,4 @@ public class Tablero extends View implements Observer{
 		} 
 		return true;
 	}
-
-
 }
