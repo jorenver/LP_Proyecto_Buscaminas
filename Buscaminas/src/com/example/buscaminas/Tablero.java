@@ -40,6 +40,8 @@ public class Tablero extends View implements Observer{
 
 	public void generarTablero(Context context){
 		layout = new TableLayout(context);
+		layout.setLayoutParams(new TableLayout.LayoutParams(
+		        LayoutParams.MATCH_PARENT , LayoutParams.WRAP_CONTENT ));
 		for(int i=0;i<n_filas;i++){
 			TableRow f = new TableRow(context);
 			tablero.add(f);
@@ -53,6 +55,7 @@ public class Tablero extends View implements Observer{
 				celda.setOnClickListener(ClickCelda);
 				celda.setText("  ");
 				f.addView(celda);
+				layout.setColumnShrinkable(j,true);
 			}
 			layout.addView(f);
 		}		
@@ -152,13 +155,18 @@ public class Tablero extends View implements Observer{
 		Celda celda=(Celda)o;
 		if(celda.getMina()){
 			//jugador pierde
-			/*for(int i=0;i<n_filas;i++){
+			for(int i=0;i<n_filas;i++){
 				for(int j=0;j<n_columnas;j++){
 					Celda c=obtenerCelda(i,j);
-					c.setEnabled(false); //desactivar todas las celdas
+					c.destapar();
+					c.setEnabled(false);//desactivar todas las celdas
 				}
-			}*/
+			}
+			Toast toast = Toast.makeText(contexto, "BOOM!!!", Toast.LENGTH_SHORT);
+			toast.show();
+		
 		}else{
+			
 			if(celdasDescubiertas()){
 				Toast toast = Toast.makeText(contexto, "Ganaste!!!", Toast.LENGTH_SHORT);
 				toast.show();

@@ -13,7 +13,7 @@ import android.widget.TableLayout;
 public class Celda extends Button implements Observer{
 	private boolean vacio;
 	private boolean Mina;
-	private int colores[]= {Color.BLUE,Color.GREEN,Color.RED};
+	private int colores[]= {Color.BLUE,Color.GREEN,Color.RED,Color.BLACK,Color.MAGENTA,Color.CYAN,Color.YELLOW,Color.GRAY};
 	private EstadoCelda estado;
 	private int CantMinasCercanas;
 	private int pos_x,pos_y;
@@ -43,9 +43,7 @@ public class Celda extends Button implements Observer{
 					this.setEnabled(false);
 				}else{
 					this.setText(String.valueOf(CantMinasCercanas));
-					Random aleatorio=new Random();
-					int indice_color=aleatorio.nextInt(3);
-					this.setTextColor(colores[indice_color]);
+					this.setTextColor(colores[CantMinasCercanas-1]);
 				}
 				TableroObservador.update(this);
 			}else{
@@ -55,6 +53,28 @@ public class Celda extends Button implements Observer{
 		}
 	}
 
+	
+	
+	public void destapar(){
+		
+		if (this.getEstado()==EstadoCelda.CUBIERTA){
+			if(!Mina){
+			
+				if(this.CantMinasCercanas==0){
+					this.setEnabled(false);
+				}
+				else{
+					this.setText(String.valueOf(CantMinasCercanas));
+					this.setTextColor(colores[CantMinasCercanas-1]);
+					}
+			}
+			else{
+				this.setText("*");
+			}
+		}
+	}
+	
+	
 	public void SetBombasCercanas(){ //este metodo debe llamarse en la clase tablero despues que se generen las minas
 		int CuentaBombas=0;
 		for(Observer Celda: adyacentes){
@@ -71,6 +91,11 @@ public class Celda extends Button implements Observer{
 
 	public EstadoCelda getEstado() {
 		return estado;
+	}
+	
+	public void SetEstado(EstadoCelda Estado){
+		estado=Estado;
+		
 	}
 
 	public boolean getMina(){
