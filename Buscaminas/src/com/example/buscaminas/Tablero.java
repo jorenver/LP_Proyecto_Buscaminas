@@ -99,6 +99,7 @@ public class Tablero extends View implements Observer{
 					continue;
 				}else{
 					celda.setMina(true);
+					celda.setText("*");//prueba
 					minas--;
 				}
 			}
@@ -152,11 +153,20 @@ public class Tablero extends View implements Observer{
 		Celda celda=(Celda)o;
 		if(celda.getMina()){
 			//jugador pierde
-			for(int i=0;i<n_filas;i++){
+			/*for(int i=0;i<n_filas;i++){
 				for(int j=0;j<n_columnas;j++){
 					Celda c=obtenerCelda(i,j);
 					c.setEnabled(false); //desactivar todas las celdas
 				}
+			}*/
+		}else{
+			if(celdasDescubiertas()){//gana el juego
+				
+				Toast toast = Toast.makeText(contexto, "Ganaste!!!!!!", Toast.LENGTH_SHORT);
+				toast.show();
+			
+			}else{
+				//continua jugando
 			}
 		}
 	}
@@ -182,6 +192,18 @@ public class Tablero extends View implements Observer{
 			}
 		}
 	}	
+
+	public boolean celdasDescubiertas(){//retorna true si todas las celdas del tablero que no son minas esta descubiertas y false si esto no es cierto
+		for(int i=0;i<n_filas;i++){
+			for(int j=0;j<n_filas;j++){
+				Celda celda=obtenerCelda(i,j);
+				if(celda.getMina()==false && celda.getEstado()==EstadoCelda.CUBIERTA){
+					return false;
+				}
+			}
+		} 
+		return true;
+	}
 
 
 }

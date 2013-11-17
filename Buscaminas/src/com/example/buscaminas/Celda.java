@@ -38,6 +38,7 @@ public class Celda extends Button implements Observer{
 				}else{
 					this.setText(String.valueOf(CantMinasCercanas));
 				}
+				TableroObservador.update(this);
 			}else{
 				TableroObservador.update(this);
 				this.setText("*");
