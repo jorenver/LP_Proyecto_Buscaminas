@@ -12,13 +12,8 @@ public class Celda extends Button implements Observer{
 	private EstadoCelda estado;
 	private int CantMinasCercanas;
 	private int pos_x,pos_y;
-	private CeldaObservable observable;
 	private ArrayList<Observer> adyacentes;
 	private Observer TableroObservador;
-		
-	public ArrayList<Observer> getAdyacentes() {
-		return adyacentes;
-	}
 	
 	public Celda(Context context,int i,int j) {
 		super(context);
@@ -41,25 +36,15 @@ public class Celda extends Button implements Observer{
 					}
 					this.setEnabled(false);
 				}else{
-					this.setText(" "+String.valueOf(CantMinasCercanas)+" ");
+					this.setText(String.valueOf(CantMinasCercanas));
 				}
 			}else{
-				//envia el boleano de la Mina para ver si el juego continua o no
-				//TableroObservador.update(Mina);
+				TableroObservador.update(this);
 				this.setText("*");
 			}
 		}
 	}
 	
-	public CeldaObservable getObservable() {
-		return observable;
-	}
-
-	class CeldaObservable extends Observable{
-		void cambioCelda(){
-			setChanged();
-		}
-	}
 	
 	public void SetBombasCercanas(){ //este metodo debe llamarse en la clase tablero despues que se generen las minas
 		int CuentaBombas=0;
@@ -82,11 +67,17 @@ public class Celda extends Button implements Observer{
 	public boolean getMina(){
 		return Mina;
 	}
-
-	
-	
+		
 	public void setMina(boolean mina) {
 		Mina = mina;
+	}
+
+	public void setTableroObservador(Observer tableroObservador) {
+		TableroObservador = tableroObservador;
+	}
+	
+	public ArrayList<Observer> getAdyacentes() {
+		return adyacentes;
 	}
 
 	@Override

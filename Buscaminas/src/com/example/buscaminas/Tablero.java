@@ -18,7 +18,7 @@ public class Tablero extends View implements Observer{
 	private ArrayList<TableRow>tablero;
 	private TableLayout layout;
 	int n_filas,n_columnas;
-	public static boolean Inicio;
+	public static boolean Inicio=true;
 	
 	public Tablero(Context context,int i,int j) {
 		super(context);
@@ -28,8 +28,7 @@ public class Tablero extends View implements Observer{
 		tablero=new ArrayList<TableRow>();
 		generarTablero(context);
 		registrarCeldasAdyacentes();
-		generarMinas(10);
-		setMinasCercanas();
+		observarCeldas();
 	}
 
 	public void generarTablero(Context context){
@@ -50,7 +49,6 @@ public class Tablero extends View implements Observer{
 				celdas.put(new Point(i,j),celda);
 				celda.setOnClickListener(ClickCelda);
 				celda.setText("  ");
-				celdas.put(new Point(i,j),celda);
 				f.addView(celda);
 			}
 			layout.addView(f);
@@ -88,7 +86,7 @@ public class Tablero extends View implements Observer{
 	}
 	
 	
-	public void generarMinas(int minas){ //falta mejorar este algoritmo
+	public void generarMinas(Celda celdaInicio,int minas){ //falta mejorar este algoritmo
 		int aleatorio_x,aleatorio_y;
 		Random random=new Random();
 		Celda celda=null;
@@ -96,7 +94,7 @@ public class Tablero extends View implements Observer{
 			aleatorio_x=random.nextInt(n_filas);
 			aleatorio_y=random.nextInt(n_columnas);
 			celda=obtenerCelda(aleatorio_x,aleatorio_y);
-			if(celda!=null){
+			if(celda!=null&&celda!=celdaInicio){
 				if(celda.getMina()){
 					continue;
 				}else{
@@ -120,7 +118,11 @@ public class Tablero extends View implements Observer{
 					{
 						//si el juego recien inicia se generan las bombas
 						if(Inicio){//generar Bombas
-							Inicio=false;						
+							Inicio=false;	
+							Celda celdaInicio=c;//referencia a la celda que se presiono primero en el juego			
+							generarMinas(celdaInicio,cantidad_de_minas);
+							setMinasCercanas();
+							Inicio=false;					
 						}
 						//si la celda aun no ha sido descubierta se la descubre
 						if(c.getEstado()!=EstadoCelda.DESCUBIERTA)	
@@ -147,6 +149,16 @@ public class Tablero extends View implements Observer{
 	
 	public void update(Object o){
 		//determina si el jugador , sigue jugando, perdio o gano
+		Celda celda=(Celda)o;
+		if(celda.getMina()){
+			//jugador pierde
+			for(int i=0;i<n_filas;i++){
+				for(int j=0;j<n_columnas;j++){
+					Celda c=obtenerCelda(i,j);
+					c.setEnabled(false); //desactivar todas las celdas
+				}
+			}
+		}
 	}
 	
 	public void setMinasCercanas(){//llama al metodo setBombasCercanas 
@@ -160,7 +172,16 @@ public class Tablero extends View implements Observer{
 				}
 			}
 		}
-	}
+	}	
 	
-	
+	public void observarCeldas(){
+		for(int i=0;i<n_filas;i++){
+			for(int j=0;j<n_columnas;j++){
+				Celda celda=obtenerCelda(i,j);
+				celda.setTableroObservador(this);//hacer que el tablero observe a las celdas
+			}
+		}
+	}	
+
+
 }
