@@ -78,7 +78,7 @@ public class Celda extends Button implements Observer{
 	}
 	
 	public void setTableroObservador(Observer tableroObservador) {
-		TableroObservador = tableroObservador;
+		this.TableroObservador = tableroObservador;
 	}
 
 	public ArrayList<Observer> getAdyacentes() {
@@ -96,7 +96,7 @@ public class Celda extends Button implements Observer{
 
 	@Override
 	public void update(Object o) {
-		// TODO Auto-generated method stub
+		//no se define
 		
 	}
 	
