@@ -17,9 +17,10 @@ public class TableroCompleto extends View {
 	private TableLayout layout;
 	private TableRow fila1;
 	
-	public TableroCompleto(Context context, int fila, int columna,int Nminas) {
+	public TableroCompleto(Context context, int fila, int columna,int Nminas,Observer O) {
 		super(context);
 		Barra=new BarraDeMenu(context);
+		Barra.setObserver(O);
 		tablero=new Tablero(context,fila,columna,Nminas);
 		layout=new TableLayout(context);
 		fila1= new TableRow(context);

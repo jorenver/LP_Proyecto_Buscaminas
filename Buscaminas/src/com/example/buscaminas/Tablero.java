@@ -152,12 +152,12 @@ public class Tablero extends View implements Observer{
 	public void update(Object o){
 		//determina si el jugador , sigue jugando, perdio o gano
 		Celda celda=(Celda)o;
-		if(celda.getMina()){
+		if(celda.getMina()){ //si es verdadero tiene una mina
 			//jugador pierde
-			for(int i=0;i<n_filas;i++){
+			for(int i=0;i<n_filas;i++){ //recorro las celdas
 				for(int j=0;j<n_columnas;j++){
 					Celda c=obtenerCelda(i,j);
-					c.destapar();
+					c.destapar(false); //informo a la celda que ha perdido el juego
 					c.setEnabled(false);//desactivar todas las celdas
 				}
 			}
@@ -166,7 +166,17 @@ public class Tablero extends View implements Observer{
 		
 		}else{
 			
-			if(celdasDescubiertas()){
+			if(celdasDescubiertas()){ //si el gana
+				
+				//recorro las celdas
+				for(int i=0;i<n_filas;i++){
+					for(int j=0;j<n_columnas;j++){
+						Celda c=obtenerCelda(i,j);
+						c.destapar(true);//informo que gano
+						c.setEnabled(false);//desactivar todas las celdas
+					}
+				}
+				
 				Toast toast = Toast.makeText(contexto, "Ganaste!!!", Toast.LENGTH_SHORT);
 				toast.show();
 			}else{

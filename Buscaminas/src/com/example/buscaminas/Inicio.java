@@ -58,8 +58,21 @@ public class Inicio extends Activity {
 	}
 	
 	
+	public class Reinicio implements Observer{
+		@Override
+		public void update(){
+			crearTablero();
+		}
+		@Override
+		public void update(Object o){
+			
+		}
+	}
+	
+	
 	public void crearTablero(){
-		TableroCompleto t=new TableroCompleto(this,filas,columnas,minas);
+		Inicio.Reinicio R= new Inicio.Reinicio(); 
+		TableroCompleto t=new TableroCompleto(this,filas,columnas,minas,R);
 		this.setContentView(t.getLayout());
 	}
 }

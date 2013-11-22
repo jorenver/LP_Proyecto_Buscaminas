@@ -56,21 +56,40 @@ public class Celda extends Button implements Observer{
 
 	
 	
-	public void destapar(){
+	public void destapar(boolean cond){
 		
-		if (this.getEstado()==EstadoCelda.CUBIERTA){
-			if(!Mina){
-			
-				if(this.CantMinasCercanas==0){
-					this.setEnabled(false);
+		if(cond){
+			if (this.getEstado()==EstadoCelda.CUBIERTA){
+				if(!Mina){
+				
+					if(this.CantMinasCercanas==0){
+						this.setEnabled(false);
+					}
+					else{
+						this.setText(String.valueOf(CantMinasCercanas));
+						this.setTextColor(colores[CantMinasCercanas-1]);
+						}
 				}
 				else{
-					this.setText(String.valueOf(CantMinasCercanas));
-					this.setTextColor(colores[CantMinasCercanas-1]);
-					}
+					this.setText("X");
+				}
 			}
-			else{
-				this.setText("*");
+		}
+		else {
+			if (this.getEstado()==EstadoCelda.CUBIERTA){
+				if(!Mina){
+				
+					if(this.CantMinasCercanas==0){
+						this.setEnabled(false);
+					}
+					else{
+						this.setText(String.valueOf(CantMinasCercanas));
+						this.setTextColor(colores[CantMinasCercanas-1]);
+						}
+				}
+				else{
+					this.setText("*");
+				}
 			}
 		}
 	}
