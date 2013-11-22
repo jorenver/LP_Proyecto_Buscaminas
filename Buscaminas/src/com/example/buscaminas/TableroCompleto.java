@@ -20,13 +20,15 @@ public class TableroCompleto extends TableLayout {
 		Barra=new BarraDeMenu(context);
 		Barra.setObserver(O);
 		tablero=new Tablero(context,fila,columna,Nminas);
+		//el relog observa al tablero para saber cuando reiniciarse , detenerce , o encerarse
+		tablero.setObserver(Barra.getObserverRelor());
 		fila1= new TableRow(context);
 		ArmarTablero();
 		
 	}
 	
 	public void ArmarTablero(){
-		fila1.addView(Barra.getLayout());
+		fila1.addView(Barra);
 		this.addView(fila1);
 		this.addView(tablero.getLayout());
 	}

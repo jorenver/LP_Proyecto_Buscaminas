@@ -22,6 +22,7 @@ public class Tablero extends View implements Observer{
 	int n_filas,n_columnas,cantidad_de_minas;
 	public static boolean Inicio;
 	private Context contexto;
+	private Observer relog;
 	
 	
 	public Tablero(Context context,int i,int j,int minas) {
@@ -125,6 +126,8 @@ public class Tablero extends View implements Observer{
 							Celda celdaInicio=c;//referencia a la celda que se presiono primero en el juego			
 							generarMinas(celdaInicio,cantidad_de_minas);
 							setMinasCercanas();
+							encerarRelog();
+							iniciarRelog();
 							Inicio=false;
 						}
 						//si la celda aun no ha sido descubierta se la descubre
@@ -221,9 +224,11 @@ public class Tablero extends View implements Observer{
 	}
 	
 	
-	
+	//inicializa el tablero y el relog
 	public void reiniciar(){
 		Inicio=true;
+		detenerRelog();
+		encerarRelog();
 		for(int i=0;i<n_filas;i++){
 			for(int j=0;j<n_columnas;j++){
 				Celda c=obtenerCelda(i,j);
@@ -234,8 +239,22 @@ public class Tablero extends View implements Observer{
 			}
 		}
 	}
+	
+	public void setObserver(Observer o){
+		relog =o;
+	}
 
-
+	public void iniciarRelog(){
+		relog.update(AccionesRelog.INICIAR);
+	}
+	
+	public void detenerRelog(){
+		relog.update(AccionesRelog.DETENER);
+	}
+	
+	public void encerarRelog(){
+		relog.update(AccionesRelog.ENCERAR);
+	}
 
 }
 		

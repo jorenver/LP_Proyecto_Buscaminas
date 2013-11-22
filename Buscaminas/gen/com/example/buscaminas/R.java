@@ -21,18 +21,34 @@ public final class R {
         public static final int activity_vertical_margin=0x7f040001;
     }
     public static final class drawable {
-        public static final int bandera=0x7f020000;
-        public static final int cara=0x7f020001;
-        public static final int ic_launcher=0x7f020002;
+        public static final int acerca_de_encendido=0x7f020000;
+        public static final int acerca_de_normal=0x7f020001;
+        public static final int acerca_de_presionado=0x7f020002;
+        public static final int bandera=0x7f020003;
+        public static final int cara=0x7f020004;
+        public static final int ic_launcher=0x7f020005;
+        public static final int nivel_experto=0x7f020006;
+        public static final int nivel_facil=0x7f020007;
+        public static final int nivel_intermedio=0x7f020008;
+        public static final int partida_nueva_encendido=0x7f020009;
+        public static final int partida_nueva_normal=0x7f02000a;
+        public static final int partida_nueva_presionado=0x7f02000b;
+        public static final int top_jugadores_encendido=0x7f02000c;
+        public static final int top_jugadores_normal=0x7f02000d;
+        public static final int top_jugadores_presionado=0x7f02000e;
     }
     public static final class id {
-        public static final int AcercaDe=0x7f080004;
-        public static final int Experto=0x7f080000;
+        public static final int AcercaDe=0x7f080008;
+        public static final int Experto=0x7f080006;
         public static final int Facil=0x7f080002;
-        public static final int Intermedio=0x7f080001;
-        public static final int PartidaNueva=0x7f080003;
-        public static final int Top=0x7f080005;
-        public static final int action_settings=0x7f080006;
+        public static final int Intermedio=0x7f080004;
+        public static final int PartidaNueva=0x7f080007;
+        public static final int TableLayout1=0x7f080000;
+        public static final int Top=0x7f080009;
+        public static final int action_settings=0x7f08000a;
+        public static final int tableRow1=0x7f080001;
+        public static final int tableRow2=0x7f080003;
+        public static final int tableRow3=0x7f080005;
     }
     public static final class layout {
         public static final int activity_acerca_de=0x7f030000;
@@ -40,6 +56,9 @@ public final class R {
         public static final int activity_inicio=0x7f030002;
         public static final int activity_main=0x7f030003;
         public static final int activity_top_jugadores=0x7f030004;
+        public static final int boton_acerca_de=0x7f030005;
+        public static final int boton_partida_nueva=0x7f030006;
+        public static final int boton_top_jugadores=0x7f030007;
     }
     public static final class menu {
         public static final int acerca_de=0x7f070000;
