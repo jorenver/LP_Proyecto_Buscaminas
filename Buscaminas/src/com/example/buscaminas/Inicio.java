@@ -6,6 +6,8 @@ import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.RelativeLayout;
+import android.widget.TableLayout;
 
 public class Inicio extends Activity {
 	private Button botonFacil,botonIntermedio,botonExperto;
@@ -57,7 +59,7 @@ public class Inicio extends Activity {
 	
 	
 	public void crearTablero(){
-		Tablero t=new Tablero(this,filas,columnas,minas);
+		TableroCompleto t=new TableroCompleto(this,filas,columnas,minas);
 		this.setContentView(t.getLayout());
 	}
 }

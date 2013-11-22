@@ -36,11 +36,12 @@ public class Celda extends Button implements Observer{
 		if(this.getEstado()==EstadoCelda.CUBIERTA){			
 			if(!Mina){	
 				estado=EstadoCelda.DESCUBIERTA;
+				this.setEnabled(false);
 				if(this.CantMinasCercanas==0){
 					for(Observer o:adyacentes){
 						o.update();
 					}
-					this.setEnabled(false);
+				
 				}else{
 					this.setText(String.valueOf(CantMinasCercanas));
 					this.setTextColor(colores[CantMinasCercanas-1]);
@@ -103,7 +104,7 @@ public class Celda extends Button implements Observer{
 	}
 	
 	public void setTableroObservador(Observer tableroObservador) {
-		this.TableroObservador = tableroObservador;
+		TableroObservador = tableroObservador;
 	}
 
 	public ArrayList<Observer> getAdyacentes() {
@@ -121,7 +122,7 @@ public class Celda extends Button implements Observer{
 
 	@Override
 	public void update(Object o) {
-		//no se define
+		// TODO Auto-generated method stub
 		
 	}
 	

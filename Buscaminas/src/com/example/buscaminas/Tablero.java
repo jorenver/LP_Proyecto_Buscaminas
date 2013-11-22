@@ -40,8 +40,7 @@ public class Tablero extends View implements Observer{
 
 	public void generarTablero(Context context){
 		layout = new TableLayout(context);
-		layout.setLayoutParams(new TableLayout.LayoutParams(
-		        LayoutParams.MATCH_PARENT , LayoutParams.WRAP_CONTENT ));
+		layout.setLayoutParams(new TableLayout.LayoutParams(LayoutParams.MATCH_PARENT , LayoutParams.WRAP_CONTENT ));
 		for(int i=0;i<n_filas;i++){
 			TableRow f = new TableRow(context);
 			tablero.add(f);
