@@ -11,7 +11,6 @@ import android.widget.TableRow;
 
 public class TableroCompleto extends TableLayout {
 
-	
 	private BarraDeMenu Barra;
 	private Tablero tablero;
 	private TableRow fila1;

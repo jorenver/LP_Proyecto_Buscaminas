@@ -11,7 +11,6 @@ import android.widget.Toast;
 
 public class BarraDeMenu {
 
-
 	private ImageButton Cara;
 	private TableLayout layout;
 	private TableRow fila;
@@ -34,17 +33,14 @@ public class BarraDeMenu {
 		return layout;
 	}
 	
-
 	OnClickListener Reiniciar =new  OnClickListener(){
 		public void onClick(View arg0) {
 				Inicio.update();
 		}
 	};
 	
-
-	
 	public void setObserver(Observer O){
 		Inicio=O;
 	}
-	
 }
+

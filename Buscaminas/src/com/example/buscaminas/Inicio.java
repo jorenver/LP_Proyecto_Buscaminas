@@ -77,3 +77,4 @@ public class Inicio extends Activity {
 		this.setContentView(t);
 	}
 }
+
