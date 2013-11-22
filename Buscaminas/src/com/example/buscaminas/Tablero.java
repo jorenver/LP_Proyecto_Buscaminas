@@ -219,4 +219,22 @@ public class Tablero extends View implements Observer{
 		} 
 		return true;
 	}
+	
+	
+	
+	public void reiniciar(){
+		Inicio=true;
+		for(int i=0;i<n_filas;i++){
+			for(int j=0;j<n_columnas;j++){
+				Celda c=obtenerCelda(i,j);
+				c.setMina(false);
+				c.setEnabled(true);//desactivar todas las celdas
+				c.SetEstado(EstadoCelda.CUBIERTA);
+			}
+		}
+	}
+
+
+
 }
+		

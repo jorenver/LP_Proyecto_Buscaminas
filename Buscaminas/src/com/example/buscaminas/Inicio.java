@@ -12,7 +12,7 @@ import android.widget.TableLayout;
 public class Inicio extends Activity {
 	private Button botonFacil,botonIntermedio,botonExperto;
 	private int filas,columnas,minas;
-	
+	private TableroCompleto TabCompleto;
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		this.setContentView(R.layout.activity_dificultad_del_juego);
@@ -58,21 +58,22 @@ public class Inicio extends Activity {
 	}
 	
 	
-	public class Reinicio implements Observer{
+	Observer Reinicio =new Observer(){
+		//cuando se de click en la cara para reiniciar el juego
 		@Override
 		public void update(){
-			crearTablero();
+			TabCompleto.reiniciarJuego();
 		}
 		@Override
 		public void update(Object o){
-			
+			//no se define
 		}
-	}
+	};
 	
 	
 	public void crearTablero(){
-		Inicio.Reinicio R= new Inicio.Reinicio(); 
-		TableroCompleto t=new TableroCompleto(this,filas,columnas,minas,R);
-		this.setContentView(t.getLayout());
+		TableroCompleto t=new TableroCompleto(this,filas,columnas,minas,Reinicio);
+		TabCompleto=t;
+		this.setContentView(t);
 	}
 }

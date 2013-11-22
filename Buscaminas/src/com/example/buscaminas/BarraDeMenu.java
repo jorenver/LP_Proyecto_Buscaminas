@@ -20,11 +20,12 @@ public class BarraDeMenu {
 		Cara=new ImageButton(C);
 		layout=new TableLayout(C);
 		fila=new TableRow(C);
+		Cara= new ImageButton(C);
+		Cara.setBackgroundResource(R.drawable.cara);
+		Cara.setOnClickListener(Reiniciar);
 		fila.addView(Cara);
 		layout.addView(fila);
-		Cara= new ImageButton(C);
-		Cara.setBackgroundResource(R.drawable.ic_launcher);
-
+		
 	}
 	
 	public TableLayout getLayout(){
@@ -34,7 +35,8 @@ public class BarraDeMenu {
 
 	OnClickListener Reiniciar =new  OnClickListener(){
 		public void onClick(View arg0) {
-			Inicio.update();
+			if(arg0==Cara)
+				Inicio.update();
 		}
 	};
 	

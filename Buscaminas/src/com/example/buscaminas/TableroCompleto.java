@@ -9,12 +9,11 @@ import android.widget.ImageButton;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 
-public class TableroCompleto extends View {
+public class TableroCompleto extends TableLayout {
 
 	
 	private BarraDeMenu Barra;
 	private Tablero tablero;
-	private TableLayout layout;
 	private TableRow fila1;
 	
 	public TableroCompleto(Context context, int fila, int columna,int Nminas,Observer O) {
@@ -22,7 +21,6 @@ public class TableroCompleto extends View {
 		Barra=new BarraDeMenu(context);
 		Barra.setObserver(O);
 		tablero=new Tablero(context,fila,columna,Nminas);
-		layout=new TableLayout(context);
 		fila1= new TableRow(context);
 		ArmarTablero();
 		
@@ -30,12 +28,12 @@ public class TableroCompleto extends View {
 	
 	public void ArmarTablero(){
 		fila1.addView(Barra.getLayout());
-		layout.addView(fila1);
-		layout.addView(tablero.getLayout());
+		this.addView(fila1);
+		this.addView(tablero.getLayout());
 	}
 	
-	public TableLayout getLayout(){
-		return layout;
+	public void reiniciarJuego(){
+		tablero.reiniciar();
 	}
 	
 	
