@@ -227,6 +227,7 @@ public class Tablero extends View implements Observer{
 		for(int i=0;i<n_filas;i++){
 			for(int j=0;j<n_columnas;j++){
 				Celda c=obtenerCelda(i,j);
+				c.setText(" ");
 				c.setMina(false);
 				c.setEnabled(true);//desactivar todas las celdas
 				c.SetEstado(EstadoCelda.CUBIERTA);

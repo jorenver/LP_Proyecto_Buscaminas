@@ -7,6 +7,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TableLayout;
 import android.widget.TableRow;
+import android.widget.Toast;
 
 public class BarraDeMenu {
 
@@ -15,7 +16,7 @@ public class BarraDeMenu {
 	private TableLayout layout;
 	private TableRow fila;
 	private Observer Inicio;
-	
+	Context C;
 	public BarraDeMenu(Context C){
 		Cara=new ImageButton(C);
 		layout=new TableLayout(C);
@@ -25,6 +26,7 @@ public class BarraDeMenu {
 		Cara.setOnClickListener(Reiniciar);
 		fila.addView(Cara);
 		layout.addView(fila);
+		this.C=C;
 		
 	}
 	
@@ -35,7 +37,6 @@ public class BarraDeMenu {
 
 	OnClickListener Reiniciar =new  OnClickListener(){
 		public void onClick(View arg0) {
-			if(arg0==Cara)
 				Inicio.update();
 		}
 	};
