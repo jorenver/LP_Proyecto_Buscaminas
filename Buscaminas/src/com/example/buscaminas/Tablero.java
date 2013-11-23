@@ -109,7 +109,7 @@ public class Tablero extends View implements Observer{
 					continue;
 				}else{
 					celda.setMina(true);
-					celda.setText("*");
+					celda.setText("  ");
 					minas--;
 				}
 			}

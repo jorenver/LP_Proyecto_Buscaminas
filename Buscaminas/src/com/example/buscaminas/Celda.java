@@ -49,7 +49,7 @@ public class Celda extends Button implements Observer{
 				TableroObservador.update(this);
 			}else{
 				TableroObservador.update(this);
-				this.setText("*");
+				this.setBackgroundResource(R.drawable.bombap);
 			}
 		}
 	}
@@ -88,7 +88,7 @@ public class Celda extends Button implements Observer{
 						}
 				}
 				else{
-					this.setText("*");
+					this.setBackgroundResource(R.drawable.bomba);
 				}
 			}
 		}
