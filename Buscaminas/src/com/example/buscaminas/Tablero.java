@@ -26,6 +26,7 @@ public class Tablero extends View implements Observer{
 	public static boolean Inicio;
 	private Context contexto;
 	private Observer relog;
+	private Observer cara;
 	
 	public Tablero(Context context,int i,int j,int minas) {
 		super(context);
@@ -59,6 +60,7 @@ public class Tablero extends View implements Observer{
 				celdas.put(new Point(i,j),celda);
 				celda.setOnClickListener(ClickCelda);
 				celda.setText("  ");
+				celda.setBackgroundResource(R.drawable.boton);
 				f.addView(celda);				
 				layout.setColumnShrinkable(j,true);
 			}
@@ -109,7 +111,8 @@ public class Tablero extends View implements Observer{
 					continue;
 				}else{
 					celda.setMina(true);
-					celda.setText("  ");
+					celda.setText("*");
+					//celda.setBackgroundResource(R.drawable.boton_bomba);
 					minas--;
 				}
 			}
@@ -144,7 +147,6 @@ public class Tablero extends View implements Observer{
 	};
 	
 	
-
 	public TableLayout getLayout() {
 		return layout;
 	}
@@ -163,6 +165,7 @@ public class Tablero extends View implements Observer{
 		if(celda.getMina()){ //si es verdadero tiene una mina
 			//jugador pierde
 			detenerRelog();//reloj se detiene
+			cara.update(EstadoCara.perder);
 			for(int i=0;i<n_filas;i++){ //recorro las celdas
 				for(int j=0;j<n_columnas;j++){
 					Celda c=obtenerCelda(i,j);
@@ -172,9 +175,8 @@ public class Tablero extends View implements Observer{
 			}
 			Toast toast = Toast.makeText(contexto, "BOOM!!!", Toast.LENGTH_SHORT);
 			toast.show();
-		
-		}else{
 			
+		}else{
 			if(celdasDescubiertas()){ //si el gana
 				detenerRelog();//reloj se detiene
 				//recorro las celdas
@@ -230,16 +232,16 @@ public class Tablero extends View implements Observer{
 	}
 	
 	
-	//inicializa el tablero y el relog
+	//inicializa el tablero y el reloj
 	public void reiniciar(){
 		Inicio=true;
 		detenerRelog();
 		encerarRelog();
+		cara.update(EstadoCara.en_juego);
 		for(int i=0;i<n_filas;i++){
 			for(int j=0;j<n_columnas;j++){
 				Celda c=obtenerCelda(i,j);
 				c.setText(" ");
-				c.setMina(false);
 				c.setEnabled(true);//desactivar todas las celdas
 				c.SetEstado(EstadoCelda.CUBIERTA);
 			}
@@ -261,5 +263,10 @@ public class Tablero extends View implements Observer{
 	public void encerarRelog(){
 		relog.update(AccionesRelog.ENCERAR);
 	}
+	
+	public void setObserverCara(Observer observer){
+		this.cara=observer;
+	}
+	
 }
 		

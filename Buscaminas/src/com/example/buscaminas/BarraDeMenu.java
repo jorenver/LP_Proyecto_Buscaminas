@@ -60,7 +60,6 @@ public class BarraDeMenu extends TableLayout {
 		@Override
 		public void update() {
 			// no se define
-			
 		}
 
 		@Override
@@ -85,5 +84,32 @@ public class BarraDeMenu extends TableLayout {
 		return RelogObserver;
 	}
 
+	Observer CaraObserver=new Observer(){
+		@Override
+		public void update() {
+			
+		}
+
+		@Override
+		public void update(Object o) {
+			EstadoCara estado=(EstadoCara)o;
+			switch(estado){
+				case ganar:
+					//se setea la cara para cuando se gane el juego
+					break;
+				case perder:
+					Cara.setBackgroundResource(R.drawable.terminator);
+					break;
+				case en_juego:
+					Cara.setBackgroundResource(R.drawable.cara2);
+					break;
+			}
+		}
+	};
+
+	public Observer getCaraObserver() {
+		return CaraObserver;
+	}
+	
 }
 
