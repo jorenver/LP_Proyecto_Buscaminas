@@ -26,16 +26,17 @@ public final class R {
         public static final int acerca_de_presionado=0x7f020002;
         public static final int bandera=0x7f020003;
         public static final int cara=0x7f020004;
-        public static final int ic_launcher=0x7f020005;
-        public static final int nivel_experto=0x7f020006;
-        public static final int nivel_facil=0x7f020007;
-        public static final int nivel_intermedio=0x7f020008;
-        public static final int partida_nueva_encendido=0x7f020009;
-        public static final int partida_nueva_normal=0x7f02000a;
-        public static final int partida_nueva_presionado=0x7f02000b;
-        public static final int top_jugadores_encendido=0x7f02000c;
-        public static final int top_jugadores_normal=0x7f02000d;
-        public static final int top_jugadores_presionado=0x7f02000e;
+        public static final int cara2=0x7f020005;
+        public static final int ic_launcher=0x7f020006;
+        public static final int nivel_experto=0x7f020007;
+        public static final int nivel_facil=0x7f020008;
+        public static final int nivel_intermedio=0x7f020009;
+        public static final int partida_nueva_encendido=0x7f02000a;
+        public static final int partida_nueva_normal=0x7f02000b;
+        public static final int partida_nueva_presionado=0x7f02000c;
+        public static final int top_jugadores_encendido=0x7f02000d;
+        public static final int top_jugadores_normal=0x7f02000e;
+        public static final int top_jugadores_presionado=0x7f02000f;
     }
     public static final class id {
         public static final int AcercaDe=0x7f080008;

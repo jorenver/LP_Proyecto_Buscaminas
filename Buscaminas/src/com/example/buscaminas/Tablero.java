@@ -9,6 +9,7 @@ import java.util.Random;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Point;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.TableLayout;
 import android.widget.TableLayout.LayoutParams;
@@ -55,6 +56,7 @@ public class Tablero extends View implements Observer{
 				celda.setOnClickListener(ClickCelda);
 				celda.setText("  ");
 				f.addView(celda);
+				f.setGravity (Gravity.CENTER); 
 				layout.setColumnShrinkable(j,true);
 			}
 			layout.addView(f);
