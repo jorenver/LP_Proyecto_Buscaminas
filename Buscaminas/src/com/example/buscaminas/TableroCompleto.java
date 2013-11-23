@@ -14,7 +14,7 @@ public class TableroCompleto extends TableLayout {
 	private BarraDeMenu Barra;
 	private Tablero tablero;
 	private TableRow fila1;
-	
+
 	public TableroCompleto(Context context, int fila, int columna,int Nminas,Observer O) {
 		super(context);
 		Barra=new BarraDeMenu(context);
@@ -22,8 +22,10 @@ public class TableroCompleto extends TableLayout {
 		tablero=new Tablero(context,fila,columna,Nminas);
 		//el reloj observa al tablero para saber cuando reiniciarse , detenerce , o encerarse
 		tablero.setObserver(Barra.getObserverRelor());
+		tablero.setObserverCara(Barra.getCaraObserver());
 		fila1= new TableRow(context);
 		fila1.setGravity(Gravity.CENTER);
+		this.setBackgroundResource(R.drawable.fondo);
 		ArmarTablero();	
 	}
 	
@@ -36,6 +38,5 @@ public class TableroCompleto extends TableLayout {
 	public void reiniciarJuego(){
 		tablero.reiniciar();
 	}
-	
 	
 }

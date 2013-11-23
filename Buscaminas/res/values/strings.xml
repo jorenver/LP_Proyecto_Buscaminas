@@ -9,10 +9,5 @@
     <string name="title_activity_acerca_de">AcercaDe</string>
     <string name="TOP">TOP DE JUGADORES:</string><string name="title_activity_top_jugadores">TopJugadores</string>
      <string name="DificultadDelJuego">Dificultad</string>
-     <string name="titulotop">Felicidades! Usted ha ingresado al top</string>
-     <string name="nombre">Ingrese su nombre:</string>
-     <string name="Aceptar">Aceptar</string>
-    
-     
     
 </resources>

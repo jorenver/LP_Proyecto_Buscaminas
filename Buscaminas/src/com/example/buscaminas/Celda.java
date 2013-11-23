@@ -13,22 +13,20 @@ import android.widget.TableLayout;
 public class Celda extends Button implements Observer{
 	private boolean vacio;
 	private boolean Mina;
-	private int colores[]= {Color.BLUE,Color.GREEN,Color.RED,Color.BLACK,Color.MAGENTA,Color.CYAN,Color.YELLOW,Color.GRAY};
+	private int verde=Color.rgb(16,124,10);
+	private int colores[]= {Color.BLUE,verde,Color.RED,Color.BLACK,Color.MAGENTA,Color.CYAN,Color.YELLOW,Color.GRAY};
 	private EstadoCelda estado;
 	private int CantMinasCercanas;
-	private int pos_x,pos_y;
 	private ArrayList<Observer> adyacentes;
 	private Observer TableroObservador;
 		
 	
-	public Celda(Context context,int i,int j) {
+	public Celda(Context context) {
 		super(context);
 		vacio=false;
 		Mina=false;
 		estado=EstadoCelda.CUBIERTA;
 		CantMinasCercanas=0;
-		pos_x=i;
-		pos_y=j;
 		adyacentes=new ArrayList<Observer>();
 	}
 	
@@ -49,19 +47,15 @@ public class Celda extends Button implements Observer{
 				TableroObservador.update(this);
 			}else{
 				TableroObservador.update(this);
-				this.setBackgroundResource(R.drawable.bombap);
+				this.setBackgroundResource(R.drawable.boton_bomba_pisada);
 			}
 		}
-	}
-
-	
+	}	
 	
 	public void destapar(boolean cond){
-		
 		if(cond){
 			if (this.getEstado()==EstadoCelda.CUBIERTA){
 				if(!Mina){
-				
 					if(this.CantMinasCercanas==0){
 						this.setEnabled(false);
 					}
@@ -74,11 +68,9 @@ public class Celda extends Button implements Observer{
 					this.setText("X");
 				}
 			}
-		}
-		else {
+	 }else{
 			if (this.getEstado()==EstadoCelda.CUBIERTA){
 				if(!Mina){
-				
 					if(this.CantMinasCercanas==0){
 						this.setEnabled(false);
 					}
@@ -88,7 +80,8 @@ public class Celda extends Button implements Observer{
 						}
 				}
 				else{
-					this.setBackgroundResource(R.drawable.bomba);
+					this.setText("*");
+					//this.setBackgroundResource(R.drawable.boton_bomba_pisada);
 				}
 			}
 		}
@@ -141,10 +134,17 @@ public class Celda extends Button implements Observer{
 
 	@Override
 	public void update(Object o) {
-		// TODO Auto-generated method stub
 		
 	}
 	
+	//sobreescritura del metodo setEnabled
+	public void setEnabled(boolean flag){
+		if(flag){
+			this.setBackgroundResource(R.drawable.boton);	
+		}else{
+			this.setBackgroundResource(R.drawable.boton_destapado);
+		}
+	}
 	
 
 }
