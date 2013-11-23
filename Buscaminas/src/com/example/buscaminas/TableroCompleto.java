@@ -11,7 +11,6 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 
 public class TableroCompleto extends TableLayout {
-
 	private BarraDeMenu Barra;
 	private Tablero tablero;
 	private TableRow fila1;
@@ -21,11 +20,11 @@ public class TableroCompleto extends TableLayout {
 		Barra=new BarraDeMenu(context);
 		Barra.setObserver(O);
 		tablero=new Tablero(context,fila,columna,Nminas);
-		//el relog observa al tablero para saber cuando reiniciarse , detenerce , o encerarse
+		//el reloj observa al tablero para saber cuando reiniciarse , detenerce , o encerarse
 		tablero.setObserver(Barra.getObserverRelor());
 		fila1= new TableRow(context);
-		ArmarTablero();
-		
+		fila1.setGravity(Gravity.CENTER);
+		ArmarTablero();	
 	}
 	
 	public void ArmarTablero(){

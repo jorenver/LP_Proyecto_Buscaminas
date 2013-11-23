@@ -36,7 +36,6 @@ public class BarraDeMenu extends TableLayout {
 		params1.span = 6; 
 		DispContador = new TextView (C);
 		DispContador.setText(String.valueOf(Contador));
-		//relog.setLayoutParams(params1);
 		bandera.setBackgroundResource(R.drawable.bandera);
 		Cara.setBackgroundResource(R.drawable.cara2);
 		Cara.setOnClickListener(Reiniciar);

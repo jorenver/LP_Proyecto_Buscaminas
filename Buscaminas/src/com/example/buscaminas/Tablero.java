@@ -11,6 +11,8 @@ import android.graphics.Color;
 import android.graphics.Point;
 import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup.MarginLayoutParams;
+import android.widget.RelativeLayout;
 import android.widget.TableLayout;
 import android.widget.TableLayout.LayoutParams;
 import android.widget.TableRow;
@@ -25,7 +27,6 @@ public class Tablero extends View implements Observer{
 	private Context contexto;
 	private Observer relog;
 	
-	
 	public Tablero(Context context,int i,int j,int minas) {
 		super(context);
 		Inicio=true;
@@ -38,13 +39,16 @@ public class Tablero extends View implements Observer{
 		generarTablero(context);
 		registrarCeldasAdyacentes();
 		observarCeldas();
+		layout.setGravity(Gravity.CENTER);
 	}
 
 	public void generarTablero(Context context){
 		layout = new TableLayout(context);
-		layout.setLayoutParams(new TableLayout.LayoutParams(LayoutParams.MATCH_PARENT , LayoutParams.WRAP_CONTENT ));
+		layout.setLayoutParams(new TableLayout.LayoutParams(LayoutParams.WRAP_CONTENT , LayoutParams.WRAP_CONTENT ));
 		for(int i=0;i<n_filas;i++){
 			TableRow f = new TableRow(context);
+			f.setLayoutParams(new TableLayout.LayoutParams(LayoutParams.WRAP_CONTENT , LayoutParams.WRAP_CONTENT ));
+			f.setGravity(Gravity.CENTER);
 			tablero.add(f);
 		}
 		for(int i=0;i<n_filas;i++)
@@ -55,8 +59,7 @@ public class Tablero extends View implements Observer{
 				celdas.put(new Point(i,j),celda);
 				celda.setOnClickListener(ClickCelda);
 				celda.setText("  ");
-				f.addView(celda);
-				f.setGravity (Gravity.CENTER); 
+				f.addView(celda);				
 				layout.setColumnShrinkable(j,true);
 			}
 			layout.addView(f);
@@ -159,6 +162,7 @@ public class Tablero extends View implements Observer{
 		Celda celda=(Celda)o;
 		if(celda.getMina()){ //si es verdadero tiene una mina
 			//jugador pierde
+			detenerRelog();//reloj se detiene
 			for(int i=0;i<n_filas;i++){ //recorro las celdas
 				for(int j=0;j<n_columnas;j++){
 					Celda c=obtenerCelda(i,j);
@@ -172,7 +176,7 @@ public class Tablero extends View implements Observer{
 		}else{
 			
 			if(celdasDescubiertas()){ //si el gana
-				
+				detenerRelog();//reloj se detiene
 				//recorro las celdas
 				for(int i=0;i<n_filas;i++){
 					for(int j=0;j<n_columnas;j++){
@@ -257,6 +261,5 @@ public class Tablero extends View implements Observer{
 	public void encerarRelog(){
 		relog.update(AccionesRelog.ENCERAR);
 	}
-
 }
 		
