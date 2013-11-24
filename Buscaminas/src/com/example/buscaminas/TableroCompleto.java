@@ -24,6 +24,8 @@ public class TableroCompleto extends TableLayout {
 		super(context);
 		Barra=new BarraDeMenu(context);
 		Barra.setObserver(O);
+		Barra.getBandera().setOnTouchListener(ListenerTocar);
+		Barra.getBandera().setOnDragListener(ListenerArrastar);
 		tablero=new Tablero(context,fila,columna,Nminas);
 		//el reloj observa al tablero para saber cuando reiniciarse , detenerce , o encerarse
 		tablero.setObserver(Barra.getObserverRelor());

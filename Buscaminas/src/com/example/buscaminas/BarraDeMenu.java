@@ -120,5 +120,9 @@ public class BarraDeMenu extends TableLayout {
 		return CaraObserver;
 	}
 	
+	public ImageView getBandera(){
+		return bandera;
+	}
+	
 }
 
