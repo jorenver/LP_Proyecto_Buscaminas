@@ -14,6 +14,7 @@ public class TableroCompleto extends TableLayout {
 	private BarraDeMenu Barra;
 	private Tablero tablero;
 	private TableRow fila1;
+	
 
 	public TableroCompleto(Context context, int fila, int columna,int Nminas,Observer O) {
 		super(context);

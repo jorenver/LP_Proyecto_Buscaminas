@@ -41,8 +41,8 @@ public class Celda extends Button implements Observer{
 					}
 				
 				}else{
-					this.setText(String.valueOf(CantMinasCercanas));
 					this.setTextColor(colores[CantMinasCercanas-1]);
+					this.setText(String.valueOf(CantMinasCercanas));
 				}
 				TableroObservador.update(this);
 			}else{
@@ -53,35 +53,34 @@ public class Celda extends Button implements Observer{
 	}	
 	
 	public void destapar(boolean cond){
-		if(cond){
+		if(cond){ // sin cond es verdadera, gano el juego
 			if (this.getEstado()==EstadoCelda.CUBIERTA){
-				if(!Mina){
-					if(this.CantMinasCercanas==0){
+				if(!Mina){ //si no tiene mina
+					if(this.CantMinasCercanas==0){// si no tiene minas cercanas solo se desbloquea
 						this.setEnabled(false);
 					}
-					else{
-						this.setText(String.valueOf(CantMinasCercanas));
+					else{ //si tiene minas cercanas muestra el numero de minas
 						this.setTextColor(colores[CantMinasCercanas-1]);
+						this.setText(String.valueOf(CantMinasCercanas));
 						}
-				}
+				}//Si es una mina
 				else{
 					this.setText("X");
 				}
 			}
-	 }else{
+	 }else{ //si cond es falsa perdio el juego
 			if (this.getEstado()==EstadoCelda.CUBIERTA){
 				if(!Mina){
 					if(this.CantMinasCercanas==0){
 						this.setEnabled(false);
 					}
 					else{
-						this.setText(String.valueOf(CantMinasCercanas));
 						this.setTextColor(colores[CantMinasCercanas-1]);
-						}
+						this.setText(String.valueOf(CantMinasCercanas));
+					}
 				}
-				else{
-					this.setText("*");
-					//this.setBackgroundResource(R.drawable.boton_bomba_pisada);
+				else{ // si es una mina imprime una imagen
+					this.setBackgroundResource(R.drawable.boton_bomba_pisada);
 				}
 			}
 		}

@@ -183,6 +183,7 @@ public class Tablero extends View implements Observer{
 				for(int i=0;i<n_filas;i++){
 					for(int j=0;j<n_columnas;j++){
 						Celda c=obtenerCelda(i,j);
+						c.setBackgroundResource(R.drawable.boton);
 						c.destapar(true);//informo que gano
 						c.setEnabled(false);//desactivar todas las celdas
 					}
@@ -233,8 +234,8 @@ public class Tablero extends View implements Observer{
 	//inicializa el tablero y el reloj
 	public void reiniciar(){
 		Inicio=true;
-		detenerRelog();
 		encerarRelog();
+		detenerRelog();
 		cara.update(EstadoCara.en_juego);
 		for(int i=0;i<n_filas;i++){
 			for(int j=0;j<n_columnas;j++){

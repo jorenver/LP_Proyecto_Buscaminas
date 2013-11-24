@@ -1,6 +1,7 @@
 package com.example.buscaminas;
 
 import android.content.Context;
+import android.os.SystemClock;
 import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -22,11 +23,13 @@ public class BarraDeMenu extends TableLayout {
 	private Chronometer relog;
 	private TextView DispContador;
 	private int Contador;
+	private long tiempo;
 	private TableRow.LayoutParams params1;   
 	    
 	public BarraDeMenu(Context C){
 		super(C);
 		Contador=0;
+		tiempo=0;
 		Cara=new ImageButton(C);
 		bandera= new ImageView(C);
 		relog = new Chronometer(C);
@@ -67,14 +70,20 @@ public class BarraDeMenu extends TableLayout {
 			AccionesRelog accion;
 			accion =(AccionesRelog) o;
 			if(accion == AccionesRelog.INICIAR)
+				relog.setBase(SystemClock.elapsedRealtime());
 				relog.start();
 			if(accion==AccionesRelog.ENCERAR)
 				relog.setText("00:00");
 			if(accion==AccionesRelog.DETENER)
 				relog.stop();
+				tiempo= SystemClock.elapsedRealtime() - relog.getBase();
 		}
 		
 	};
+	
+	public long getTiempo(){
+		return tiempo;
+	}
 	
 	public void setObserver(Observer O){
 		Inicio=O;

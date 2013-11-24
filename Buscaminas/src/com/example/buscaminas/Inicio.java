@@ -63,6 +63,7 @@ public class Inicio extends Activity {
 		@Override
 		public void update(){
 			TabCompleto.reiniciarJuego();
+			
 		}
 		@Override
 		public void update(Object o){
