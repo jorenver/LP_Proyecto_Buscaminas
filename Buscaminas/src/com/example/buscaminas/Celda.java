@@ -3,6 +3,8 @@ package com.example.buscaminas;
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Random;
+
+import android.app.ActionBar.LayoutParams;
 import android.content.Context;
 import android.graphics.Color;
 import android.widget.Button;

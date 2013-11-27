@@ -27,6 +27,9 @@ public class Tablero extends View implements Observer{
 	private Context contexto;
 	private Observer relog;
 	private Observer cara;
+	private Observer TabCompleto;
+	private long tiempo=0;
+
 	
 	public Tablero(Context context,int i,int j,int minas) {
 		super(context);
@@ -179,6 +182,7 @@ public class Tablero extends View implements Observer{
 		}else{
 			if(celdasDescubiertas()){ //si el gana
 				detenerRelog();//reloj se detiene
+				TabCompleto.update();
 				//recorro las celdas
 				for(int i=0;i<n_filas;i++){
 					for(int j=0;j<n_columnas;j++){
@@ -264,9 +268,15 @@ public class Tablero extends View implements Observer{
 		relog.update(AccionesRelog.ENCERAR);
 	}
 	
+	
 	public void setObserverCara(Observer observer){
 		this.cara=observer;
 	}
+	
+	public void  setObserverTableroCompleto(Observer T){
+		TabCompleto=T;
+	}
+	
 	
 }
 		

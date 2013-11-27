@@ -76,7 +76,8 @@ public class BarraDeMenu extends TableLayout {
 				relog.setText("00:00");
 			if(accion==AccionesRelog.DETENER)
 				relog.stop();
-				tiempo= SystemClock.elapsedRealtime() - relog.getBase();
+				tiempo=SystemClock.elapsedRealtime()- relog.getBase();
+			
 		}
 		
 	};
@@ -118,10 +119,6 @@ public class BarraDeMenu extends TableLayout {
 
 	public Observer getCaraObserver() {
 		return CaraObserver;
-	}
-	
-	public ImageView getBandera(){
-		return bandera;
 	}
 	
 }

@@ -1,38 +1,40 @@
 package com.example.buscaminas;
 
-import android.annotation.SuppressLint;
-import android.content.ClipData;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
-import android.view.DragEvent;
 import android.view.Gravity;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TableLayout;
 import android.widget.TableRow;
+import android.widget.Toast;
 
 public class TableroCompleto extends TableLayout {
 	private BarraDeMenu Barra;
 	private Tablero tablero;
 	private TableRow fila1;
+	private Jugador jugador;
+	private Nivel nivel;
+	private TopManager Top;
+	private Context C;
 	
-
 	public TableroCompleto(Context context, int fila, int columna,int Nminas,Observer O) {
 		super(context);
+		C=context;
 		Barra=new BarraDeMenu(context);
 		Barra.setObserver(O);
-		Barra.getBandera().setOnTouchListener(ListenerTocar);
-		Barra.getBandera().setOnDragListener(ListenerArrastar);
 		tablero=new Tablero(context,fila,columna,Nminas);
 		//el reloj observa al tablero para saber cuando reiniciarse , detenerce , o encerarse
 		tablero.setObserver(Barra.getObserverRelor());
 		tablero.setObserverCara(Barra.getCaraObserver());
+		tablero.setObserverTableroCompleto(TabCompObserver);
 		fila1= new TableRow(context);
+		Top= new TopManager(context);
 		fila1.setGravity(Gravity.CENTER);
 		this.setBackgroundResource(R.drawable.fondo);
+		
 		ArmarTablero();	
 	}
 	
@@ -45,59 +47,41 @@ public class TableroCompleto extends TableLayout {
 	public void reiniciarJuego(){
 		tablero.reiniciar();
 	}
-	@SuppressLint("NewApi")
-	OnTouchListener ListenerTocar = new OnTouchListener(){
-
-		@Override
-		public boolean onTouch(View view, MotionEvent event) {
 	
-			if (MotionEvent.ACTION_DOWN==event.getAction()){
-				ClipData data = ClipData.newPlainText("", "");
-				DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(view);
-				view.startDrag(data, shadowBuilder, view, 0);
-				return true;
+	Observer TabCompObserver= new Observer(){
+		@Override
+		public void update() {
+			long time=Barra.getTiempo();
+			boolean entraTop=Top.validarTiempo(time);
+			Toast toast1 = Toast.makeText(C,""+time, Toast.LENGTH_SHORT);
+			toast1.show();
+			if (entraTop){
+			Toast toast = Toast.makeText(C,"Entraste al Top"+time, Toast.LENGTH_SHORT);
+			toast.show();
 			}
-			return false;
 		}
-
-	};
-	
-	
-	@SuppressLint("NewApi")
-	OnDragListener ListenerArrastar = new OnDragListener(){
 
 		@Override
-		public boolean onDrag(View v, DragEvent event) {
-			
-			switch (event.getAction()) {
-		    case DragEvent.ACTION_DRAG_STARTED:
-		        //no se define
-		        break;
-		    case DragEvent.ACTION_DRAG_ENTERED:
-		        //no se define
-		        break;
-		    case DragEvent.ACTION_DRAG_EXITED:
-		        //no se define
-		        break;
-		    case DragEvent.ACTION_DROP:
-		        //cuando se suelta la vista
-		    	Object O;
-		    	O=event.getLocalState();
-		    	if(O instanceof Celda  )
-		    	{
-		    		Celda c=(Celda) O;
-		    		c.setText("B");
-		    	}
-		        break;
-		    case DragEvent.ACTION_DRAG_ENDED:
-		        //no se define
-		        break;
-		    default:
-		        break;
+		public void update(Object o) {
 		}
-			return false;
-		}
-
 		
 	};
+	
+	
+	public Nivel getNivel(int j){
+		Nivel N;
+		
+		if (j==9){
+			return Nivel.PRINCIPIANTE;
+		}
+		else if(j==16){
+			return Nivel.INTERMEDIO;
+		}
+		else{
+			return Nivel.EXPERTO;
+			}
+		
+	}
+	
+	
 }
