@@ -1,9 +1,14 @@
 package com.example.buscaminas;
 
+import android.annotation.SuppressLint;
+import android.content.ClipData;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
+import android.util.Log;
+import android.view.DragEvent;
 import android.view.Gravity;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -11,6 +16,7 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.Toast;
 
+@SuppressLint("NewApi")
 public class TableroCompleto extends TableLayout {
 	private BarraDeMenu Barra;
 	private Tablero tablero;
@@ -25,11 +31,13 @@ public class TableroCompleto extends TableLayout {
 		C=context;
 		Barra=new BarraDeMenu(context);
 		Barra.setObserver(O);
+		Barra.getBandera().setOnTouchListener(ListenerTocar);
 		tablero=new Tablero(context,fila,columna,Nminas);
 		//el reloj observa al tablero para saber cuando reiniciarse , detenerce , o encerarse
 		tablero.setObserver(Barra.getObserverRelor());
 		tablero.setObserverCara(Barra.getCaraObserver());
 		tablero.setObserverTableroCompleto(TabCompObserver);
+		//tablero.setOnDrag(ListenerArrastar);
 		fila1= new TableRow(context);
 		Top= new TopManager(context);
 		fila1.setGravity(Gravity.CENTER);
@@ -82,6 +90,61 @@ public class TableroCompleto extends TableLayout {
 			}
 		
 	}
+	
+	 
+	   @SuppressLint("NewApi")
+	OnTouchListener ListenerTocar = new OnTouchListener(){
+	
+		@Override
+		public boolean onTouch(View view, MotionEvent event) {
+			if (MotionEvent.ACTION_DOWN==event.getAction()){
+		         ClipData data = ClipData.newPlainText("", "");
+		         DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(view);
+		         view.startDrag(data, shadowBuilder, view, 0);
+		         return true;
+		       }
+			return false;
+		}
+	 
+	   };
+	    
+	   
+	  
+	   @SuppressLint("NewApi")
+	OnDragListener ListenerArrastar = new OnDragListener(){
+	 
+
+		@Override
+		public boolean onDrag(View view, DragEvent event) {
+			switch (event.getAction()) {
+	         case DragEvent.ACTION_DRAG_STARTED:
+	             //no se define
+	             break;
+	         case DragEvent.ACTION_DRAG_ENTERED:
+	             //no se define
+	             break;
+	         case DragEvent.ACTION_DRAG_EXITED:
+	             //no se define
+	             break;
+	         case DragEvent.ACTION_DROP:
+	             //cuando se suelta la vista
+	        	 Log.i("entro","drag");
+	        	 /*
+	             Celda c=(Celda) view;
+	             c.setBackgroundResource(R.drawable.bandera);
+	             */
+	             break;
+	         case DragEvent.ACTION_DRAG_ENDED:
+	             //no se define
+	             break;
+	         default:
+	             break;
+	     }
+			return false;
+		}
+	 
+	     
+	   };
 	
 	
 }

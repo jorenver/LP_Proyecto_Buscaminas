@@ -6,6 +6,7 @@ import java.util.Observable;
 import java.util.Random;
 
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Point;
@@ -277,6 +278,15 @@ public class Tablero extends View implements Observer{
 		TabCompleto=T;
 	}
 	
+	@SuppressLint("NewApi")
+	public void setOnDrag(OnDragListener listenerTocar){
+		for(int i=0;i<n_filas;i++){
+			for(int j=0;j<n_columnas;j++){
+				Celda c=obtenerCelda(i,j);
+				c.setOnDragListener(listenerTocar);
+			}
+		}
+	}
 	
 }
 		
