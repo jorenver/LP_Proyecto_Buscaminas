@@ -17,6 +17,8 @@ import android.widget.TableRow;
 import android.widget.Toast;
 
 @SuppressLint("NewApi")
+
+
 public class TableroCompleto extends TableLayout {
 	private BarraDeMenu Barra;
 	private Tablero tablero;
@@ -26,23 +28,22 @@ public class TableroCompleto extends TableLayout {
 	private TopManager Top;
 	private Context C;
 	
-	public TableroCompleto(Context context, int fila, int columna,int Nminas,Observer O) {
+	public TableroCompleto(Context context, int fila, int columna,int Nminas,Observer Reinicio) {
 		super(context);
 		C=context;
 		Barra=new BarraDeMenu(context);
-		Barra.setObserver(O);
-		Barra.getBandera().setOnTouchListener(ListenerTocar);
+		Barra.setObserver(Reinicio);
 		tablero=new Tablero(context,fila,columna,Nminas);
 		//el reloj observa al tablero para saber cuando reiniciarse , detenerce , o encerarse
-		tablero.setObserver(Barra.getObserverRelor());
-		tablero.setObserverCara(Barra.getCaraObserver());
-		tablero.setObserverTableroCompleto(TabCompObserver);
-		//tablero.setOnDrag(ListenerArrastar);
+		tablero.setObserver(Barra.getObserverRelor());//reloj
+		tablero.setObserverCara(Barra.getCaraObserver());//cara
+		tablero.setObserverTableroCompleto(TabCompObserver);//tab
+		tablero.setOnDrag(ListenerArrastar);
 		fila1= new TableRow(context);
 		Top= new TopManager(context);
 		fila1.setGravity(Gravity.CENTER);
 		this.setBackgroundResource(R.drawable.fondo);
-		
+		Barra.getBandera().setOnTouchListener(ListenerTocar);
 		ArmarTablero();	
 	}
 	
@@ -55,7 +56,7 @@ public class TableroCompleto extends TableLayout {
 	public void reiniciarJuego(){
 		tablero.reiniciar();
 	}
-	
+
 	Observer TabCompObserver= new Observer(){
 		@Override
 		public void update() {
@@ -91,10 +92,10 @@ public class TableroCompleto extends TableLayout {
 		
 	}
 	
-	 
-	   @SuppressLint("NewApi")
+
 	OnTouchListener ListenerTocar = new OnTouchListener(){
 	
+		@SuppressLint("NewApi")
 		@Override
 		public boolean onTouch(View view, MotionEvent event) {
 			if (MotionEvent.ACTION_DOWN==event.getAction()){
@@ -110,10 +111,10 @@ public class TableroCompleto extends TableLayout {
 	    
 	   
 	  
-	   @SuppressLint("NewApi")
+
+	@SuppressLint("NewApi")
 	OnDragListener ListenerArrastar = new OnDragListener(){
 	 
-
 		@Override
 		public boolean onDrag(View view, DragEvent event) {
 			switch (event.getAction()) {

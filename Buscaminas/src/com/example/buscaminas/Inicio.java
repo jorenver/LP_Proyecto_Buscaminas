@@ -13,6 +13,7 @@ public class Inicio extends Activity {
 	private Button botonFacil,botonIntermedio,botonExperto;
 	private int filas,columnas,minas;
 	private TableroCompleto TabCompleto;
+	
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		this.setContentView(R.layout.activity_dificultad_del_juego);
@@ -63,7 +64,6 @@ public class Inicio extends Activity {
 		@Override
 		public void update(){
 			TabCompleto.reiniciarJuego();
-			
 		}
 		@Override
 		public void update(Object o){
@@ -75,7 +75,7 @@ public class Inicio extends Activity {
 	public void crearTablero(){
 		TableroCompleto t=new TableroCompleto(this,filas,columnas,minas,Reinicio);
 		TabCompleto=t;
-		this.setContentView(t);
+		this.setContentView(TabCompleto);
 	}
 }
 

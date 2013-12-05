@@ -1,5 +1,6 @@
 package com.example.buscaminas;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Observable;
@@ -8,8 +9,13 @@ import java.util.Random;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.res.AssetFileDescriptor;
+import android.content.res.AssetManager;
 import android.graphics.Color;
 import android.graphics.Point;
+import android.media.MediaPlayer;
+import android.media.MediaPlayer.OnCompletionListener;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup.MarginLayoutParams;
@@ -18,6 +24,8 @@ import android.widget.TableLayout;
 import android.widget.TableLayout.LayoutParams;
 import android.widget.TableRow;
 import android.widget.Toast;
+
+
 
 public class Tablero extends View implements Observer{
 	private HashMap<Point,Celda>celdas;
@@ -29,8 +37,7 @@ public class Tablero extends View implements Observer{
 	private Observer relog;
 	private Observer cara;
 	private Observer TabCompleto;
-	private long tiempo=0;
-
+	private MediaPlayer player;
 	
 	public Tablero(Context context,int i,int j,int minas) {
 		super(context);
@@ -41,18 +48,25 @@ public class Tablero extends View implements Observer{
 		cantidad_de_minas=minas;
 		celdas=new HashMap<Point,Celda>();
 		tablero=new ArrayList<TableRow>();
+		
+		
 		generarTablero(context);
 		registrarCeldasAdyacentes();
 		observarCeldas();
 		layout.setGravity(Gravity.CENTER);
+	
+		
+		
+	
+	
 	}
 
 	public void generarTablero(Context context){
 		layout = new TableLayout(context);
-		layout.setLayoutParams(new TableLayout.LayoutParams(LayoutParams.WRAP_CONTENT , LayoutParams.WRAP_CONTENT ));
+	//	layout.setLayoutParams(new TableLayout.LayoutParams(LayoutParams.FILL_PARENT , LayoutParams.FILL_PARENT ));
 		for(int i=0;i<n_filas;i++){
 			TableRow f = new TableRow(context);
-			f.setLayoutParams(new TableLayout.LayoutParams(LayoutParams.WRAP_CONTENT , LayoutParams.WRAP_CONTENT ));
+			//f.setLayoutParams(new TableLayout.LayoutParams(LayoutParams.WRAP_CONTENT , LayoutParams.WRAP_CONTENT ));
 			f.setGravity(Gravity.CENTER);
 			tablero.add(f);
 		}
@@ -65,6 +79,7 @@ public class Tablero extends View implements Observer{
 				celda.setOnClickListener(ClickCelda);
 				celda.setText("  ");
 				celda.setBackgroundResource(R.drawable.boton);
+				//celda.setLayoutParams(new TableLayout.LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT ));
 				f.addView(celda);				
 				layout.setColumnShrinkable(j,true);
 			}
@@ -115,8 +130,7 @@ public class Tablero extends View implements Observer{
 					continue;
 				}else{
 					celda.setMina(true);
-					celda.setText("*");
-					//celda.setBackgroundResource(R.drawable.boton_bomba);
+					//celda.setText("*");
 					minas--;
 				}
 			}
@@ -170,20 +184,23 @@ public class Tablero extends View implements Observer{
 			//jugador pierde
 			detenerRelog();//reloj se detiene
 			cara.update(EstadoCara.perder);
+			
+			reproducirMusica();
+			
 			for(int i=0;i<n_filas;i++){ //recorro las celdas
 				for(int j=0;j<n_columnas;j++){
 					Celda c=obtenerCelda(i,j);
 					c.destapar(false); //informo a la celda que ha perdido el juego
-					c.setEnabled(false);//desactivar todas las celdas
 				}
 			}
+			
+			
 			Toast toast = Toast.makeText(contexto, "BOOM!!!", Toast.LENGTH_SHORT);
 			toast.show();
 			
 		}else{
 			if(celdasDescubiertas()){ //si el gana
 				detenerRelog();//reloj se detiene
-				TabCompleto.update();
 				//recorro las celdas
 				for(int i=0;i<n_filas;i++){
 					for(int j=0;j<n_columnas;j++){
@@ -241,11 +258,18 @@ public class Tablero extends View implements Observer{
 		Inicio=true;
 		encerarRelog();
 		detenerRelog();
+		
+		if(player!=null&&player.isPlaying()){
+			player.stop();
+		}
+		
 		cara.update(EstadoCara.en_juego);
+		
 		for(int i=0;i<n_filas;i++){
 			for(int j=0;j<n_columnas;j++){
 				Celda c=obtenerCelda(i,j);
 				c.setText(" ");
+				c.setTextColor(Color.BLACK);
 				c.setMina(false);
 				c.setEnabled(true);//desactivar todas las celdas
 				c.SetEstado(EstadoCelda.CUBIERTA);
@@ -269,15 +293,37 @@ public class Tablero extends View implements Observer{
 		relog.update(AccionesRelog.ENCERAR);
 	}
 	
-	
 	public void setObserverCara(Observer observer){
 		this.cara=observer;
 	}
-	
+
 	public void  setObserverTableroCompleto(Observer T){
 		TabCompleto=T;
 	}
 	
+
+	public void reproducirMusica(){
+		AssetManager manejador=this.getContext().getAssets();
+		player=new MediaPlayer();
+		player.setOnCompletionListener(new OnCompletionListener(){
+				@Override
+				public void onCompletion(MediaPlayer arg0) {
+					player.stop();
+				}
+			}
+		);
+		try {
+			AssetFileDescriptor des=manejador.openFd("terminator_final.wav");
+			player.setDataSource(des.getFileDescriptor(),des.getStartOffset(),des.getLength());
+			player.prepare();			
+			player.start();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+
 	@SuppressLint("NewApi")
 	public void setOnDrag(OnDragListener listenerTocar){
 		for(int i=0;i<n_filas;i++){
@@ -288,5 +334,8 @@ public class Tablero extends View implements Observer{
 		}
 	}
 	
+	
+	
+
 }
 		

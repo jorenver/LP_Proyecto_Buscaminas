@@ -7,6 +7,7 @@ import java.util.Random;
 import android.app.ActionBar.LayoutParams;
 import android.content.Context;
 import android.graphics.Color;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.TableLayout;
 
@@ -20,7 +21,6 @@ public class Celda extends Button implements Observer{
 	private ArrayList<Observer> adyacentes;
 	private Observer TableroObservador;
 		
-	
 	public Celda(Context context) {
 		super(context);
 		vacio=false;
@@ -53,8 +53,9 @@ public class Celda extends Button implements Observer{
 	}	
 	
 	public void destapar(boolean cond){
-		if(cond){ // sin cond es verdadera, gano el juego
+	   if(cond){ // sin cond es verdadera, gano el juego
 			if (this.getEstado()==EstadoCelda.CUBIERTA){
+				estado=EstadoCelda.DESCUBIERTA;
 				if(!Mina){ //si no tiene mina
 					if(this.CantMinasCercanas==0){// si no tiene minas cercanas solo se desbloquea
 						this.setEnabled(false);
@@ -62,7 +63,7 @@ public class Celda extends Button implements Observer{
 					else{ //si tiene minas cercanas muestra el numero de minas
 						this.setTextColor(colores[CantMinasCercanas-1]);
 						this.setText(String.valueOf(CantMinasCercanas));
-						}
+					}
 				}//Si es una mina
 				else{
 					this.setText("X");
@@ -70,17 +71,18 @@ public class Celda extends Button implements Observer{
 			}
 	 }else{ //si cond es falsa perdio el juego
 			if (this.getEstado()==EstadoCelda.CUBIERTA){
+				estado=EstadoCelda.DESCUBIERTA;
 				if(!Mina){
 					if(this.CantMinasCercanas==0){
 						this.setEnabled(false);
 					}
 					else{
+						this.setEnabled(false);
 						this.setTextColor(colores[CantMinasCercanas-1]);
 						this.setText(String.valueOf(CantMinasCercanas));
 					}
-				}
-				else{ // si es una mina imprime una imagen
-					this.setBackgroundResource(R.drawable.boton_bomba_pisada);
+				}else{ // si es una mina imprime una imagen
+					this.setBackgroundResource(R.drawable.boton_bomba_destapado);
 				}
 			}
 		}
@@ -131,6 +133,7 @@ public class Celda extends Button implements Observer{
 		this.descubrir();
 	}
 
+	
 	@Override
 	public void update(Object o) {
 		

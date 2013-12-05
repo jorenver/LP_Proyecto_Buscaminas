@@ -15,7 +15,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class BarraDeMenu extends TableLayout {
-
 	private ImageButton Cara;
 	private TableRow fila;
 	private Observer Inicio;
@@ -25,10 +24,13 @@ public class BarraDeMenu extends TableLayout {
 	private int Contador;
 	private long tiempo;
 	private TableRow.LayoutParams params1;   
-	    
+	 
 	public BarraDeMenu(Context C){
 		super(C);
-		Contador=0;
+		LayoutParams parametros=new TableLayout.LayoutParams();
+		//parametros.height=500;
+	//	this.setLayoutParams(parametros);
+		Contador=10;
 		tiempo=0;
 		Cara=new ImageButton(C);
 		bandera= new ImageView(C);
@@ -36,19 +38,18 @@ public class BarraDeMenu extends TableLayout {
 		fila=new TableRow(C);
 		Cara= new ImageButton(C);
 		params1= new TableRow.LayoutParams();
-		params1.span = 6; 
 		DispContador = new TextView (C);
 		DispContador.setText(String.valueOf(Contador));
 		bandera.setBackgroundResource(R.drawable.bandera);
-		Cara.setBackgroundResource(R.drawable.cara2);
+		Cara.setBackgroundResource(R.drawable.terminator_face);
 		Cara.setOnClickListener(Reiniciar);
 		fila.setGravity (Gravity.CENTER); 
 		fila.addView(relog);
 		fila.addView(Cara);
 		fila.addView(bandera);
 		fila.addView(DispContador);
-		this.addView(fila);
 		
+		this.addView(fila);
 	}
 	
 	
@@ -76,8 +77,7 @@ public class BarraDeMenu extends TableLayout {
 				relog.setText("00:00");
 			if(accion==AccionesRelog.DETENER)
 				relog.stop();
-				tiempo=SystemClock.elapsedRealtime()- relog.getBase();
-			
+				tiempo= SystemClock.elapsedRealtime() - relog.getBase();
 		}
 		
 	};
@@ -111,7 +111,7 @@ public class BarraDeMenu extends TableLayout {
 					Cara.setBackgroundResource(R.drawable.terminator);
 					break;
 				case en_juego:
-					Cara.setBackgroundResource(R.drawable.cara2);
+					Cara.setBackgroundResource(R.drawable.terminator_face);
 					break;
 			}
 		}
@@ -120,9 +120,9 @@ public class BarraDeMenu extends TableLayout {
 	public Observer getCaraObserver() {
 		return CaraObserver;
 	}
-	
-	public ImageView getBandera(){
-		return bandera;
+
+	public View getBandera() {
+		return this.bandera;
 	}
 	
 }
