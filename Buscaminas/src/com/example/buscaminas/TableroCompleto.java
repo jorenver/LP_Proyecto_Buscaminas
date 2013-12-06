@@ -16,9 +16,6 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.Toast;
 
-@SuppressLint("NewApi")
-
-
 public class TableroCompleto extends TableLayout {
 	private BarraDeMenu Barra;
 	private Tablero tablero;
@@ -33,21 +30,23 @@ public class TableroCompleto extends TableLayout {
 		C=context;
 		Barra=new BarraDeMenu(context);
 		Barra.setObserver(Reinicio);
+		Barra.getBandera().setOnTouchListener(ListenerTocar);
 		tablero=new Tablero(context,fila,columna,Nminas);
 		//el reloj observa al tablero para saber cuando reiniciarse , detenerce , o encerarse
+		
 		tablero.setObserver(Barra.getObserverRelor());//reloj
 		tablero.setObserverCara(Barra.getCaraObserver());//cara
 		tablero.setObserverTableroCompleto(TabCompObserver);//tab
 		tablero.setOnDrag(ListenerArrastar);
+		
 		fila1= new TableRow(context);
 		Top= new TopManager(context);
 		fila1.setGravity(Gravity.CENTER);
-		this.setBackgroundResource(R.drawable.fondo);
-		Barra.getBandera().setOnTouchListener(ListenerTocar);
+		this.setBackgroundResource(R.drawable.fondo);	
 		ArmarTablero();	
 	}
 	
-	public void ArmarTablero(){
+	public void ArmarTablero(){ 
 		fila1.addView(Barra);
 		this.addView(fila1);
 		this.addView(tablero.getLayout());
@@ -110,13 +109,12 @@ public class TableroCompleto extends TableLayout {
 	   };
 	    
 	   
-	  
-
 	@SuppressLint("NewApi")
 	OnDragListener ListenerArrastar = new OnDragListener(){
 	 
-		@Override
+		@SuppressLint("NewApi")
 		public boolean onDrag(View view, DragEvent event) {
+			
 			switch (event.getAction()) {
 	         case DragEvent.ACTION_DRAG_STARTED:
 	             //no se define
@@ -129,11 +127,12 @@ public class TableroCompleto extends TableLayout {
 	             break;
 	         case DragEvent.ACTION_DROP:
 	             //cuando se suelta la vista
-	        	 Log.i("entro","drag");
-	        	 /*
 	             Celda c=(Celda) view;
-	             c.setBackgroundResource(R.drawable.bandera);
-	             */
+	             if(c.getEstado()==EstadoCelda.CUBIERTA){
+	            	 c.setBackgroundResource(R.drawable.bandera);
+	            	 c.setBandera(true);
+	            	 tablero.update(c);
+	             }
 	             break;
 	         case DragEvent.ACTION_DRAG_ENDED:
 	             //no se define
@@ -141,11 +140,8 @@ public class TableroCompleto extends TableLayout {
 	         default:
 	             break;
 	     }
-			return false;
+			return true;
 		}
-	 
-	     
 	   };
-	
 	
 }

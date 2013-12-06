@@ -54,11 +54,6 @@ public class Tablero extends View implements Observer{
 		registrarCeldasAdyacentes();
 		observarCeldas();
 		layout.setGravity(Gravity.CENTER);
-	
-		
-		
-	
-	
 	}
 
 	public void generarTablero(Context context){
@@ -130,7 +125,7 @@ public class Tablero extends View implements Observer{
 					continue;
 				}else{
 					celda.setMina(true);
-					//celda.setText("*");
+					celda.setText("*");
 					minas--;
 				}
 			}
@@ -244,15 +239,14 @@ public class Tablero extends View implements Observer{
 		for(int i=0;i<n_filas;i++){
 			for(int j=0;j<n_filas;j++){
 				Celda celda=obtenerCelda(i,j);
-				if(celda.getMina()==false && celda.getEstado()==EstadoCelda.CUBIERTA){
+				if(celda.getMina()==false &&celda.getEstado()==EstadoCelda.CUBIERTA && celda.isBandera()==false){
 					return false;
 				}
 			}
 		} 
 		return true;
 	}
-	
-	
+
 	//inicializa el tablero y el reloj
 	public void reiniciar(){
 		Inicio=true;
@@ -271,7 +265,8 @@ public class Tablero extends View implements Observer{
 				c.setText(" ");
 				c.setTextColor(Color.BLACK);
 				c.setMina(false);
-				c.setEnabled(true);//desactivar todas las celdas
+				c.setBandera(false);
+				c.setEnabled(true);
 				c.SetEstado(EstadoCelda.CUBIERTA);
 			}
 		}
@@ -323,7 +318,6 @@ public class Tablero extends View implements Observer{
 		}
 	}
 	
-
 	@SuppressLint("NewApi")
 	public void setOnDrag(OnDragListener listenerTocar){
 		for(int i=0;i<n_filas;i++){
@@ -333,9 +327,5 @@ public class Tablero extends View implements Observer{
 			}
 		}
 	}
-	
-	
-	
-
 }
 		

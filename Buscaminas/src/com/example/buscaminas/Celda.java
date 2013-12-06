@@ -14,6 +14,7 @@ import android.widget.TableLayout;
 public class Celda extends Button implements Observer{
 	private boolean vacio;
 	private boolean Mina;
+	private boolean Bandera;
 	private int verde=Color.rgb(16,124,10);
 	private int colores[]= {Color.BLUE,verde,Color.RED,Color.BLACK,Color.MAGENTA,Color.CYAN,Color.YELLOW,Color.GRAY};
 	private EstadoCelda estado;
@@ -25,13 +26,14 @@ public class Celda extends Button implements Observer{
 		super(context);
 		vacio=false;
 		Mina=false;
+		Bandera=false;
 		estado=EstadoCelda.CUBIERTA;
 		CantMinasCercanas=0;
 		adyacentes=new ArrayList<Observer>();
 	}
 	
 	public void descubrir(){
-		if(this.getEstado()==EstadoCelda.CUBIERTA){			
+		if(this.getEstado()==EstadoCelda.CUBIERTA &&!Bandera){			
 			if(!Mina){	
 				estado=EstadoCelda.DESCUBIERTA;
 				this.setEnabled(false);
@@ -39,7 +41,6 @@ public class Celda extends Button implements Observer{
 					for(Observer o:adyacentes){
 						o.update();
 					}
-				
 				}else{
 					this.setTextColor(colores[CantMinasCercanas-1]);
 					this.setText(String.valueOf(CantMinasCercanas));
@@ -66,7 +67,11 @@ public class Celda extends Button implements Observer{
 					}
 				}//Si es una mina
 				else{
-					this.setText("X");
+					if(Bandera){
+						this.setText("!!!");
+					}else{
+						this.setText("X");
+					}
 				}
 			}
 	 }else{ //si cond es falsa perdio el juego
@@ -127,7 +132,15 @@ public class Celda extends Button implements Observer{
 	public void setMina(boolean mina) {
 		Mina = mina;
 	}
-	
+
+	public boolean isBandera() {
+		return Bandera;
+	}
+
+	public void setBandera(boolean bandera) {
+		Bandera = bandera;
+	}
+
 	@Override
 	public void update() {
 		this.descubrir();
