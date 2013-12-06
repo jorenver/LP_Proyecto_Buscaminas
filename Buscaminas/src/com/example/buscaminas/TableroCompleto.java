@@ -38,6 +38,7 @@ public class TableroCompleto extends TableLayout {
 		tablero.setObserverCara(Barra.getCaraObserver());//cara
 		tablero.setObserverTableroCompleto(TabCompObserver);//tab
 		tablero.setOnDrag(ListenerArrastar);
+		quitarBandera();
 		
 		fila1= new TableRow(context);
 		Top= new TopManager(context);
@@ -107,14 +108,12 @@ public class TableroCompleto extends TableLayout {
 		}
 	 
 	   };
-	    
 	   
 	@SuppressLint("NewApi")
-	OnDragListener ListenerArrastar = new OnDragListener(){
+	OnDragListener ListenerArrastar = new OnDragListener(){//manejador del evento para las celdas
 	 
 		@SuppressLint("NewApi")
-		public boolean onDrag(View view, DragEvent event) {
-			
+		public boolean onDrag(View view, DragEvent event) {		
 			switch (event.getAction()) {
 	         case DragEvent.ACTION_DRAG_STARTED:
 	             //no se define
@@ -131,6 +130,10 @@ public class TableroCompleto extends TableLayout {
 	             if(c.getEstado()==EstadoCelda.CUBIERTA){
 	            	 c.setBackgroundResource(R.drawable.bandera);
 	            	 c.setBandera(true);
+	            	 if(event.getLocalState() instanceof Celda){//si la vista del drag fue una celda
+	            		Celda celda_origen=(Celda)event.getLocalState();
+	            		actualizarCelda(celda_origen);//actualiza el estado de la celda_origen
+	            	 }
 	            	 tablero.update(c);
 	             }
 	             break;
@@ -139,9 +142,48 @@ public class TableroCompleto extends TableLayout {
 	             break;
 	         default:
 	             break;
-	     }
+			}
 			return true;
 		}
 	   };
+	   
+	
+	@SuppressLint("NewApi")
+	public void quitarBandera(){
+		this.setOnDragListener(new OnDragListener(){
+			@SuppressLint("NewApi")
+			@Override
+			public boolean onDrag(View view, DragEvent event) {
+				Celda celda_actual=null;
+				switch (event.getAction()) {
+			         case DragEvent.ACTION_DRAG_STARTED:
+			             break;
+			         case DragEvent.ACTION_DRAG_ENTERED:
+	
+			             break;
+			         case DragEvent.ACTION_DRAG_EXITED:
+			             //no se define
+			             break;
+			         case DragEvent.ACTION_DROP:
+			        	 celda_actual=(Celda)event.getLocalState();//origen del drag event
+			        	 actualizarCelda(celda_actual);//actualiza el nuevo estado de la celda
+			        	 break;
+			         case DragEvent.ACTION_DRAG_ENDED:
+			             //no se definee
+			             break;
+			         default:
+			             break;
+				}
+				return true;
+			}
+		});
+		
+	}   
+	   
+	public void actualizarCelda(Celda celda_actual){
+		 celda_actual.setEnabled(true);//setea background
+	   	 celda_actual.setBandera(false);// ya no tiene bandera
+	   	 tablero.setCeldaOnTouchListener(celda_actual);//celda ya no sea arrastrable
+	}
 	
 }

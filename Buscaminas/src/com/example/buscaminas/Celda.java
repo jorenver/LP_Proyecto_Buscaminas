@@ -4,10 +4,15 @@ import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Random;
 
+import android.annotation.SuppressLint;
 import android.app.ActionBar.LayoutParams;
+import android.content.ClipData;
 import android.content.Context;
 import android.graphics.Color;
 import android.util.Log;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.View.DragShadowBuilder;
 import android.widget.Button;
 import android.widget.TableLayout;
 
@@ -159,6 +164,26 @@ public class Celda extends Button implements Observer{
 		}else{
 			this.setBackgroundResource(R.drawable.boton_destapado);
 		}
+	}
+	
+	public void celdaConBandera(){
+		
+		this.setOnTouchListener(new OnTouchListener(){
+			@SuppressLint("NewApi")
+			@Override
+			public boolean onTouch(View view, MotionEvent event) {
+				if (MotionEvent.ACTION_DOWN==event.getAction()){
+			         ClipData data = ClipData.newPlainText("", "");
+			         DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(view);
+			         view.startDrag(data, shadowBuilder, view, 0);
+			         return true;
+			     }
+				return false;
+			}
+		});
+		
+		
+		
 	}
 	
 

@@ -175,7 +175,7 @@ public class Tablero extends View implements Observer{
 	public void update(Object o){
 		//determina si el jugador , sigue jugando, perdio o gano
 		Celda celda=(Celda)o;
-		if(celda.getMina()){ //si es verdadero tiene una mina
+		if(celda.getMina()&&celda.isBandera()==false){ //si es verdadero tiene una mina
 			//jugador pierde
 			detenerRelog();//reloj se detiene
 			cara.update(EstadoCara.perder);
@@ -188,11 +188,8 @@ public class Tablero extends View implements Observer{
 					c.destapar(false); //informo a la celda que ha perdido el juego
 				}
 			}
-			
-			
 			Toast toast = Toast.makeText(contexto, "BOOM!!!", Toast.LENGTH_SHORT);
 			toast.show();
-			
 		}else{
 			if(celdasDescubiertas()){ //si el gana
 				detenerRelog();//reloj se detiene
@@ -208,6 +205,10 @@ public class Tablero extends View implements Observer{
 				
 				Toast toast = Toast.makeText(contexto, "Ganaste!!!", Toast.LENGTH_SHORT);
 				toast.show();
+			}else{
+				if(celda.isBandera()){
+					celda.celdaConBandera();//setea el listener de celda
+				}
 			}
 		}
 	}
@@ -327,5 +328,11 @@ public class Tablero extends View implements Observer{
 			}
 		}
 	}
+	
+	public void setCeldaOnTouchListener(Celda celda){
+		celda.setOnTouchListener(null);
+	}
+	
+	
 }
 		
