@@ -38,7 +38,7 @@ public class TableroCompleto extends TableLayout {
 		tablero.setObserverCara(Barra.getCaraObserver());//cara
 		tablero.setObserverTableroCompleto(TabCompObserver);//tab
 		tablero.setOnDrag(ListenerArrastar);
-		quitarBandera();
+		
 		
 		fila1= new TableRow(context);
 		Top= new TopManager(context);
@@ -106,7 +106,6 @@ public class TableroCompleto extends TableLayout {
 		       }
 			return false;
 		}
-	 
 	   };
 	   
 	@SuppressLint("NewApi")
@@ -134,7 +133,8 @@ public class TableroCompleto extends TableLayout {
 	            		Celda celda_origen=(Celda)event.getLocalState();
 	            		actualizarCelda(celda_origen);//actualiza el estado de la celda_origen
 	            	 }
-	            	 tablero.update(c);
+	            	 listenerQuitarBandera();
+	            	 tablero.update(c);	             
 	             }
 	             break;
 	         case DragEvent.ACTION_DRAG_ENDED:
@@ -149,7 +149,7 @@ public class TableroCompleto extends TableLayout {
 	   
 	
 	@SuppressLint("NewApi")
-	public void quitarBandera(){
+	public void listenerQuitarBandera(){
 		this.setOnDragListener(new OnDragListener(){
 			@SuppressLint("NewApi")
 			@Override
@@ -159,17 +159,18 @@ public class TableroCompleto extends TableLayout {
 			         case DragEvent.ACTION_DRAG_STARTED:
 			             break;
 			         case DragEvent.ACTION_DRAG_ENTERED:
-	
 			             break;
 			         case DragEvent.ACTION_DRAG_EXITED:
-			             //no se define
 			             break;
 			         case DragEvent.ACTION_DROP:
-			        	 celda_actual=(Celda)event.getLocalState();//origen del drag event
-			        	 actualizarCelda(celda_actual);//actualiza el nuevo estado de la celda
+			        	 if(event.getLocalState() instanceof Celda){
+				        	 celda_actual=(Celda)event.getLocalState();//origen del drag event
+				        	 if(celda_actual!=null){
+				        		 actualizarCelda(celda_actual);//actualiza el nuevo estado de la celda
+				        	 }
+			        	 }
 			        	 break;
 			         case DragEvent.ACTION_DRAG_ENDED:
-			             //no se definee
 			             break;
 			         default:
 			             break;
