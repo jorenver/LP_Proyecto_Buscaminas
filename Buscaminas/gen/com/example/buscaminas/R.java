@@ -24,56 +24,78 @@ public final class R {
         public static final int acerca_de_encendido=0x7f020000;
         public static final int acerca_de_normal=0x7f020001;
         public static final int acerca_de_presionado=0x7f020002;
-        public static final int bandera=0x7f020003;
-        public static final int bomba=0x7f020004;
-        public static final int bombap=0x7f020005;
+        public static final int animacion_inicio=0x7f020003;
+        public static final int animacion_intro=0x7f020004;
+        public static final int bandera=0x7f020005;
         public static final int boton=0x7f020006;
-        public static final int boton_bomba=0x7f020007;
+        public static final int boton_bomba_destapado=0x7f020007;
         public static final int boton_bomba_pisada=0x7f020008;
         public static final int boton_destapado=0x7f020009;
-        public static final int cara=0x7f02000a;
-        public static final int cara2=0x7f02000b;
-        public static final int fondo=0x7f02000c;
-        public static final int ic_launcher=0x7f02000d;
-        public static final int nivel_experto=0x7f02000e;
-        public static final int nivel_facil=0x7f02000f;
-        public static final int nivel_intermedio=0x7f020010;
-        public static final int partida_nueva_encendido=0x7f020011;
-        public static final int partida_nueva_normal=0x7f020012;
-        public static final int partida_nueva_presionado=0x7f020013;
-        public static final int terminator=0x7f020014;
-        public static final int top_jugadores_encendido=0x7f020015;
-        public static final int top_jugadores_normal=0x7f020016;
-        public static final int top_jugadores_presionado=0x7f020017;
+        public static final int fondo=0x7f02000a;
+        public static final int fondo_1=0x7f02000b;
+        public static final int fondo_2=0x7f02000c;
+        public static final int fondo_3=0x7f02000d;
+        public static final int fondo_4=0x7f02000e;
+        public static final int fondo_5=0x7f02000f;
+        public static final int ic_launcher=0x7f020010;
+        public static final int nivel_experto=0x7f020011;
+        public static final int nivel_experto_presionado=0x7f020012;
+        public static final int nivel_facil=0x7f020013;
+        public static final int nivel_facil_presionado=0x7f020014;
+        public static final int nivel_intermedio=0x7f020015;
+        public static final int nivel_intermedio_presionado=0x7f020016;
+        public static final int partida_nueva_encendido=0x7f020017;
+        public static final int partida_nueva_normal=0x7f020018;
+        public static final int partida_nueva_presionado=0x7f020019;
+        public static final int terminator=0x7f02001a;
+        public static final int terminator_face=0x7f02001b;
+        public static final int terminator_face_1=0x7f02001c;
+        public static final int terminator_m=0x7f02001d;
+        public static final int top_jugadores_encendido=0x7f02001e;
+        public static final int top_jugadores_normal=0x7f02001f;
+        public static final int top_jugadores_presionado=0x7f020020;
     }
     public static final class id {
         public static final int AcercaDe=0x7f080008;
         public static final int Experto=0x7f080006;
         public static final int Facil=0x7f080002;
+        public static final int Imagen_Animacion=0x7f08000e;
         public static final int Intermedio=0x7f080004;
         public static final int PartidaNueva=0x7f080007;
         public static final int TableLayout1=0x7f080000;
         public static final int Top=0x7f080009;
-        public static final int action_settings=0x7f08000a;
+        public static final int action_settings=0x7f08000f;
+        public static final int button1=0x7f08000d;
+        public static final int editText1=0x7f08000c;
         public static final int tableRow1=0x7f080001;
         public static final int tableRow2=0x7f080003;
         public static final int tableRow3=0x7f080005;
+        public static final int textView1=0x7f08000a;
+        public static final int textView2=0x7f08000b;
     }
     public static final class layout {
         public static final int activity_acerca_de=0x7f030000;
         public static final int activity_dificultad_del_juego=0x7f030001;
-        public static final int activity_inicio=0x7f030002;
-        public static final int activity_main=0x7f030003;
-        public static final int activity_top_jugadores=0x7f030004;
-        public static final int boton_acerca_de=0x7f030005;
-        public static final int boton_partida_nueva=0x7f030006;
-        public static final int boton_top_jugadores=0x7f030007;
+        public static final int activity_drag_and_drop=0x7f030002;
+        public static final int activity_inicio=0x7f030003;
+        public static final int activity_main=0x7f030004;
+        public static final int activity_top_jugadores=0x7f030005;
+        public static final int barra_menu=0x7f030006;
+        public static final int boton_acerca_de=0x7f030007;
+        public static final int boton_experto=0x7f030008;
+        public static final int boton_facil=0x7f030009;
+        public static final int boton_intermedio=0x7f03000a;
+        public static final int boton_partida_nueva=0x7f03000b;
+        public static final int boton_top_jugadores=0x7f03000c;
+        public static final int ingresotop=0x7f03000d;
+        public static final int splash_screen_intro=0x7f03000e;
     }
     public static final class menu {
         public static final int acerca_de=0x7f070000;
-        public static final int inicio=0x7f070001;
-        public static final int main=0x7f070002;
-        public static final int top_jugadores=0x7f070003;
+        public static final int drag_and_drop=0x7f070001;
+        public static final int inicio=0x7f070002;
+        public static final int main=0x7f070003;
+        public static final int top_jugadores=0x7f070004;
     }
     public static final class string {
         public static final int Desarrolladores=0x7f050005;
@@ -82,12 +104,14 @@ public final class R {
         public static final int action_settings=0x7f050001;
         public static final int app_name=0x7f050000;
         public static final int busca_Minas=0x7f050002;
-        public static final int camponombretop=0x7f05000b;
+        public static final int camponombretop=0x7f05000c;
         public static final int hello_world=0x7f050004;
+        public static final int nombre=0x7f05000d;
         public static final int title_activity_acerca_de=0x7f050006;
+        public static final int title_activity_drag_and_drop=0x7f05000a;
         public static final int title_activity_inicio=0x7f050003;
         public static final int title_activity_top_jugadores=0x7f050008;
-        public static final int titulotop=0x7f05000a;
+        public static final int titulotop=0x7f05000b;
     }
     public static final class style {
         /** 

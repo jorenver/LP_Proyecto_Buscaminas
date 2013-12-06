@@ -108,6 +108,7 @@ public class TableroCompleto extends TableLayout {
 		}
 	   };
 	   
+	   
 	@SuppressLint("NewApi")
 	OnDragListener ListenerArrastar = new OnDragListener(){//manejador del evento para las celdas
 	 
@@ -127,8 +128,8 @@ public class TableroCompleto extends TableLayout {
 	             //cuando se suelta la vista
 	             Celda c=(Celda) view;
 	             if(c.getEstado()==EstadoCelda.CUBIERTA){
+	            	 c.SetEstado(EstadoCelda.BANDERA);
 	            	 c.setBackgroundResource(R.drawable.bandera);
-	            	 c.setBandera(true);
 	            	 if(event.getLocalState() instanceof Celda){//si la vista del drag fue una celda
 	            		Celda celda_origen=(Celda)event.getLocalState();
 	            		actualizarCelda(celda_origen);//actualiza el estado de la celda_origen
@@ -183,7 +184,7 @@ public class TableroCompleto extends TableLayout {
 	   
 	public void actualizarCelda(Celda celda_actual){
 		 celda_actual.setEnabled(true);//setea background
-	   	 celda_actual.setBandera(false);// ya no tiene bandera
+	   	 celda_actual.SetEstado(EstadoCelda.CUBIERTA);// ya no tiene bandera
 	   	 tablero.setCeldaOnTouchListener(celda_actual);//celda ya no sea arrastrable
 	}
 	

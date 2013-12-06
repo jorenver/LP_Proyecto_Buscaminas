@@ -21,7 +21,7 @@
             android:id="@+id/Facil"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/nivel_facil" />
+            android:background="@layout/boton_facil"/>
 
     </TableRow>
 
@@ -35,7 +35,7 @@
             android:id="@+id/Intermedio"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/nivel_intermedio" />
+            android:background="@layout/boton_intermedio" />
 
     </TableRow>
 
@@ -49,7 +49,7 @@
             android:id="@+id/Experto"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/nivel_experto" />
+            android:background="@layout/boton_experto" />
 
     </TableRow>
 

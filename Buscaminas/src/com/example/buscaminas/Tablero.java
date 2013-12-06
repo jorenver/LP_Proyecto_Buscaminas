@@ -175,13 +175,11 @@ public class Tablero extends View implements Observer{
 	public void update(Object o){
 		//determina si el jugador , sigue jugando, perdio o gano
 		Celda celda=(Celda)o;
-		if(celda.getMina()&&celda.isBandera()==false){ //si es verdadero tiene una mina
+		if(celda.getMina() && celda.getEstado() != EstadoCelda.BANDERA){ //si es verdadero tiene una mina
 			//jugador pierde
 			detenerRelog();//reloj se detiene
 			cara.update(EstadoCara.perder);
-			
 			reproducirMusica();
-			
 			for(int i=0;i<n_filas;i++){ //recorro las celdas
 				for(int j=0;j<n_columnas;j++){
 					Celda c=obtenerCelda(i,j);
@@ -206,7 +204,7 @@ public class Tablero extends View implements Observer{
 				Toast toast = Toast.makeText(contexto, "Ganaste!!!", Toast.LENGTH_SHORT);
 				toast.show();
 			}else{
-				if(celda.isBandera()){
+				if(celda.getEstado()==EstadoCelda.BANDERA){
 					celda.celdaConBandera();//setea el listener de celda
 				}
 			}
@@ -240,7 +238,7 @@ public class Tablero extends View implements Observer{
 		for(int i=0;i<n_filas;i++){
 			for(int j=0;j<n_filas;j++){
 				Celda celda=obtenerCelda(i,j);
-				if(celda.getMina()==false &&celda.getEstado()==EstadoCelda.CUBIERTA && celda.isBandera()==false){
+				if(celda.getMina()==false && (celda.getEstado()==EstadoCelda.CUBIERTA ||celda.getEstado()==EstadoCelda.BANDERA)) {
 					return false;
 				}
 			}
@@ -266,7 +264,6 @@ public class Tablero extends View implements Observer{
 				c.setText(" ");
 				c.setTextColor(Color.BLACK);
 				c.setMina(false);
-				c.setBandera(false);
 				c.setEnabled(true);
 				c.SetEstado(EstadoCelda.CUBIERTA);
 			}
