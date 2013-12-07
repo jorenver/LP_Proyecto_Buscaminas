@@ -59,19 +59,22 @@ public final class R {
         public static final int AcercaDe=0x7f080008;
         public static final int Experto=0x7f080006;
         public static final int Facil=0x7f080002;
-        public static final int Imagen_Animacion=0x7f08000e;
+        public static final int Imagen_Animacion=0x7f080011;
         public static final int Intermedio=0x7f080004;
         public static final int PartidaNueva=0x7f080007;
+        public static final int TablaTop=0x7f08000a;
         public static final int TableLayout1=0x7f080000;
         public static final int Top=0x7f080009;
-        public static final int action_settings=0x7f08000f;
-        public static final int button1=0x7f08000d;
-        public static final int editText1=0x7f08000c;
+        public static final int action_settings=0x7f080012;
+        public static final int lista_exper=0x7f080010;
+        public static final int lista_inter=0x7f08000e;
+        public static final int lista_princ=0x7f08000c;
+        public static final int tab1=0x7f08000b;
+        public static final int tab2=0x7f08000d;
+        public static final int tab3=0x7f08000f;
         public static final int tableRow1=0x7f080001;
         public static final int tableRow2=0x7f080003;
         public static final int tableRow3=0x7f080005;
-        public static final int textView1=0x7f08000a;
-        public static final int textView2=0x7f08000b;
     }
     public static final class layout {
         public static final int activity_acerca_de=0x7f030000;
@@ -87,8 +90,7 @@ public final class R {
         public static final int boton_intermedio=0x7f03000a;
         public static final int boton_partida_nueva=0x7f03000b;
         public static final int boton_top_jugadores=0x7f03000c;
-        public static final int ingresotop=0x7f03000d;
-        public static final int splash_screen_intro=0x7f03000e;
+        public static final int splash_screen_intro=0x7f03000d;
     }
     public static final class menu {
         public static final int acerca_de=0x7f070000;
@@ -106,7 +108,6 @@ public final class R {
         public static final int busca_Minas=0x7f050002;
         public static final int camponombretop=0x7f05000c;
         public static final int hello_world=0x7f050004;
-        public static final int nombre=0x7f05000d;
         public static final int title_activity_acerca_de=0x7f050006;
         public static final int title_activity_drag_and_drop=0x7f05000a;
         public static final int title_activity_inicio=0x7f050003;
