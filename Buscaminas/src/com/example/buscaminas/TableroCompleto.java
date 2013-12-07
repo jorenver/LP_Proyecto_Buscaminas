@@ -38,6 +38,7 @@ public class TableroCompleto extends TableLayout {
 		tablero.setObserverCara(Barra.getCaraObserver());//cara
 		tablero.setObserverTableroCompleto(TabCompObserver);//tab
 		tablero.setOnDrag(ListenerArrastar);
+		tablero.setOnTouch(ListenerTocar);
 		
 		
 		fila1= new TableRow(context);
@@ -98,12 +99,30 @@ public class TableroCompleto extends TableLayout {
 		@SuppressLint("NewApi")
 		@Override
 		public boolean onTouch(View view, MotionEvent event) {
-			if (MotionEvent.ACTION_DOWN==event.getAction()){
-		         ClipData data = ClipData.newPlainText("", "");
-		         DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(view);
-		         view.startDrag(data, shadowBuilder, view, 0);
-		         return true;
-		       }
+			// para el caso que sea una celda el que genera el evento
+			if((view instanceof Celda ) ){
+				Celda a;
+				a=(Celda)view;
+				//solo la deja arrastar si tiene bandera
+				if(a.getEstado()==EstadoCelda.BANDERA){
+					if (MotionEvent.ACTION_DOWN==event.getAction()){
+				         ClipData data = ClipData.newPlainText("", "");
+				         DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(view);
+				         view.startDrag(data, shadowBuilder, view, 0);
+				         a.setEnabled(true);//setea background
+				         return true;
+				       }
+				}
+			
+			}else{//es una bandera
+				if (MotionEvent.ACTION_DOWN==event.getAction()){
+			         ClipData data = ClipData.newPlainText("", "");
+			         DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(view);
+			         view.startDrag(data, shadowBuilder, view, 0);
+			         return true;
+			       }
+				
+			}
 			return false;
 		}
 	   };
@@ -134,7 +153,6 @@ public class TableroCompleto extends TableLayout {
 	            		Celda celda_origen=(Celda)event.getLocalState();
 	            		actualizarCelda(celda_origen);//actualiza el estado de la celda_origen
 	            	 }
-	            	 listenerQuitarBandera();
 	            	 tablero.update(c);	             
 	             }
 	             break;
@@ -148,44 +166,10 @@ public class TableroCompleto extends TableLayout {
 		}
 	   };
 	   
-	
-	@SuppressLint("NewApi")
-	public void listenerQuitarBandera(){
-		this.setOnDragListener(new OnDragListener(){
-			@SuppressLint("NewApi")
-			@Override
-			public boolean onDrag(View view, DragEvent event) {
-				Celda celda_actual=null;
-				switch (event.getAction()) {
-			         case DragEvent.ACTION_DRAG_STARTED:
-			             break;
-			         case DragEvent.ACTION_DRAG_ENTERED:
-			             break;
-			         case DragEvent.ACTION_DRAG_EXITED:
-			             break;
-			         case DragEvent.ACTION_DROP:
-			        	 if(event.getLocalState() instanceof Celda){
-				        	 celda_actual=(Celda)event.getLocalState();//origen del drag event
-				        	 if(celda_actual!=null){
-				        		 actualizarCelda(celda_actual);//actualiza el nuevo estado de la celda
-				        	 }
-			        	 }
-			        	 break;
-			         case DragEvent.ACTION_DRAG_ENDED:
-			             break;
-			         default:
-			             break;
-				}
-				return true;
-			}
-		});
-		
-	}   
 	   
 	public void actualizarCelda(Celda celda_actual){
 		 celda_actual.setEnabled(true);//setea background
 	   	 celda_actual.SetEstado(EstadoCelda.CUBIERTA);// ya no tiene bandera
-	   	 tablero.setCeldaOnTouchListener(celda_actual);//celda ya no sea arrastrable
 	}
 	
 }

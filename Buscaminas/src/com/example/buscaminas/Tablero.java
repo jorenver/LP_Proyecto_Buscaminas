@@ -203,10 +203,6 @@ public class Tablero extends View implements Observer{
 				
 				Toast toast = Toast.makeText(contexto, "Ganaste!!!", Toast.LENGTH_SHORT);
 				toast.show();
-			}else{
-				if(celda.getEstado()==EstadoCelda.BANDERA){
-					celda.celdaConBandera();//setea el listener de celda
-				}
 			}
 		}
 	}
@@ -316,6 +312,8 @@ public class Tablero extends View implements Observer{
 		}
 	}
 	
+	
+	//setea el drag para que las celdas pueden escuchar cuando cae una bandera
 	@SuppressLint("NewApi")
 	public void setOnDrag(OnDragListener listenerTocar){
 		for(int i=0;i<n_filas;i++){
@@ -326,9 +324,18 @@ public class Tablero extends View implements Observer{
 		}
 	}
 	
-	public void setCeldaOnTouchListener(Celda celda){
-		celda.setOnTouchListener(null);
+	
+	//setea en ontouch para que las celdas que tengan banderas sean arrastables
+	@SuppressLint("NewApi")
+	public void setOnTouch(OnTouchListener listenerTocar){
+		for(int i=0;i<n_filas;i++){
+			for(int j=0;j<n_columnas;j++){
+				Celda c=obtenerCelda(i,j);
+				c.setOnTouchListener(listenerTocar);
+			}
+		}
 	}
+	
 	
 	
 }

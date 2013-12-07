@@ -156,25 +156,5 @@ public class Celda extends Button implements Observer{
 		}
 	}
 	
-	public void celdaConBandera(){
-		
-		this.setOnTouchListener(new OnTouchListener(){
-			@SuppressLint("NewApi")
-			@Override
-			public boolean onTouch(View view, MotionEvent event) {
-				if (MotionEvent.ACTION_DOWN==event.getAction()){
-			         ClipData data = ClipData.newPlainText("", "");
-			         DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(view);
-			         view.startDrag(data, shadowBuilder, view, 0);
-			         return true;
-			     }
-				return false;
-			}
-		});
-		
-		
-		
-	}
-	
 
 }
