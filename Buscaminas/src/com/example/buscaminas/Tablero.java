@@ -174,22 +174,41 @@ public class Tablero extends View implements Observer{
 	
 	public void update(Object o){
 		//determina si el jugador , sigue jugando, perdio o gano
-		Celda celda=(Celda)o;
-		if(celda.getMina() && celda.getEstado() != EstadoCelda.BANDERA){ //si es verdadero tiene una mina
-			//jugador pierde
-			detenerRelog();//reloj se detiene
-			cara.update(EstadoCara.perder);
-			reproducirMusica();
-			for(int i=0;i<n_filas;i++){ //recorro las celdas
-				for(int j=0;j<n_columnas;j++){
-					Celda c=obtenerCelda(i,j);
-					c.destapar(false); //informo a la celda que ha perdido el juego
+		if(o!=null){//si el objeto no es nulo se dio click en una celda
+			Celda celda=(Celda)o;
+			if(celda.getMina() && celda.getEstado() != EstadoCelda.BANDERA){ //si es verdadero tiene una mina
+				//jugador pierde
+				detenerRelog();//reloj se detiene
+				cara.update(EstadoCara.perder);
+				reproducirMusica();
+				for(int i=0;i<n_filas;i++){ //recorro las celdas
+					for(int j=0;j<n_columnas;j++){
+						Celda c=obtenerCelda(i,j);
+						c.destapar(false); //informo a la celda que ha perdido el juego
+					}
+				}
+				Toast toast = Toast.makeText(contexto, "BOOM!!!", Toast.LENGTH_SHORT);
+				toast.show();
+			}
+			else{
+				if(celdasDescubiertas()){ //si el gana
+					detenerRelog();//reloj se detiene
+					//recorro las celdas
+					for(int i=0;i<n_filas;i++){
+						for(int j=0;j<n_columnas;j++){
+							Celda c=obtenerCelda(i,j);
+							c.setBackgroundResource(R.drawable.boton);
+							c.destapar(true);//informo que gano
+							c.setEnabled(false);//desactivar todas las celdas
+						}
+					}
+					
+					Toast toast = Toast.makeText(contexto, "Ganaste!!!", Toast.LENGTH_SHORT);
+					toast.show();
 				}
 			}
-			Toast toast = Toast.makeText(contexto, "BOOM!!!", Toast.LENGTH_SHORT);
-			toast.show();
-		}else{
-			if(celdasDescubiertas()){ //si el gana
+		}else{//si es nulo vino de alguna bandera
+			if(this.allMinasBandera() && this.cantBanderasTablero()==cantidad_de_minas){
 				detenerRelog();//reloj se detiene
 				//recorro las celdas
 				for(int i=0;i<n_filas;i++){
@@ -290,6 +309,10 @@ public class Tablero extends View implements Observer{
 		TabCompleto=T;
 	}
 	
+	public int getCantMinas(){
+		return cantidad_de_minas;
+	}
+	
 
 	public void reproducirMusica(){
 		AssetManager manejador=this.getContext().getAssets();
@@ -336,6 +359,30 @@ public class Tablero extends View implements Observer{
 		}
 	}
 	
+	
+	int cantBanderasTablero(){
+		int cont=0;
+		for(int i=0;i<n_filas;i++){
+			for(int j=0;j<n_columnas;j++){
+				Celda c=obtenerCelda(i,j);
+				if(c.getEstado()==EstadoCelda.BANDERA)
+					cont++;
+			}
+		}
+		return cont;
+	}
+	
+	boolean allMinasBandera(){
+		for(int i=0;i<n_filas;i++){
+			for(int j=0;j<n_columnas;j++){
+				Celda c=obtenerCelda(i,j);
+				//si la mina esta cubierta y tiene mina
+				if(c.getEstado()==EstadoCelda.CUBIERTA && c.getMina())
+					return false;
+			}
+		}
+		return true;
+	}
 	
 	
 }

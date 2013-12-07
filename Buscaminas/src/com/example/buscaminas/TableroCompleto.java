@@ -110,6 +110,11 @@ public class TableroCompleto extends TableLayout {
 				         DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(view);
 				         view.startDrag(data, shadowBuilder, view, 0);
 				         a.setEnabled(true);//setea background
+				         a.SetEstado(EstadoCelda.CUBIERTA);
+				         int num;
+				         num=TableroCompleto.this.tablero.getCantMinas()-TableroCompleto.this.tablero.cantBanderasTablero();
+				         TableroCompleto.this.Barra.getContbandera().setText(String.valueOf(num));
+				         tablero.update(null);//informar el tablero de la celda que se le quito la bandera
 				         return true;
 				       }
 				}
@@ -153,7 +158,10 @@ public class TableroCompleto extends TableLayout {
 	            		Celda celda_origen=(Celda)event.getLocalState();
 	            		actualizarCelda(celda_origen);//actualiza el estado de la celda_origen
 	            	 }
-	            	 tablero.update(c);	             
+	            	 int num;
+			         num=TableroCompleto.this.tablero.getCantMinas()-TableroCompleto.this.tablero.cantBanderasTablero();
+			         TableroCompleto.this.Barra.getContbandera().setText(String.valueOf(num));
+	            	 tablero.update(null);//informa al tablero que se coloco una bandera	             
 	             }
 	             break;
 	         case DragEvent.ACTION_DRAG_ENDED:
@@ -170,6 +178,10 @@ public class TableroCompleto extends TableLayout {
 	public void actualizarCelda(Celda celda_actual){
 		 celda_actual.setEnabled(true);//setea background
 	   	 celda_actual.SetEstado(EstadoCelda.CUBIERTA);// ya no tiene bandera
+	}
+	
+	public  BarraDeMenu getBarra(){
+		return Barra;
 	}
 	
 }
