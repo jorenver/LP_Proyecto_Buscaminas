@@ -32,13 +32,13 @@ public class TableroCompleto extends TableLayout {
 		Barra.setObserver(Reinicio);
 		Barra.getBandera().setOnTouchListener(ListenerTocar);
 		tablero=new Tablero(context,fila,columna,Nminas);
-		nivel=getNivel(Nminas);
 		//el reloj observa al tablero para saber cuando reiniciarse , detenerce , o encerarse
 		
 		tablero.setObserver(Barra.getObserverRelor());//reloj
 		tablero.setObserverCara(Barra.getCaraObserver());//cara
 		tablero.setObserverTableroCompleto(TabCompObserver);//tab
 		tablero.setOnDrag(ListenerArrastar);
+		tablero.setOnTouch(ListenerTocar);
 		
 		
 		fila1= new TableRow(context);
@@ -50,8 +50,8 @@ public class TableroCompleto extends TableLayout {
 	
 	public void ArmarTablero(){ 
 		fila1.addView(Barra);
-		this.addView(fila1); // agrega la fila que contine la barra
-		this.addView(tablero.getLayout()); // abajo agrega el tablero
+		this.addView(fila1);
+		this.addView(tablero.getLayout());
 	}
 	
 	public void reiniciarJuego(){
@@ -62,7 +62,6 @@ public class TableroCompleto extends TableLayout {
 		@Override
 		public void update() {
 			long time=Barra.getTiempo();
-			Top.setNivel(nivel);
 			boolean entraTop=Top.validarTiempo(time);
 			Toast toast1 = Toast.makeText(C,""+time, Toast.LENGTH_SHORT);
 			toast1.show();
@@ -78,18 +77,20 @@ public class TableroCompleto extends TableLayout {
 		
 	};
 	
-	//devuelve el nivel del juego, depende del numero del Numero de minas
-	public Nivel getNivel(int Nminas){
-		if (Nminas==10){
+	
+	public Nivel getNivel(int j){
+		Nivel N;
+		
+		if (j==9){
 			return Nivel.PRINCIPIANTE;
 		}
-		else if(Nminas==40){
+		else if(j==16){
 			return Nivel.INTERMEDIO;
 		}
-		else if (Nminas==99){
+		else{
 			return Nivel.EXPERTO;
 			}
-		return null;
+		
 	}
 	
 
@@ -98,15 +99,39 @@ public class TableroCompleto extends TableLayout {
 		@SuppressLint("NewApi")
 		@Override
 		public boolean onTouch(View view, MotionEvent event) {
-			if (MotionEvent.ACTION_DOWN==event.getAction()){
-		         ClipData data = ClipData.newPlainText("", "");
-		         DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(view);
-		         view.startDrag(data, shadowBuilder, view, 0);
-		         return true;
-		       }
+			// para el caso que sea una celda el que genera el evento
+			if((view instanceof Celda ) ){
+				Celda a;
+				a=(Celda)view;
+				//solo la deja arrastar si tiene bandera
+				if(a.getEstado()==EstadoCelda.BANDERA){
+					if (MotionEvent.ACTION_DOWN==event.getAction()){
+				         ClipData data = ClipData.newPlainText("", "");
+				         DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(view);
+				         view.startDrag(data, shadowBuilder, view, 0);
+				         a.setEnabled(true);//setea background
+				         a.SetEstado(EstadoCelda.CUBIERTA);
+				         int num;
+				         num=TableroCompleto.this.tablero.getCantMinas()-TableroCompleto.this.tablero.cantBanderasTablero();
+				         TableroCompleto.this.Barra.getContbandera().setText(String.valueOf(num));
+				         tablero.update(null);//informar el tablero de la celda que se le quito la bandera
+				         return true;
+				       }
+				}
+			
+			}else{//es una bandera
+				if (MotionEvent.ACTION_DOWN==event.getAction()){
+			         ClipData data = ClipData.newPlainText("", "");
+			         DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(view);
+			         view.startDrag(data, shadowBuilder, view, 0);
+			         return true;
+			       }
+				
+			}
 			return false;
 		}
 	   };
+	   
 	   
 	@SuppressLint("NewApi")
 	OnDragListener ListenerArrastar = new OnDragListener(){//manejador del evento para las celdas
@@ -127,14 +152,16 @@ public class TableroCompleto extends TableLayout {
 	             //cuando se suelta la vista
 	             Celda c=(Celda) view;
 	             if(c.getEstado()==EstadoCelda.CUBIERTA){
+	            	 c.SetEstado(EstadoCelda.BANDERA);
 	            	 c.setBackgroundResource(R.drawable.bandera);
-	            	 c.setBandera(true);
 	            	 if(event.getLocalState() instanceof Celda){//si la vista del drag fue una celda
 	            		Celda celda_origen=(Celda)event.getLocalState();
 	            		actualizarCelda(celda_origen);//actualiza el estado de la celda_origen
 	            	 }
-	            	 listenerQuitarBandera();
-	            	 tablero.update(c);	             
+	            	 int num;
+			         num=TableroCompleto.this.tablero.getCantMinas()-TableroCompleto.this.tablero.cantBanderasTablero();
+			         TableroCompleto.this.Barra.getContbandera().setText(String.valueOf(num));
+	            	 tablero.update(null);//informa al tablero que se coloco una bandera	             
 	             }
 	             break;
 	         case DragEvent.ACTION_DRAG_ENDED:
@@ -147,44 +174,17 @@ public class TableroCompleto extends TableLayout {
 		}
 	   };
 	   
-	
-	@SuppressLint("NewApi")
-	public void listenerQuitarBandera(){
-		this.setOnDragListener(new OnDragListener(){
-			@SuppressLint("NewApi")
-			@Override
-			public boolean onDrag(View view, DragEvent event) {
-				Celda celda_actual=null;
-				switch (event.getAction()) {
-			         case DragEvent.ACTION_DRAG_STARTED:
-			             break;
-			         case DragEvent.ACTION_DRAG_ENTERED:
-			             break;
-			         case DragEvent.ACTION_DRAG_EXITED:
-			             break;
-			         case DragEvent.ACTION_DROP:
-			        	 if(event.getLocalState() instanceof Celda){
-				        	 celda_actual=(Celda)event.getLocalState();//origen del drag event
-				        	 if(celda_actual!=null){
-				        		 actualizarCelda(celda_actual);//actualiza el nuevo estado de la celda
-				        	 }
-			        	 }
-			        	 break;
-			         case DragEvent.ACTION_DRAG_ENDED:
-			             break;
-			         default:
-			             break;
-				}
-				return true;
-			}
-		});
-		
-	}   
 	   
 	public void actualizarCelda(Celda celda_actual){
 		 celda_actual.setEnabled(true);//setea background
-	   	 celda_actual.setBandera(false);// ya no tiene bandera
-	   	 tablero.setCeldaOnTouchListener(celda_actual);//celda ya no sea arrastrable
+	   	 celda_actual.SetEstado(EstadoCelda.CUBIERTA);// ya no tiene bandera
 	}
+	
+	public  BarraDeMenu getBarra(){
+		return Barra;
+	}
+	
+		
+
 	
 }
