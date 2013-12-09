@@ -42,10 +42,6 @@
             android:name="com.example.buscaminas.DragAndDrop"
             android:label="@string/title_activity_drag_and_drop" >
         </activity>
-        <activity
-            android:name="com.example.buscaminas.Top_Ingreso"
-            android:label="@string/title_activity_top__ingreso" >
-        </activity>
     </application>
 
 </manifest>

@@ -19,9 +19,7 @@ import android.widget.TableLayout;
 public class Celda extends Button implements Observer{
 	private boolean vacio;
 	private boolean Mina;
-	private boolean Bandera;
-	private int verde=Color.rgb(16,124,10);
-	private int colores[]= {Color.BLUE,verde,Color.RED,Color.BLACK,Color.MAGENTA,Color.CYAN,Color.YELLOW,Color.GRAY};
+	private int colores[]= {Color.BLUE,Color.rgb(16,124,10),Color.RED,Color.BLACK,Color.MAGENTA,Color.CYAN,Color.YELLOW,Color.GRAY};
 	private EstadoCelda estado;
 	private int CantMinasCercanas;
 	private ArrayList<Observer> adyacentes;
@@ -31,14 +29,13 @@ public class Celda extends Button implements Observer{
 		super(context);
 		vacio=false;
 		Mina=false;
-		Bandera=false;
 		estado=EstadoCelda.CUBIERTA;
 		CantMinasCercanas=0;
 		adyacentes=new ArrayList<Observer>();
 	}
 	
 	public void descubrir(){
-		if(this.getEstado()==EstadoCelda.CUBIERTA &&!Bandera){			
+		if(this.getEstado()==EstadoCelda.CUBIERTA){			
 			if(!Mina){	
 				estado=EstadoCelda.DESCUBIERTA;
 				this.setEnabled(false);
@@ -72,7 +69,7 @@ public class Celda extends Button implements Observer{
 					}
 				}//Si es una mina
 				else{
-					if(Bandera){
+					if(estado==EstadoCelda.BANDERA){
 						this.setText("!!!");
 					}else{
 						this.setText("X");
@@ -138,13 +135,6 @@ public class Celda extends Button implements Observer{
 		Mina = mina;
 	}
 
-	public boolean isBandera() {
-		return Bandera;
-	}
-
-	public void setBandera(boolean bandera) {
-		Bandera = bandera;
-	}
 
 	@Override
 	public void update() {
@@ -164,26 +154,6 @@ public class Celda extends Button implements Observer{
 		}else{
 			this.setBackgroundResource(R.drawable.boton_destapado);
 		}
-	}
-	
-	public void celdaConBandera(){
-		
-		this.setOnTouchListener(new OnTouchListener(){
-			@SuppressLint("NewApi")
-			@Override
-			public boolean onTouch(View view, MotionEvent event) {
-				if (MotionEvent.ACTION_DOWN==event.getAction()){
-			         ClipData data = ClipData.newPlainText("", "");
-			         DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(view);
-			         view.startDrag(data, shadowBuilder, view, 0);
-			         return true;
-			     }
-				return false;
-			}
-		});
-		
-		
-		
 	}
 	
 
