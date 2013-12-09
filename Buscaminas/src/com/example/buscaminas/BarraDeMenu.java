@@ -125,9 +125,5 @@ public class BarraDeMenu extends TableLayout {
 		return this.bandera;
 	}
 	
-	public TextView getContbandera(){
-		return DispContador;
-	}
-	
 }
 

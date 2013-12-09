@@ -112,7 +112,7 @@ public class Tablero extends View implements Observer{
 		}
 	}
 	
-	public void generarMinas(Celda celdaInicio,int minas){ //falta mejorar este algoritmo
+	public void generarMinas(Celda celdaInicio,int minas){ 
 		int aleatorio_x,aleatorio_y;
 		Random random=new Random();
 		Celda celda=null;
@@ -174,41 +174,24 @@ public class Tablero extends View implements Observer{
 	
 	public void update(Object o){
 		//determina si el jugador , sigue jugando, perdio o gano
-		if(o!=null){//si el objeto no es nulo se dio click en una celda
-			Celda celda=(Celda)o;
-			if(celda.getMina() && celda.getEstado() != EstadoCelda.BANDERA){ //si es verdadero tiene una mina
-				//jugador pierde
-				detenerRelog();//reloj se detiene
-				cara.update(EstadoCara.perder);
-				reproducirMusica();
-				for(int i=0;i<n_filas;i++){ //recorro las celdas
-					for(int j=0;j<n_columnas;j++){
-						Celda c=obtenerCelda(i,j);
-						c.destapar(false); //informo a la celda que ha perdido el juego
-					}
-				}
-				Toast toast = Toast.makeText(contexto, "BOOM!!!", Toast.LENGTH_SHORT);
-				toast.show();
-			}
-			else{
-				if(celdasDescubiertas()){ //si el gana
-					detenerRelog();//reloj se detiene
-					//recorro las celdas
-					for(int i=0;i<n_filas;i++){
-						for(int j=0;j<n_columnas;j++){
-							Celda c=obtenerCelda(i,j);
-							c.setBackgroundResource(R.drawable.boton);
-							c.destapar(true);//informo que gano
-							c.setEnabled(false);//desactivar todas las celdas
-						}
-					}
-					
-					Toast toast = Toast.makeText(contexto, "Ganaste!!!", Toast.LENGTH_SHORT);
-					toast.show();
+		Celda celda=(Celda)o;
+		if(celda.getMina()&&celda.isBandera()==false){ //si tiene bomba y no tiene bandera
+			//jugador pierde
+			detenerRelog();//reloj se detiene
+			cara.update(EstadoCara.perder);
+			
+			reproducirMusica();
+			
+			for(int i=0;i<n_filas;i++){ //recorro las celdas
+				for(int j=0;j<n_columnas;j++){
+					Celda c=obtenerCelda(i,j);
+					c.destapar(false); //informo a la celda que ha perdido el juego
 				}
 			}
-		}else{//si es nulo vino de alguna bandera
-			if(this.allMinasBandera() && this.cantBanderasTablero()==cantidad_de_minas){
+			Toast toast = Toast.makeText(contexto, "BOOM!!!", Toast.LENGTH_SHORT);
+			toast.show();
+		}else{
+			if(celdasDescubiertas()){ //si el gana
 				detenerRelog();//reloj se detiene
 				//recorro las celdas
 				for(int i=0;i<n_filas;i++){
@@ -222,6 +205,12 @@ public class Tablero extends View implements Observer{
 				
 				Toast toast = Toast.makeText(contexto, "Ganaste!!!", Toast.LENGTH_SHORT);
 				toast.show();
+				TabCompleto.update(); // informa al top que ha ganado
+				
+			}else{
+				if(celda.isBandera()){
+					celda.celdaConBandera();//setea el listener de celda
+				}
 			}
 		}
 	}
@@ -253,7 +242,7 @@ public class Tablero extends View implements Observer{
 		for(int i=0;i<n_filas;i++){
 			for(int j=0;j<n_filas;j++){
 				Celda celda=obtenerCelda(i,j);
-				if(celda.getMina()==false && (celda.getEstado()==EstadoCelda.CUBIERTA ||celda.getEstado()==EstadoCelda.BANDERA)) {
+				if(celda.getMina()==false &&celda.getEstado()==EstadoCelda.CUBIERTA && celda.isBandera()==false){
 					return false;
 				}
 			}
@@ -279,6 +268,7 @@ public class Tablero extends View implements Observer{
 				c.setText(" ");
 				c.setTextColor(Color.BLACK);
 				c.setMina(false);
+				c.setBandera(false);
 				c.setEnabled(true);
 				c.SetEstado(EstadoCelda.CUBIERTA);
 			}
@@ -309,10 +299,6 @@ public class Tablero extends View implements Observer{
 		TabCompleto=T;
 	}
 	
-	public int getCantMinas(){
-		return cantidad_de_minas;
-	}
-	
 
 	public void reproducirMusica(){
 		AssetManager manejador=this.getContext().getAssets();
@@ -335,8 +321,6 @@ public class Tablero extends View implements Observer{
 		}
 	}
 	
-	
-	//setea el drag para que las celdas pueden escuchar cuando cae una bandera
 	@SuppressLint("NewApi")
 	public void setOnDrag(OnDragListener listenerTocar){
 		for(int i=0;i<n_filas;i++){
@@ -347,41 +331,8 @@ public class Tablero extends View implements Observer{
 		}
 	}
 	
-	
-	//setea en ontouch para que las celdas que tengan banderas sean arrastables
-	@SuppressLint("NewApi")
-	public void setOnTouch(OnTouchListener listenerTocar){
-		for(int i=0;i<n_filas;i++){
-			for(int j=0;j<n_columnas;j++){
-				Celda c=obtenerCelda(i,j);
-				c.setOnTouchListener(listenerTocar);
-			}
-		}
-	}
-	
-	
-	int cantBanderasTablero(){
-		int cont=0;
-		for(int i=0;i<n_filas;i++){
-			for(int j=0;j<n_columnas;j++){
-				Celda c=obtenerCelda(i,j);
-				if(c.getEstado()==EstadoCelda.BANDERA)
-					cont++;
-			}
-		}
-		return cont;
-	}
-	
-	boolean allMinasBandera(){
-		for(int i=0;i<n_filas;i++){
-			for(int j=0;j<n_columnas;j++){
-				Celda c=obtenerCelda(i,j);
-				//si la mina esta cubierta y tiene mina
-				if(c.getEstado()==EstadoCelda.CUBIERTA && c.getMina())
-					return false;
-			}
-		}
-		return true;
+	public void setCeldaOnTouchListener(Celda celda){
+		celda.setOnTouchListener(null);
 	}
 	
 	

@@ -1,5 +1,6 @@
 package com.example.buscaminas;
 
+
 public class Jugador implements Comparable<Jugador> {
 	private String nombre;
 	private int tiempo;
@@ -10,8 +11,17 @@ public class Jugador implements Comparable<Jugador> {
 		this.tiempo=aproximarTime(tiempo);
 	}
 	
+	public Jugador(String Nombre, int tiempo){
+		nombre=Nombre;
+		this.tiempo=tiempo;
+	}
+	
 	public int getTiempo(){
 		return tiempo;
+	}
+	
+	public String getNombre(){
+		return nombre;
 	}
 	
 	public void setNombre(String N){
@@ -31,7 +41,7 @@ public class Jugador implements Comparable<Jugador> {
 		}
 	}
 	
-	public int aproximarTime(long tiempoMiliseg){
+	public static int aproximarTime(long tiempoMiliseg){
 		int tiempo;
 		long tiempoSeg;
 		tiempoSeg=tiempoMiliseg/1000;
@@ -42,10 +52,12 @@ public class Jugador implements Comparable<Jugador> {
 	@Override
 	public String toString(){
 		String player;
-		player="\t"+nombre+"\t"+tiempo+"\n";
+		player="\t"+nombre+"\t"+Integer.toString(tiempo)+"\n";
 		return player;
 	}
 	
-	
+	public String JugadorFormatoDeArchivo(){
+		return tiempo+";"+nombre+"\n";
+	}
 
 }

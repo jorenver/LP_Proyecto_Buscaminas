@@ -12,5 +12,6 @@
     <string name="title_activity_top_jugadores">TopJugadores</string>
     <string name="DificultadDelJuego">Dificultad</string>
     <string name="title_activity_drag_and_drop">DragAndDrop</string>
+    <string name="title_activity_top__ingreso">Top_Ingreso</string>
 
 </resources>
