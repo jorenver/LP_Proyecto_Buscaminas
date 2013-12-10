@@ -202,9 +202,7 @@ public class Tablero extends View implements Observer{
 							c.setEnabled(false);//desactivar todas las celdas
 						}
 					}
-					
-					Toast toast = Toast.makeText(contexto, "Ganaste!!!", Toast.LENGTH_SHORT);
-					toast.show();
+					TabCompleto.update(); // informa al top que ha ganado
 				}
 			}
 		}else{//si es nulo vino de alguna bandera

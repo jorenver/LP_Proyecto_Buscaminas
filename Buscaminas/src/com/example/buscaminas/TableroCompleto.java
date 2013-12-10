@@ -20,7 +20,6 @@ public class TableroCompleto extends TableLayout {
 	private BarraDeMenu Barra;
 	private Tablero tablero;
 	private TableRow fila1;
-	private Jugador jugador;
 	private Nivel nivel;
 	private TopManager Top;
 	private Context C;
@@ -57,17 +56,17 @@ public class TableroCompleto extends TableLayout {
 	public void reiniciarJuego(){
 		tablero.reiniciar();
 	}
-
+	
 	Observer TabCompObserver= new Observer(){
 		@Override
 		public void update() {
 			long time=Barra.getTiempo();
-			boolean entraTop=Top.validarTiempo(time);
-			Toast toast1 = Toast.makeText(C,""+time, Toast.LENGTH_SHORT);
-			toast1.show();
-			if (entraTop){
-			Toast toast = Toast.makeText(C,"Entraste al Top"+time, Toast.LENGTH_SHORT);
+			Top.setNivel(nivel);
+			boolean entraTop=Top.validarTiempo(Jugador.aproximarTime(time));
+			Toast toast = Toast.makeText(C, "Ganaste!!!", Toast.LENGTH_SHORT);
 			toast.show();
+			if (entraTop){
+				Top.agregarJugador(time);
 			}
 		}
 
@@ -76,7 +75,6 @@ public class TableroCompleto extends TableLayout {
 		}
 		
 	};
-	
 	
 	public Nivel getNivel(int j){
 		Nivel N;
