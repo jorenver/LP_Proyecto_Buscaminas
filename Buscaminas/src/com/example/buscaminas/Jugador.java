@@ -52,7 +52,7 @@ public class Jugador implements Comparable<Jugador> {
 	@Override
 	public String toString(){
 		String player;
-		player="\t"+nombre+"\t"+Integer.toString(tiempo)+"\n";
+		player="\t"+nombre+"\t\t\t"+Integer.toString(tiempo)+"\n";
 		return player;
 	}
 	

@@ -22,14 +22,13 @@ public class CustomDialog extends Dialog implements OnClickListener {
 		super(context);
 		// TODO Auto-generated constructor stub
 		setContentView(R.layout.custom_dialog_jugador);
-		setTitle("Ingreso al Top");
+		setTitle("Tiempo Record");
 		Aceptar=(Button)findViewById(R.id.Aceptar);
 		Felicitacion=(TextView)findViewById(R.id.Felicitacion);
 		Nombre=(EditText)findViewById(R.id.NombreJug);
 		Aceptar.setText("Aceptar");
 		Aceptar.setOnClickListener(this);
 		Felicitacion.setText("Felicidades, gracias a ti Terminator no piso una mina y no murió, ingresas al top");
-		
 	}
 
 	public void mostrar(long time){

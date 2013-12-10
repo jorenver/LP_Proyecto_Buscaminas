@@ -34,6 +34,9 @@
                         android:id="@+id/lista_princ"
 		                android:layout_width="fill_parent"
 		                android:layout_height="fill_parent"
+		                android:textSize ="25sp"
+		                android:textStyle="bold"
+		                android:textColor="#ffffff"
 		                />
                     
 
@@ -49,6 +52,9 @@
                         android:id="@+id/lista_inter"
 		                android:layout_width="fill_parent"
 		                android:layout_height="fill_parent"
+		                android:textSize ="25sp"
+		                android:textStyle="bold"
+		                android:textColor="#ffffff"
 		                />
                     
 
@@ -64,6 +70,9 @@
                         android:id="@+id/lista_exper"
 		                android:layout_width="fill_parent"
 		                android:layout_height="fill_parent"
+		                android:textSize ="25sp"
+		                android:textStyle="bold"
+		                android:textColor="#ffffff"
 		                />
 
                 </LinearLayout>

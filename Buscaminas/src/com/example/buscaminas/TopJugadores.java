@@ -37,10 +37,13 @@ public class TopJugadores extends Activity{
 		ListaExperto=(TextView)findViewById(R.id.lista_exper);
 		ListaPrincipiante.setMovementMethod(new ScrollingMovementMethod());//agrego un scrollbar
 		ListaPrincipiante.setText(llenarLista(ARCHIVO_PRINC));//lleno la Lista
+		ListaPrincipiante.setBackgroundResource(R.drawable.fondo);
 		ListaIntermedio.setMovementMethod(new ScrollingMovementMethod()); //agrego un scrollbar
 		ListaIntermedio.setText(llenarLista(ARCHIVO_INTER));//lleno la Lista
+		ListaIntermedio.setBackgroundResource(R.drawable.fondo);
 		ListaExperto.setMovementMethod(new ScrollingMovementMethod());//agrego un scrollbar
 		ListaExperto.setText(llenarLista(ARCHIVO_EXPER));//lleno la Lista
+		ListaExperto.setBackgroundResource(R.drawable.fondo);
 		
 		Top= (TabHost)findViewById(R.id.TablaTop);
 		Top.setup();
@@ -113,7 +116,7 @@ public class TopJugadores extends Activity{
 			}
 		}
 		else{
-			return "No existen elementos para mostrar";
+			return "\n\tNo existen elementos para mostrar.";
 		}
 		return Lista;
 		
