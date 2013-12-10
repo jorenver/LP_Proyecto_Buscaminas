@@ -12,6 +12,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ScrollView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.Toast;
@@ -23,11 +24,12 @@ public class TableroCompleto extends TableLayout {
 	private Nivel nivel;
 	private TopManager Top;
 	private Context C;
-	
+	private ScrollView scroll;
 	public TableroCompleto(Context context, int fila, int columna,int Nminas,Observer Reinicio) {
 		super(context);
 		C=context;
 		Barra=new BarraDeMenu(context);
+		scroll=new ScrollView(context);
 		Barra.setObserver(Reinicio);
 		Barra.getBandera().setOnTouchListener(ListenerTocar);
 		tablero=new Tablero(context,fila,columna,Nminas);
@@ -38,8 +40,7 @@ public class TableroCompleto extends TableLayout {
 		tablero.setObserverTableroCompleto(TabCompObserver);//tab
 		tablero.setOnDrag(ListenerArrastar);
 		tablero.setOnTouch(ListenerTocar);
-		
-		
+		nivel=getNivel(Nminas);
 		fila1= new TableRow(context);
 		Top= new TopManager(context);
 		fila1.setGravity(Gravity.CENTER);
@@ -50,7 +51,8 @@ public class TableroCompleto extends TableLayout {
 	public void ArmarTablero(){ 
 		fila1.addView(Barra);
 		this.addView(fila1);
-		this.addView(tablero.getLayout());
+		scroll.addView(tablero.getLayout());
+		this.addView(scroll);
 	}
 	
 	public void reiniciarJuego(){
@@ -60,8 +62,8 @@ public class TableroCompleto extends TableLayout {
 	Observer TabCompObserver= new Observer(){
 		@Override
 		public void update() {
-			long time=Barra.getTiempo();
 			Top.setNivel(nivel);
+			long time=Barra.getTiempo();
 			boolean entraTop=Top.validarTiempo(Jugador.aproximarTime(time));
 			Toast toast = Toast.makeText(C, "Ganaste!!!", Toast.LENGTH_SHORT);
 			toast.show();
@@ -76,19 +78,17 @@ public class TableroCompleto extends TableLayout {
 		
 	};
 	
-	public Nivel getNivel(int j){
-		Nivel N;
-		
-		if (j==9){
-			return Nivel.PRINCIPIANTE;
-		}
-		else if(j==16){
-			return Nivel.INTERMEDIO;
-		}
-		else{
-			return Nivel.EXPERTO;
-			}
-		
+	public Nivel getNivel(int Nminas){
+		   if (Nminas==10){
+		        return Nivel.PRINCIPIANTE;
+		      }
+		 else if(Nminas==40){
+		       return Nivel.INTERMEDIO;
+		  }
+		 else if (Nminas==99){
+		       return Nivel.EXPERTO;
+		        }
+		   	return null;
 	}
 	
 
