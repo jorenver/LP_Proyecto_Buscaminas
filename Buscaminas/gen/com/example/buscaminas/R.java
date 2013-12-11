@@ -106,7 +106,8 @@ public final class R {
         public static final int drag_and_drop=0x7f070001;
         public static final int inicio=0x7f070002;
         public static final int main=0x7f070003;
-        public static final int top_jugadores=0x7f070004;
+        public static final int top__ingreso=0x7f070004;
+        public static final int top_jugadores=0x7f070005;
     }
     public static final class string {
         public static final int Desarrolladores=0x7f050005;

@@ -20,6 +20,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup.MarginLayoutParams;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TableLayout;
 import android.widget.TableLayout.LayoutParams;
 import android.widget.TableRow;
@@ -27,6 +28,7 @@ import android.widget.Toast;
 
 
 
+@SuppressLint("NewApi")
 public class Tablero extends View implements Observer{
 	private HashMap<Point,Celda>celdas;
 	private ArrayList<TableRow>tablero;
@@ -48,8 +50,6 @@ public class Tablero extends View implements Observer{
 		cantidad_de_minas=minas;
 		celdas=new HashMap<Point,Celda>();
 		tablero=new ArrayList<TableRow>();
-		
-		
 		generarTablero(context);
 		registrarCeldasAdyacentes();
 		observarCeldas();
