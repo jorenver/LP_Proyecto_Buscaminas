@@ -34,7 +34,6 @@ public class TableroCompleto extends TableLayout {
 		Barra.getBandera().setOnTouchListener(ListenerTocar);
 		tablero=new Tablero(context,fila,columna,Nminas);
 		//el reloj observa al tablero para saber cuando reiniciarse , detenerce , o encerarse
-		
 		tablero.setObserver(Barra.getObserverRelor());//reloj
 		tablero.setObserverCara(Barra.getCaraObserver());//cara
 		tablero.setObserverTableroCompleto(TabCompObserver);//tab
@@ -44,7 +43,9 @@ public class TableroCompleto extends TableLayout {
 		fila1= new TableRow(context);
 		Top= new TopManager(context);
 		fila1.setGravity(Gravity.CENTER);
-		this.setBackgroundResource(R.drawable.fondo);	
+		this.setBackgroundResource(R.drawable.fondo);
+		int num= TableroCompleto.this.tablero.getCantMinas(); 
+		TableroCompleto.this.Barra.getContbandera().setText(String.valueOf(num));
 		ArmarTablero();	
 	}
 	

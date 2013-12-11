@@ -21,7 +21,6 @@ public class BarraDeMenu extends TableLayout {
 	private ImageView bandera;
 	private Chronometer relog;
 	private TextView DispContador;
-	private int Contador;
 	private long tiempo;
 	private TableRow.LayoutParams params1;   
 	 
@@ -30,7 +29,6 @@ public class BarraDeMenu extends TableLayout {
 		LayoutParams parametros=new TableLayout.LayoutParams();
 		//parametros.height=500;
 	//	this.setLayoutParams(parametros);
-		Contador=10;
 		tiempo=0;
 		Cara=new ImageButton(C);
 		bandera= new ImageView(C);
@@ -39,7 +37,6 @@ public class BarraDeMenu extends TableLayout {
 		Cara= new ImageButton(C);
 		params1= new TableRow.LayoutParams();
 		DispContador = new TextView (C);
-		DispContador.setText(String.valueOf(Contador));
 		bandera.setBackgroundResource(R.drawable.bandera);
 		Cara.setBackgroundResource(R.drawable.terminator_face);
 		Cara.setOnClickListener(Reiniciar);
