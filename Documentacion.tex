@@ -72,7 +72,38 @@ Your text goes here.
 
 \section{Justificación}
 
-Your text goes here.
+
+
+En el desarrollo del proyecto hemos aplicado el paradigma de programación orientado a objetos. Hemos creado varias clases para dividir el problema en pequeñas partes, entre estas clases tememos.
+Interface Observer
+Esta interface la hemos definido para poder implementar el patrón de diseño Observer, consta de dos eventos Update que sirven para notificar al Observador de los cambios que ocurren en el Observado.
+
+\subsection{Clase Celda}
+Esta es una de las clase principales del proyecto simula cada una de las casillas del juego, esta clase extiende de Button e implementa Observer.\\
+¿Por qué extiende de Button?\\
+Esto se lo hiso principalmente para facilitar el manejo de eventos como click, Drap and Drop utilizando los listener que están definimos para este componente.\\
+¿Por qué implementa Observer?\\
+Lo hemos implementado así para logran en forma más eficiente el algoritmo para descubrir las celdas, cada celda tiene un ArrayList con sus celdas adyacentes las cuales observan un cambio de esta celda para descubrirse o no dependiendo de la situación, esto involucra que todas las celdas son Observes y a la vez son Observadas por sus adyacentes.
+Aparte de estas dos características todas las celdas poseen un estado que puede ser CUBIERTA ,DESCUBIERTA, BANDERA que sirve para que la celda sepa cómo comportarse ante algún evento.\\
+
+\subsection{Clase Tablero}
+Esta clase al igual que celda es una de las más importantes, es básicamente un conjunto de celdas que se organizan en forma de matriz, pero hemos decidido utilizar un HaspMap para contener las celdas, porque al no ser muchas celdas se pueden generar muy fácil las claves y el acceso a cada elemento del Mapa es muy rápido, esta clase extiende de View e implementa Observer.\\
+¿Por qué se extiende de View?\\
+La razón es muy simple el tablero se lo tiene que instanciar dentro de una actividad por lo cual la mejor opción era que extendiera de View\\
+¿Por qué se implementa Observer?\\
+Básicamente esto es para poder determinar si el juego continúa o finaliza, para esto el Tablero debe observar cuando alguna de las celdas cambie y realizar las validaciones correspondientes.\\
+
+\subsection{Clase Barra de Menu}
+Esta clase es muy sencilla consiste en un cronometro, un botón que sirve para reiniciar el juego, una bandera y un contador de banderas, y extiende de TableLayout.\\
+¿Por qué extiende de tableLayout?\\
+Porque la barra tiene barias componentes y uno forma muy fácil de organizarlos es con el TableLayout.\\
+
+\subsection{Comportamiento Drap and Drop}
+Se decidió utilizar Drap and Drop porque en Android no existe el Click derecho para poder colocar banderas en una celda, básicamente consiste en poder arrastrar una bandera encima de una celda y luego poder sacar la bandera de la celda arrastrándola.
+
+
+
+
 
 \section{Alcance}
 
@@ -86,6 +117,10 @@ Tenemos implementado varias formas de ganar el juego: una de ellas consiste en d
 Al momento de ganar el juego, la aplicación obtiene el tiempo del cronómetro, busca en su base de datos si el tiempo o las condiciones son apropiados para entrar al top. Las condiciones del top son las siguientes, si existen diez o menos jugadores en la lista, se permite el ingreso; si existen más de diez la aplicación revisa si el tiempo es menor a alguno de los existentes y permite el ingreso.  Así como lo implementamos se permite tener infinitos jugadores en la lista.
 La base de datos consiste en tres  ficheros .txt (uno para cada nivel) que son guardados en la memoria interna del dispositivo, los datos son presentados al usuario, ordenados de forma descendiente y usando un TableHost para visualizar mejor los resultados.
 Entre las cosas que no se pudieron implementar está conseguir mayor portabilidad de la aplicación, no se visualiza bien la resolución en teléfonos o Tablet muy pequeñas, porque fue pensada para funcionar en dispositivos grandes con una resolución de 1280 X 800, tampoco se consiguió que al girar la pantalla del dispositivo la aplicación gire y se adapte a la nueva forma vertical, la aplicación bloque el acelerómetro y mantiene la orientación en horizontal. 
+
+
+
+
 
 
 
