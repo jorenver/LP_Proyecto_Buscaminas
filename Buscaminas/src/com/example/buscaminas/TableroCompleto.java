@@ -25,35 +25,37 @@ public class TableroCompleto extends TableLayout {
 	private TopManager Top;
 	private Context C;
 	private ScrollView scroll;
+	
 	public TableroCompleto(Context context, int fila, int columna,int Nminas,Observer Reinicio) {
 		super(context);
 		C=context;
 		Barra=new BarraDeMenu(context);
-		scroll=new ScrollView(context);
 		Barra.setObserver(Reinicio);
 		Barra.getBandera().setOnTouchListener(ListenerTocar);
 		tablero=new Tablero(context,fila,columna,Nminas);
+		nivel=getNivel(Nminas);
 		//el reloj observa al tablero para saber cuando reiniciarse , detenerce , o encerarse
+		scroll=new ScrollView(C);
 		tablero.setObserver(Barra.getObserverRelor());//reloj
 		tablero.setObserverCara(Barra.getCaraObserver());//cara
 		tablero.setObserverTableroCompleto(TabCompObserver);//tab
 		tablero.setOnDrag(ListenerArrastar);
 		tablero.setOnTouch(ListenerTocar);
-		nivel=getNivel(Nminas);
 		fila1= new TableRow(context);
 		Top= new TopManager(context);
 		fila1.setGravity(Gravity.CENTER);
-		this.setBackgroundResource(R.drawable.fondo);
+		this.setBackgroundResource(R.drawable.fondo);	
 		int num= TableroCompleto.this.tablero.getCantMinas(); 
 		TableroCompleto.this.Barra.getContbandera().setText(String.valueOf(num));
 		ArmarTablero();	
 	}
-	
+
 	public void ArmarTablero(){ 
 		fila1.addView(Barra);
 		this.addView(fila1);
 		scroll.addView(tablero.getLayout());
 		this.addView(scroll);
+		//this.addView(tablero.getLayout());
 	}
 	
 	public void reiniciarJuego(){
@@ -63,8 +65,8 @@ public class TableroCompleto extends TableLayout {
 	Observer TabCompObserver= new Observer(){
 		@Override
 		public void update() {
-			Top.setNivel(nivel);
 			long time=Barra.getTiempo();
+			Top.setNivel(nivel);
 			boolean entraTop=Top.validarTiempo(Jugador.aproximarTime(time));
 			Toast toast = Toast.makeText(C, "Ganaste!!!", Toast.LENGTH_SHORT);
 			toast.show();
@@ -79,19 +81,16 @@ public class TableroCompleto extends TableLayout {
 		
 	};
 	
-	public Nivel getNivel(int Nminas){
-		   if (Nminas==10){
-		        return Nivel.PRINCIPIANTE;
-		      }
-		 else if(Nminas==40){
-		       return Nivel.INTERMEDIO;
-		  }
-		 else if (Nminas==99){
-		       return Nivel.EXPERTO;
-		        }
-		   	return null;
-	}
-	
+	 public Nivel getNivel(int Nminas){
+		 if (Nminas==10){
+		            return Nivel.PRINCIPIANTE;
+		 }else if(Nminas==40){
+		            return Nivel.INTERMEDIO;
+		 }else if (Nminas==99){
+		            return Nivel.EXPERTO;
+		 }
+		 return null;
+	 }
 
 	OnTouchListener ListenerTocar = new OnTouchListener(){
 	
@@ -106,6 +105,7 @@ public class TableroCompleto extends TableLayout {
 				if(a.getEstado()==EstadoCelda.BANDERA){
 					if (MotionEvent.ACTION_DOWN==event.getAction()){
 				         ClipData data = ClipData.newPlainText("", "");
+				         view.setBackgroundResource(R.drawable.bandera); 
 				         DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(view);
 				         view.startDrag(data, shadowBuilder, view, 0);
 				         a.setEnabled(true);//setea background
@@ -117,17 +117,16 @@ public class TableroCompleto extends TableLayout {
 				         return true;
 				       }
 				}
-			
 			}else{//es una bandera
 				if (MotionEvent.ACTION_DOWN==event.getAction()){
-			         ClipData data = ClipData.newPlainText("", "");
-			         DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(view);
-			         view.startDrag(data, shadowBuilder, view, 0);
-			         return true;
-			       }
-				
+					ClipData data = ClipData.newPlainText("", "");
+			        DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(view);
+			        view.startDrag(data, shadowBuilder, view, 0);
+			        return true;
+			    }
 			}
 			return false;
+			
 		}
 	   };
 	   
@@ -139,20 +138,18 @@ public class TableroCompleto extends TableLayout {
 		public boolean onDrag(View view, DragEvent event) {		
 			switch (event.getAction()) {
 	         case DragEvent.ACTION_DRAG_STARTED:
-	             //no se define
 	             break;
 	         case DragEvent.ACTION_DRAG_ENTERED:
-	             //no se define
 	             break;
 	         case DragEvent.ACTION_DRAG_EXITED:
 	             //no se define
-	             break;
+	             break; 
 	         case DragEvent.ACTION_DROP:
 	             //cuando se suelta la vista
 	             Celda c=(Celda) view;
 	             if(c.getEstado()==EstadoCelda.CUBIERTA){
 	            	 c.SetEstado(EstadoCelda.BANDERA);
-	            	 c.setBackgroundResource(R.drawable.bandera);
+	            	 c.setBackgroundResource(R.drawable.boton_bandera);
 	            	 if(event.getLocalState() instanceof Celda){//si la vista del drag fue una celda
 	            		Celda celda_origen=(Celda)event.getLocalState();
 	            		actualizarCelda(celda_origen);//actualiza el estado de la celda_origen
@@ -177,6 +174,7 @@ public class TableroCompleto extends TableLayout {
 	public void actualizarCelda(Celda celda_actual){
 		 celda_actual.setEnabled(true);//setea background
 	   	 celda_actual.SetEstado(EstadoCelda.CUBIERTA);// ya no tiene bandera
+	   	 
 	}
 	
 	public  BarraDeMenu getBarra(){

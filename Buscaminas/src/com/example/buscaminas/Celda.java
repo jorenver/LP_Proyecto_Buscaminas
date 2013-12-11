@@ -17,7 +17,6 @@ import android.widget.Button;
 import android.widget.TableLayout;
 
 public class Celda extends Button implements Observer{
-	private boolean vacio;
 	private boolean Mina;
 	private int colores[]= {Color.BLUE,Color.rgb(16,124,10),Color.RED,Color.BLACK,Color.MAGENTA,Color.CYAN,Color.YELLOW,Color.GRAY};
 	private EstadoCelda estado;
@@ -27,7 +26,6 @@ public class Celda extends Button implements Observer{
 		
 	public Celda(Context context) {
 		super(context);
-		vacio=false;
 		Mina=false;
 		estado=EstadoCelda.CUBIERTA;
 		CantMinasCercanas=0;
@@ -96,7 +94,7 @@ public class Celda extends Button implements Observer{
 	}
 	
 	
-	public void SetBombasCercanas(){ //este metodo debe llamarse en la clase tablero despues que se generen las minas
+	public void SetBombasCercanas(){
 		int CuentaBombas=0;
 		for(Observer Celda: adyacentes){
 			if(((Celda)Celda).getMina())

@@ -23,9 +23,7 @@ public class TopManager implements Observer {
 		fin = null;
 		Dialogo=new CustomDialog(C);
 		Dialogo.setObserver(this);
-		
 	}
-
 	/*Metodo readTimesfromFile 
 	 * Recibe un string para abrir un archivo
 	 * Lee linea por linea el archivo y separar el tiempo para agregarlo al LinkedList
@@ -137,7 +135,6 @@ public class TopManager implements Observer {
 		String JugadorString=J.JugadorFormatoDeArchivo();
 		Log.i("guardarJugador",JugadorString);
 		if (nivel == Nivel.PRINCIPIANTE){
-			Log.i("guardarJugador","principiante");
 			escribirJugadorEnArchivo(ARCHIVO_PRINC,JugadorString);
 		}
 		else if(nivel==Nivel.INTERMEDIO){
@@ -171,7 +168,6 @@ public class TopManager implements Observer {
 	public void update(Object o) {
 		// TODO Auto-generated method stub
 		Jugador J=(Jugador)o;
-		Log.i("Escribo","fsrsrs");
 		guardarJugador(J);
 		
 	}

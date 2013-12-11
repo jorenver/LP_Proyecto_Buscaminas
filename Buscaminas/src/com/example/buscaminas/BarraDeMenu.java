@@ -27,8 +27,6 @@ public class BarraDeMenu extends TableLayout {
 	public BarraDeMenu(Context C){
 		super(C);
 		LayoutParams parametros=new TableLayout.LayoutParams();
-		//parametros.height=500;
-	//	this.setLayoutParams(parametros);
 		tiempo=0;
 		Cara=new ImageButton(C);
 		bandera= new ImageView(C);

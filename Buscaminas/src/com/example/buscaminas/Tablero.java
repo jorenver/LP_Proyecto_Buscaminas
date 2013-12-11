@@ -20,7 +20,6 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup.MarginLayoutParams;
 import android.widget.RelativeLayout;
-import android.widget.ScrollView;
 import android.widget.TableLayout;
 import android.widget.TableLayout.LayoutParams;
 import android.widget.TableRow;
@@ -28,7 +27,6 @@ import android.widget.Toast;
 
 
 
-@SuppressLint("NewApi")
 public class Tablero extends View implements Observer{
 	private HashMap<Point,Celda>celdas;
 	private ArrayList<TableRow>tablero;
@@ -49,19 +47,20 @@ public class Tablero extends View implements Observer{
 		n_columnas=j;
 		cantidad_de_minas=minas;
 		celdas=new HashMap<Point,Celda>();
-		tablero=new ArrayList<TableRow>();
+		tablero=new ArrayList<TableRow>();		
 		generarTablero(context);
 		registrarCeldasAdyacentes();
 		observarCeldas();
 		layout.setGravity(Gravity.CENTER);
+		
 	}
 
 	public void generarTablero(Context context){
 		layout = new TableLayout(context);
-	//	layout.setLayoutParams(new TableLayout.LayoutParams(LayoutParams.FILL_PARENT , LayoutParams.FILL_PARENT ));
+		layout.setLayoutParams(new TableLayout.LayoutParams(LayoutParams.WRAP_CONTENT , LayoutParams.WRAP_CONTENT ));
 		for(int i=0;i<n_filas;i++){
 			TableRow f = new TableRow(context);
-			//f.setLayoutParams(new TableLayout.LayoutParams(LayoutParams.WRAP_CONTENT , LayoutParams.WRAP_CONTENT ));
+			f.setLayoutParams(new TableLayout.LayoutParams(LayoutParams.WRAP_CONTENT , LayoutParams.WRAP_CONTENT ));
 			f.setGravity(Gravity.CENTER);
 			tablero.add(f);
 		}
@@ -74,7 +73,6 @@ public class Tablero extends View implements Observer{
 				celda.setOnClickListener(ClickCelda);
 				celda.setText("  ");
 				celda.setBackgroundResource(R.drawable.boton);
-				//celda.setLayoutParams(new TableLayout.LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT ));
 				f.addView(celda);				
 				layout.setColumnShrinkable(j,true);
 			}
@@ -112,7 +110,7 @@ public class Tablero extends View implements Observer{
 		}
 	}
 	
-	public void generarMinas(Celda celdaInicio,int minas){ //falta mejorar este algoritmo
+	public void generarMinas(Celda celdaInicio,int minas){ 
 		int aleatorio_x,aleatorio_y;
 		Random random=new Random();
 		Celda celda=null;
