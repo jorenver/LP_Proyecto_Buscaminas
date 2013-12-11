@@ -79,9 +79,28 @@ Your text goes here.
 El proyecto fue escrito en la versión de Android 4.3, con lo cual sólo funcionaría correctamente en dispositivos avanzados.
 Nuestro proyecto al inicio  muestra un menú de opciones para elegir entre: Partida Nueva, Acerca De y Top Jugadores, como se muestra en la fig1. La opción Partida Nueva muestra otra actividad para elegir entre tres niveles, Fácil, Intermedio y Experto, la opción de personalizar el número de filas, columnas y bombas del tablero no ha sido implementada. 
 
+\begin{figure}[H]
+ \begin{center}
+    \includegraphics{imagenes_Documentacion/fig1}
+\end{center}
+\caption {}
+\label{Figura 1}
+\end{figure}
+
+
+
 El tablero del juego muestra básicamente dos Views uno en la parte superior con opciones donde se muestran un cronómetro, un botón para reiniciar el juego, una bandera y un contador; el otro View muestra las celdas.  Los algoritmos recursivos de la expansión de las celdas funcionan muy bien. Todas las opciones  funcionan correctamente, cabe destacar que en el proyecto si fue posible implementar un drag and drop para arrastrar la bandera y ubicarla en la celda, además se puede desde cualquier celda arrastrar la bandera para ser colocada en otra celda o ser eliminada soltándose en un sitio libre de celdas. Fig2
 
 Tenemos implementado varias formas de ganar el juego: una de ellas consiste en descubrir todas las celdas sin minas, pudiendo usar o no usar las banderas; otra manera es que en el momento de haber colocado banderas en todas las celdas con bombas, automáticamente se descubren las celdas que no han sido descubiertas y se gana el juego. Esta última forma se implementó para que el acto de ganar sea más rápido porque el juego también consiste en ganar en el menor tiempo posible y romper records. En el juego existe una cantidad de banderas infinitas, es posible llenar todo el tablero con ellas y seguir arrastrando aunque no haya espacio para ponerlas, en esta situación el contador no es afectado.
+
+\begin{figure}[H]
+ \begin{center}
+    \includegraphics{imagenes_Documentacion/fig2}
+\end{center}
+\caption {//Tablero del juego: arrastrando una bandera hasta una celda}
+\label{Figura 2}
+\end{figure}
+
 
 Al momento de ganar el juego, la aplicación obtiene el tiempo del cronómetro, busca en su base de datos si el tiempo o las condiciones son apropiados para entrar al top. Las condiciones del top son las siguientes, si existen diez o menos jugadores en la lista, se permite el ingreso; si existen más de diez la aplicación revisa si el tiempo es menor a alguno de los existentes y permite el ingreso.  Así como lo implementamos se permite tener infinitos jugadores en la lista.
 La base de datos consiste en tres  ficheros .txt (uno para cada nivel) que son guardados en la memoria interna del dispositivo, los datos son presentados al usuario, ordenados de forma descendiente y usando un TableHost para visualizar mejor los resultados.
