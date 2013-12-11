@@ -93,15 +93,43 @@ La razón es muy simple el tablero se lo tiene que instanciar dentro de una acti
 ¿Por qué se implementa Observer?\\
 Básicamente esto es para poder determinar si el juego continúa o finaliza, para esto el Tablero debe observar cuando alguna de las celdas cambie y realizar las validaciones correspondientes.\\
 
+\begin{figure}[H]
+ \begin{center}
+    \includegraphics{imagenes_Documentacion/tablero}
+\end{center}
+\caption {}
+\label{Tablero}
+\end{figure}
+
+
 \subsection{Clase Barra de Menu}
 Esta clase es muy sencilla consiste en un cronometro, un botón que sirve para reiniciar el juego, una bandera y un contador de banderas, y extiende de TableLayout.\\
 ¿Por qué extiende de tableLayout?\\
 Porque la barra tiene barias componentes y uno forma muy fácil de organizarlos es con el TableLayout.\\
 
+\begin{figure}[H]
+ \begin{center}
+    \includegraphics{imagenes_Documentacion/barraMenu}
+\end{center}
+\caption {}
+\label{Barra de Menu}
+\end{figure}
+
+
 \subsection{Comportamiento Drap and Drop}
 Se decidió utilizar Drap and Drop porque en Android no existe el Click derecho para poder colocar banderas en una celda, básicamente consiste en poder arrastrar una bandera encima de una celda y luego poder sacar la bandera de la celda arrastrándola.
 
+\begin{figure}[H]
+ \begin{center}
+    \includegraphics{imagenes_Documentacion/DrapandDrop}
+\end{center}
+\caption {}
+\label{Drap and Drop}
+\end{figure}
 
+
+\subsection{Scroll}
+Decidimos utilizar un ScrollView para colocar el tablero porque mientras mayor es el numero de celdas del tablero para que se vean todas las celdas en la pantalla se tendrían que colocar en un tamaño muy pequeño el cual no permitiría jugar al usuario como es debido, esto se soluciono con el scrollView.\\
 
 
 
