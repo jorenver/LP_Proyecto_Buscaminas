@@ -69,18 +69,18 @@
 \section{Introducción}
 
 Nuestro proyecto de Lenguajes de Programacion del Primer Parcial,consiste en la implementacion del juego Buscaminas en Android. 
-Para desarrollar esta aplicacion hemos usado el entorno de trabajo que nos provee Eclipse y hemos hecho las respectivas pruebas en los dispositivos que hemos tenido al alcance. 
-La logica del juego es exactamente la misma que el juego de Buscaminas que todos conocemos pero nosotros hemos perzonalizado la interfaz grafica clasica con el objetivo de darle originalidad. 
-Hemos hecho uso de muchos conceptos aprendidos sobre Programacion Orientada Objetos, tales como herencia, polimorfismo,interfaces,manejadores de eventos,etc algunos de estos conceptos seran tratados con mayor detalle mas adelante.
-En este documento trataremos de explicar brevemente la definicion de las clases mas relevantes del programa, plantearemos las razones por las cuales utlizamos lo que utilizamos.
+Para desarrollar esta aplicacion usamos el entorno de trabajo que nos provee Eclipse y hemos hecho las respectivas pruebas en los dispositivos que tuvimos al alcance. 
+La logica del juego es exactamente la misma que el juego de Buscaminas que todos conocemos pero nosotros personalizamos la interfaz gráfica clásica con el objetivo de darle originalidad. 
+Aplicamos muchos conceptos aprendidos sobre Programacion Orientada Objetos, tales como herencia, polimorfismo,interfaces,manejadores de eventos,etc algunos de estos conceptos seran tratados con mayor detalle mas adelante.
+En este documento trataremos de explicar brevemente la definicion de las clases mas relevantes del programa, justificaremos las razones por las cuáles utlizamos lo que utilizamos.
 Ademas hemos incluido una seccion con el avance progresivo de la interfaz del proyecto en donde se muestra imagenes del trabajo que hemos venido realizando en estas semanas.
-Tambien definiremos el alcance de nuestra aplicacion en donde aclararemos los comportamientos que hemos implementado y las cosas que hemos considerado no incluir.
+Tambien definiremos el alcance de nuestra aplicacion en donde aclararemos los comportamientos que hemos implementado y las cosas que consideramos no incluir.
 
 \section{Justificación}
 
 
 
-En el desarrollo del proyecto hemos aplicado el paradigma de programación orientado a objetos. Hemos creado varias clases para dividir el problema en pequeñas partes, entre estas clases tememos.
+En el desarrollo del proyecto aplicamos el paradigma de programación orientado a objetos. Creamos varias clases para dividir el problema en pequeñas partes, entre estas clases tememos.
 
 Interface Observer
 Esta interface la hemos definido para poder implementar el patrón de diseño Observer, consta de dos eventos Update que sirven para notificar al Observador de los cambios que ocurren en el Observado.
@@ -90,7 +90,7 @@ Esta es una de las clase principales del proyecto simula cada una de las casilla
 ¿Por qué extiende de Button?\\
 Esto se lo hiso principalmente para facilitar el manejo de eventos como click, Drap and Drop utilizando los listener que están definimos para este componente.\\
 ¿Por qué implementa Observer?\\
-Lo hemos implementado así para logran en forma más eficiente el algoritmo para descubrir las celdas, cada celda tiene un ArrayList con sus celdas adyacentes las cuales observan un cambio de esta celda para descubrirse o no dependiendo de la situación, esto involucra que todas las celdas son Observes y a la vez son Observadas por sus adyacentes.
+Lo hemos implementado así para logran en forma más eficiente el algoritmo para descubrir las celdas, cada celda tiene un ArrayList con sus celdas adyacentes las cuales observan un cambio de esta celda para descubrirse o no dependiendo de la situación, esto involucra que todas las celdas son Observers y a la vez son Observadas por sus adyacentes.
 Aparte de estas dos características todas las celdas poseen un estado que puede ser CUBIERTA ,DESCUBIERTA, BANDERA que sirve para que la celda sepa cómo comportarse ante algún evento.\\
 
 \subsection{Clase Tablero}
@@ -222,7 +222,7 @@ Tenemos implementado varias formas de ganar el juego: una de ellas consiste en d
 
 Al momento de ganar el juego, la aplicación obtiene el tiempo del cronómetro, busca en su base de datos si el tiempo o las condiciones son apropiados para entrar al top. Las condiciones del top son las siguientes, si existen diez o menos jugadores en la lista, se permite el ingreso; si existen más de diez la aplicación revisa si el tiempo es menor a alguno de los existentes y permite el ingreso.  Así como lo implementamos se permite tener infinitos jugadores en la lista.
 La base de datos consiste en tres  ficheros .txt (uno para cada nivel) que son guardados en la memoria interna del dispositivo, los datos son presentados al usuario, ordenados de forma descendiente y usando un TableHost para visualizar mejor los resultados.
-Entre las cosas que no se pudieron implementar está conseguir mayor portabilidad de la aplicación, no se visualiza bien la resolución en teléfonos o Tablet muy pequeñas, o en dispositivos con densidades de xxhdpi en donde los componentes de la aplicacion se ven exageradamente grandes ,para dispositivos grandes con una resolución de 1280 X 800 con densidad de mdpi no se tiene ningun problema, tampoco se consiguió que al girar la pantalla del dispositivo la aplicación gire y se adapte a la nueva forma vertical, la aplicación bloque el acelerómetro y mantiene la orientación en horizontal. 
+Entre las cosas que no se pudieron implementar está conseguir mayor portabilidad de la aplicación, no se visualiza bien la resolución en teléfonos o Tablet muy pequeñas, o en dispositivos con densidades de xxhdpi en donde los componentes de la aplicacion se ven exageradamente grandes ,para dispositivos grandes con una resolución de 1280 X 800 con densidad de mdpi no se tiene ningun problema, tampoco se consiguió que al girar la pantalla del dispositivo la aplicación gire y se adapte a la nueva forma vertical, la aplicación bloquea el acelerómetro y mantiene la orientación en horizontal. 
 
 
 
