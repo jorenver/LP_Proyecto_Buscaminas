@@ -119,7 +119,6 @@ public class Tablero extends View implements Observer{
 					continue;
 				}else{
 					celda.setMina(true);
-					celda.setText("*");
 					minas--;
 				}
 			}
@@ -381,7 +380,7 @@ public class Tablero extends View implements Observer{
 	public void comprobar(){
 		Celda c= obtenerCelda(2,0);
 		int tam=c.getAdyacentes().size();
-		Log.i("tamaño",String.valueOf(tam));
+		Log.i("tamaï¿½o",String.valueOf(tam));
 	}
 	
 	
