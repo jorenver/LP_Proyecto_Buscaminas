@@ -99,13 +99,13 @@ public class BarraDeMenu extends TableLayout {
 		public void update(Object o) {
 			EstadoCara estado=(EstadoCara)o;
 			switch(estado){
-				case ganar:
-					//se setea la cara para cuando se gane el juego
+				case GANAR:
+					Cara.setBackgroundResource(R.drawable.terminator_winner);
 					break;
-				case perder:
+				case PERDER:
 					Cara.setBackgroundResource(R.drawable.terminator);
 					break;
-				case en_juego:
+				case EN_JUEGO:
 					Cara.setBackgroundResource(R.drawable.terminator_face);
 					break;
 			}

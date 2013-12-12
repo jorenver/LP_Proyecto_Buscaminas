@@ -99,8 +99,9 @@ public class Celda extends Button implements Observer{
 	
 	public void SetBombasCercanas(){
 		int CuentaBombas=0;
-		for(Observer Celda: adyacentes){
-			if(((Celda)Celda).getMina())
+		for(Observer celda_actual: adyacentes){
+			Celda c=(Celda) celda_actual;
+			if(c.getMina())
 				CuentaBombas++;
 		}
 		this.setCantMinasCercanas(CuentaBombas);

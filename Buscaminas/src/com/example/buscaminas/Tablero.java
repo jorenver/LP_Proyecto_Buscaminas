@@ -52,7 +52,6 @@ public class Tablero extends View implements Observer{
 		registrarCeldasAdyacentes();
 		observarCeldas();
 		layout.setGravity(Gravity.CENTER);
-		
 	}
 
 	public void generarTablero(Context context){
@@ -96,9 +95,6 @@ public class Tablero extends View implements Observer{
 				if(celda_actual!=null){
 					for(int k=-1;k<=1;k++){
 						for(int l=-1;l<=1;l++){
-							if(k==0&&j==0){
-								continue;
-							}
 							Celda celda_adj=obtenerCelda(i+k,j+l);
 							if(celda_adj!=null){
 								celda_actual.getAdyacentes().add(celda_adj);
@@ -123,6 +119,7 @@ public class Tablero extends View implements Observer{
 					continue;
 				}else{
 					celda.setMina(true);
+					celda.setText("*");
 					minas--;
 				}
 			}
@@ -147,6 +144,7 @@ public class Tablero extends View implements Observer{
 							encerarRelog();
 							iniciarRelog();
 							Inicio=false;
+							comprobar();
 						}
 						//si la celda aun no ha sido descubierta se la descubre
 							c.descubrir();	
@@ -176,7 +174,7 @@ public class Tablero extends View implements Observer{
 			if(celda.getMina() && celda.getEstado() != EstadoCelda.BANDERA){ //si es verdadero tiene una mina
 				//jugador pierde
 				detenerRelog();//reloj se detiene
-				cara.update(EstadoCara.perder);
+				cara.update(EstadoCara.PERDER);
 				reproducirMusica();
 				for(int i=0;i<n_filas;i++){ //recorro las celdas
 					for(int j=0;j<n_columnas;j++){
@@ -190,6 +188,7 @@ public class Tablero extends View implements Observer{
 			else{
 				if(celdasDescubiertas()){ //si el gana
 					detenerRelog();//reloj se detiene
+					cara.update(EstadoCara.GANAR);
 					//recorro las celdas
 					for(int i=0;i<n_filas;i++){
 						for(int j=0;j<n_columnas;j++){
@@ -266,7 +265,7 @@ public class Tablero extends View implements Observer{
 			player.stop();
 		}
 		
-		cara.update(EstadoCara.en_juego);
+		cara.update(EstadoCara.EN_JUEGO);
 		
 		for(int i=0;i<n_filas;i++){
 			for(int j=0;j<n_columnas;j++){
@@ -377,6 +376,12 @@ public class Tablero extends View implements Observer{
 			}
 		}
 		return true;
+	}
+	
+	public void comprobar(){
+		Celda c= obtenerCelda(2,0);
+		int tam=c.getAdyacentes().size();
+		Log.i("tamaño",String.valueOf(tam));
 	}
 	
 	
