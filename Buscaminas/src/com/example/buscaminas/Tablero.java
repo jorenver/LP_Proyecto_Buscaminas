@@ -143,7 +143,6 @@ public class Tablero extends View implements Observer{
 							encerarRelog();
 							iniciarRelog();
 							Inicio=false;
-							comprobar();
 						}
 						//si la celda aun no ha sido descubierta se la descubre
 							c.descubrir();	
@@ -375,12 +374,6 @@ public class Tablero extends View implements Observer{
 			}
 		}
 		return true;
-	}
-	
-	public void comprobar(){
-		Celda c= obtenerCelda(2,0);
-		int tam=c.getAdyacentes().size();
-		Log.i("tama�o",String.valueOf(tam));
 	}
 	
 	
