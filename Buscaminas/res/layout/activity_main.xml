@@ -9,6 +9,8 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:background="@drawable/fondo"
+    android:screenOrientation="landscape"
+	android:configChanges="orientation"
     tools:context=".MainActivity" >
 
     <TableRow

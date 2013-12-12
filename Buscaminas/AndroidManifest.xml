@@ -2,20 +2,25 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.buscaminas"
     android:versionCode="1"
-    android:versionName="1.0" >
-
+    android:versionName="1.0" 
+    android:screenOrientation="landscape"
+	android:configChanges="orientation"
+    >
+	
     <uses-sdk
         android:minSdkVersion="8"
         android:targetSdkVersion="18" />
 
     <application
         android:allowBackup="true"
-        android:icon="@drawable/ic_launcher"
+        android:icon="@drawable/terminator_icon"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
             android:name="com.example.buscaminas.Splash_Screen_Inicio"
-            android:label="@string/app_name" >
+            android:label="@string/app_name" 
+            android:screenOrientation="landscape"
+			android:configChanges="orientation">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -24,19 +29,27 @@
         </activity>
         <activity
             android:name="com.example.buscaminas.MainActivity"
-            android:label="@string/app_name" >
+            android:label="@string/app_name" 
+            android:screenOrientation="landscape"
+			android:configChanges="orientation">
         </activity>
         <activity
             android:name="com.example.buscaminas.Inicio"
-            android:label="@string/title_activity_inicio" >
+            android:label="@string/title_activity_inicio" 
+            android:screenOrientation="landscape"
+			android:configChanges="orientation">
         </activity>
         <activity
             android:name="com.example.buscaminas.AcercaDe"
-            android:label="@string/title_activity_acerca_de" >
+            android:label="@string/title_activity_acerca_de" 
+            android:screenOrientation="landscape"
+			android:configChanges="orientation">
         </activity>
         <activity
             android:name="com.example.buscaminas.TopJugadores"
-            android:label="@string/title_activity_top_jugadores" >
+            android:label="@string/title_activity_top_jugadores" 
+            android:screenOrientation="landscape"
+			android:configChanges="orientation">
         </activity>
         <activity
             android:name="com.example.buscaminas.DragAndDrop"

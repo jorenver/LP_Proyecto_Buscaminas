@@ -90,6 +90,9 @@ public class Celda extends Button implements Observer{
 					this.setBackgroundResource(R.drawable.boton_bomba_destapado);
 				}
 			}
+			if(this.getEstado()==EstadoCelda.BANDERA){
+				this.SetEstado(EstadoCelda.DESCUBIERTA);
+			}	
 		}
 	}
 	

@@ -174,7 +174,6 @@ public class TableroCompleto extends TableLayout {
 	public void actualizarCelda(Celda celda_actual){
 		 celda_actual.setEnabled(true);//setea background
 	   	 celda_actual.SetEstado(EstadoCelda.CUBIERTA);// ya no tiene bandera
-	   	 
 	}
 	
 	public  BarraDeMenu getBarra(){
